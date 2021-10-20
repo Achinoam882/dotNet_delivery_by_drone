@@ -11,7 +11,7 @@ namespace DAL
         public int id;
         public int senderld;
         public int targetId;
-        public  WeightCategories Weight;
+        public  WeightCategories  Weight;
 
 
 
