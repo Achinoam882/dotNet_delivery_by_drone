@@ -17,7 +17,7 @@ namespace IDAL
 
             public double Latitude { get; set; }
 
-            public int ChargeSlots { get; set; }
+            public int ChargeSlots { get; set; }//מספר עמדות טעינה פנויות
 
             public override string ToString()
             {

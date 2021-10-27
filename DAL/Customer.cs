@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace IDAL
 {
     namespace DO
-
+        
     {
         public struct Customer
         {
@@ -24,6 +24,7 @@ namespace IDAL
                 return string.Format("Id is:{0}\t  Name of the customer is:{1}\t   PhoneNumber is:{2}\t " +
                     " Longitude is:{3}\t  Latitude is:{4}\t", Id, Name, PhoneNumber, Longitude, Latitude);
             }
+         
 
         }
     }

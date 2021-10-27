@@ -15,19 +15,19 @@ namespace IDAL
 
             public int TargetId { get; set; }
 
-            public WeightCategories Weight { get; set; }
+            public WeightCategories Weight { get; set; }//light,medium,heavy
 
-            public Priorities Priority { get; set; }
+            public Priorities Priority { get; set; }//regular, fast, urgent
 
             public int DroneId { get; set; }
 
-            public DateTime Scheduled { get; set; }
+            public DateTime Scheduled { get; set; }//זמן שיוך החבילה לרחפן
 
-            public DateTime PickUp { get; set; }
+            public DateTime PickUp { get; set; }///  זמן איסוף חבילה מהשולחן (מהרחפן
 
-            public DateTime Delivered { get; set; }
+            public DateTime Delivered { get; set; }//זמן הגעת החבילה למקבל
 
-            public DateTime Requested { get; set; }
+            public DateTime Requested { get; set; } //זמן יצירת חבילה למשלוח
             public override string ToString()
             {
                 return string.Format("Id is:{0}\t Sender Id is:{1}\t  Target Id is:{2}\t " +
