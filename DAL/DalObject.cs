@@ -7,12 +7,22 @@ using System.Threading.Tasks;
 using IDAL.DO;
 namespace DalObject
 {
+    /// <summary>
+    /// matods that use from the main 
+    /// </summary>
     public class DalObject
     {
+
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public DalObject()
         {
             DataSource.Initialize();
         }
+        /// The function adds a drone to the list of drones.
+        /// </summary>
+        /// <param name="newDrone"></param>
         public void SetDrone(int id,string model,WeightCategories maxWeight,DroneStatuses status,double battery)
         {
             DataSource.droneList.Add( new Drone()
@@ -25,6 +35,10 @@ namespace DalObject
             });
 
         }
+        /// <summary>
+        /// The function adds a station to the list of Basestations.
+        /// </summary>
+        /// <param name="newbaseStation"></param>
         public void SetBaseStation(int id, string name, double longitude, double latitude, int chargeSlots)
         {
             DataSource.BaseStationList.Add(new BaseStation()
@@ -37,6 +51,10 @@ namespace DalObject
             });
 
         }
+        /// <summary>
+        /// The function adds a customer to the list of customers.
+        /// </summary>
+        /// <param name="newCustomer"></param>
         public void SetCustomer(int id, string name, double longitude, double latitude, string phoneNumber)
         {
             DataSource.CustomerList.Add(new Customer()
@@ -49,6 +67,11 @@ namespace DalObject
             }) ;
             
         }
+        /// <summary>
+        /// The function adds a Parcel to the list of Parcels.
+        /// </summary>
+        /// <param name="newParcel"></param>
+        /// <returns></returns>
         public int SetParcel(int senderId, int targetId, WeightCategories weightParcel, Priorities priority)
         {
             DataSource.ParcelList.Add(new Parcel()
@@ -61,7 +84,13 @@ namespace DalObject
                 Requested = DateTime.Now,
             }) ;
             return DataSource.Config.IdParcel;
+       
         }
+        /// <summary>
+        /// The function assigns a package to the drone.
+        /// </summary>
+        /// <param name="parcelId">Id of Parcel</param>
+        /// <param name="droneId">Id of drone</param>
         public void SetParcelToDrone(int parcelId, int droneId)
         {
             int parcelIndex = DataSource.ParcelList.FindIndex(x => x.Id == parcelId);
@@ -75,7 +104,10 @@ namespace DalObject
             droneTemp.Status = (DroneStatuses)2;
             DataSource.droneList[droneIndex] = droneTemp;
         }
-      
+        /// <summary>
+        /// picked up package by the drone.
+        /// </summary>
+        /// <param name="parcelId">Id of Parcel</param>
         public void PickUpParcel(int parcelId)
         {
             int parcelIndex = DataSource.ParcelList.FindIndex(x => x.Id == parcelId);
@@ -83,6 +115,10 @@ namespace DalObject
             temp.PickUp = DateTime.Now;
             DataSource.ParcelList[parcelIndex] = temp;
         }
+        /// <summary>
+        /// delivery package to the customer.
+        /// </summary>
+        /// <param name="parcelId">Id of Parcel</param>
         public void DeliverToCustomer(int parcelId)
         {
             int parcelIndex = DataSource.ParcelList.FindIndex(x => x.Id == parcelId);
@@ -91,6 +127,11 @@ namespace DalObject
             DataSource.ParcelList[parcelIndex] = temp;
            // DataSource.ParcelList[parcelIndex].Delivered= DateTime.Now;
         }
+        /// <summary>
+        /// sending drone for charging at BaseStation.
+        /// </summary>
+        /// <param name="baseStationId">Id of baseStation</param>
+        /// <param name="droneId">Id of drone</param>
         public void SendDroneToCharge(int droneId,int baseStationId)
         {
             int droneIndex = DataSource.droneList.FindIndex(x => x.Id == droneId);
@@ -110,46 +151,76 @@ namespace DalObject
             }) ;            
 
         }
+        /// <summary>
+        /// release drone from charging at BaseStation.
+        /// </summary>
+        /// <param name="droneId">Id of drone</param>
         public void ReleaseFromCharging(int droneId)
         {
+            //Drone update.
             int droneIndex = DataSource.droneList.FindIndex(x => x.Id == droneId);
             Drone droneTemp = DataSource.droneList[droneIndex];
             droneTemp.Status = (DroneStatuses)0;
             DataSource.droneList[droneIndex] = droneTemp;
-
+            //find the Station Id and remove from the droneChargeList.
             int chargeSlotIndex = DataSource.droneChargeList.FindIndex(x => x.DroneId == droneId);
             int baseStationId = DataSource.droneChargeList[chargeSlotIndex].StationId;
             DataSource.droneChargeList.Remove(DataSource.droneChargeList.Find(x => x.DroneId == droneId));
-
+            //BaseStation update.
             int BaseStationIndex = DataSource.BaseStationList.FindIndex(x => x.Id == baseStationId);
             BaseStation temp = DataSource.BaseStationList[BaseStationIndex];
             temp.ChargeSlots++;
             DataSource.BaseStationList[BaseStationIndex] = temp;
         }
+        /// <summary>
+        /// The function returns the selected base station.
+        /// </summary>
+        /// <param name="idForAllObjects">Id of a selected BaseStation </param>
+        /// <returns> return empty ubjact if its not there</returns>
         public BaseStation GetBaseStation(int idForAllObjects)
         {
             int BaseStationIndex = DataSource.BaseStationList.FindIndex(x => x.Id == idForAllObjects);
             return DataSource.BaseStationList[BaseStationIndex];
             
         }
+        /// <summary>
+        /// The function returns the selected Drone.
+        /// </summary>
+        /// <param name="idForAllObjects">Id of a selected Drone</param>
+        /// <returns>return empty ubjact if its not there</returns>
         public Drone GetDrone(int idForAllObjects)
         {
             int DroneIndex = DataSource.droneList.FindIndex(x => x.Id == idForAllObjects);
             return DataSource.droneList[DroneIndex];
 
         }
-         public Customer  GetCustomer( int idForAllObjects)
+
+        /// <summary>
+        /// The function returns the selected Customer.
+        /// </summary>
+        /// <param name="idForAllObjects">Id of a selected Customer</param>
+        /// <returns>return empty ubjact if its not there</returns>
+        public Customer  GetCustomer( int idForAllObjects)
         {
             int CustomerIndex = DataSource.CustomerList.FindIndex(x => x.Id == idForAllObjects);
             return DataSource.CustomerList[CustomerIndex];
 
         }
+        /// <summary>
+        /// The function returns the selected Parcel.
+        /// </summary>
+        /// <param name="idForAllObjects">Id of a selected Parcel</param>
+        /// <returns>return empty ubjact if its not there</returns>
         public Parcel GetParcel(int idForAllObjects)
         {
             int ParcelIndex = DataSource.ParcelList.FindIndex(x => x.Id == idForAllObjects);
             return DataSource.ParcelList[ParcelIndex];
         }
-       public List<BaseStation> GetBaseStationList()
+        /// <summary>
+        /// The function returns an array of all base stations.
+        /// </summary>
+        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
+        public List<BaseStation> GetBaseStationList()
         {
             List<BaseStation> temp = new List<BaseStation>();
             for(int i=0;i<DataSource.BaseStationList.Count();i++)
@@ -158,6 +229,10 @@ namespace DalObject
             }
             return temp;
         }
+        /// <summary>
+        /// The function returns an array of all Drone.
+        /// </summary>
+        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List <Drone> GetDroneList()
         {
             List<Drone> temp = new List<Drone>();
@@ -168,6 +243,10 @@ namespace DalObject
             return temp;
 
         }
+        /// <summary>
+        /// The function returns an array of all Customer.
+        /// </summary>
+        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List <Customer> GetCustomerList()
         {
             List<Customer> temp = new List<Customer>();
@@ -178,6 +257,10 @@ namespace DalObject
             return temp;
 
         }
+        /// <summary>
+        /// The function returns an array of all Parcel.
+        /// </summary>
+        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List <Parcel> GetParcelList()
         {
             List<Parcel> temp = new List<Parcel>();
@@ -187,6 +270,10 @@ namespace DalObject
             }
             return temp;
         }
+        /// <summary>
+        /// The function returns an array of all packages not associated with the Drone.
+        /// </summary>
+        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List <Parcel> GetFreeParcelList()
         {
             List<Parcel> temp = new List<Parcel>();
@@ -200,6 +287,10 @@ namespace DalObject
             return temp;
 
         }
+        /// <summary>
+        /// The function returns base stations with free charge positions.
+        /// </summary>
+        /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         public List <BaseStation> GetBaseStationFreeChargeSlots()
         {
             List<BaseStation> temp = new List<BaseStation>();

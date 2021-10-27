@@ -45,10 +45,7 @@ namespace DalObject
                 ChargeSlots = r.Next(5, 10)
             });
             BaseStationList.Add(new BaseStation()
-            {
-
-            baseStationsList.Add(new BaseStation()
-            {
+            { 
                     Id = r.Next(100000000, 999999999),
                     Name = "Tel Aviv",
                     Latitude = 35.239900,
