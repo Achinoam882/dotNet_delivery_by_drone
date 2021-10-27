@@ -13,7 +13,7 @@ namespace IDAL
             public int StationId { get; set; }
             public override string ToString()
             {
-                return string.Format("Drone Id is:{0}\t  StationId is:{1}\t"  , DroneId, StationId);
+                return string.Format("Drone Id is:{0,-14}\tStationId is:{1,-14}\t"  , DroneId, StationId);
             }
 
         }

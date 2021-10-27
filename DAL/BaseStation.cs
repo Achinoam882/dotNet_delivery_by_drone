@@ -21,8 +21,8 @@ namespace IDAL
 
             public override string ToString()
             {
-                return string.Format("Id is:{0}\t  Name of Base Station is:{1}\t   Longitude is:{2}\t " +
-                    "Latitude is:{3}\t  Number of Charge Slots is:{4}\t", Id, Name, Longitude, Latitude, ChargeSlots);
+                return string.Format("Id is:{0,-14}\tName of Base Station is:{1,-14}\tLongitude is:{2,-14}\t " +
+                    "Latitude is:{3,-14}\tNumber of Charge Slots is:{4,-14}\t", Id, Name, Longitude, Latitude, ChargeSlots);
             }
 
 

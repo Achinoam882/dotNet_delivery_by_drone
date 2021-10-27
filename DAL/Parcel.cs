@@ -30,9 +30,9 @@ namespace IDAL
             public DateTime Requested { get; set; }
             public override string ToString()
             {
-                return string.Format("Id is:{0}\t Sender Id is:{1}\t  Target Id is:{2}\t " +
-                    " Drone Weight is:{3}\t  Priority is:{4}\t  Drone Id is:{5}\t  Scheduled time is:{6}\t " +
-                    " PickUp time is:{7}\t  Delivered time is:{8}\t  Requested time is:\t"  , Id, SenderId,
+                return string.Format("Id is:{0,-14}\tSender Id is:{1,-14}\tTarget Id is:{2,-14}\t " +
+                    " Drone Weight is:{3,-14}\tPriority is:{4,-14}\tDrone Id is:{5,-14}\tScheduled time is:{6,-14}\t " +
+                    " PickUp time is:{7,-14}\tDelivered time is:{8,-14}\tRequested time is:{9,-14}\t", Id, SenderId,
                     TargetId, Weight, Priority, DroneId, Scheduled, PickUp, Delivered, Requested);
             }
 
