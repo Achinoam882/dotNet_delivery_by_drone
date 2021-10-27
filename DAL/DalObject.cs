@@ -34,6 +34,7 @@ namespace DalObject
                 Battery = battery,
             });
 
+
         }
         /// <summary>
         /// The function adds a station to the list of Basestations.
@@ -41,7 +42,7 @@ namespace DalObject
         /// <param name="newbaseStation"></param>
         public void SetBaseStation(int id, string name, double longitude, double latitude, int chargeSlots)
         {
-            DataSource.BaseStationList.Add(new BaseStation()
+            DataSource.BaseStationList.Add (new BaseStation()
             {
                 Id=id,
                 Name=name,
