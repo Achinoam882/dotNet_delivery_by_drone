@@ -51,7 +51,7 @@ please enter the id of the new station");
                     int idDrone;
                     string model;
                     WeightCategories maxWeight;
-                    DroneStatuses status;
+                    //DroneStatuses status;
                     double battery;
                     Console.WriteLine(@"
 You have chosen to add a new  drone,
@@ -62,10 +62,10 @@ please enter the id of the new drone");
                     Console.WriteLine(" please enter the weight of the new drone:0 for light,1 for medium,2 for heavy");
                     WeightCategories.TryParse(Console.ReadLine(), out maxWeight);
                     Console.WriteLine(" please enter the status of the new drone:0 for free,1 for inMaintenance,2 for busy");
-                    DroneStatuses.TryParse(Console.ReadLine(), out status);
+                    //DroneStatuses.TryParse(Console.ReadLine(), out status);
                     Console.WriteLine("please enter the charge level of  the battery");
                     double.TryParse(Console.ReadLine(), out battery);
-                    dal.SetDrone(idDrone, model, maxWeight, status, battery);
+                    dal.SetDrone(idDrone, model, maxWeight/*, status*/, battery);
                     break;
                 case Add.newcustomer:
                     int idCustomer;

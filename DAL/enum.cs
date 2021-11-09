@@ -13,8 +13,8 @@ namespace IDAL
         /// <summary> enum for Weight Categories of the parcel and the drone </summary>
         public enum WeightCategories { light,medium,heavy}
         /// <summary> enum  for Drone Statuses  of the  drone </summary>
-        public enum DroneStatuses { free,inMaintenance,busy}
-        /// <summary>enum for the first dialog </summary>
+        //public enum DroneStatuses { free,inMaintenance,busy}
+        ///// <summary>enum for the first dialog </summary>
         public enum Choice { add,update,display,viewLists,exit}
         /// <summary> enum for InsertrOption</summary>
         public enum Add { basestation,drone,newcustomer,parcelDelivery }

@@ -23,15 +23,15 @@ namespace DalObject
         /// The function adds a drone to the list of drones.
         /// </summary>
         /// <param name="newDrone"></param>
-        public void SetDrone(int id,string model,WeightCategories maxWeight,DroneStatuses status,double battery)
+        public void SetDrone(int id,string model,WeightCategories maxWeight/*,DroneStatuses status*/,double battery)
         {
             DataSource.droneList.Add( new Drone()
             {
                 Id = id,
                 Model = model,
                 MaxWeight = maxWeight,
-                Status = status,
-                Battery = battery,
+                //Status = status,
+                //Battery = battery,
             });
 
 
@@ -102,7 +102,7 @@ namespace DalObject
 
             int droneIndex = DataSource.droneList.FindIndex(x => x.Id == droneId);
             Drone droneTemp = DataSource.droneList[droneIndex];
-            droneTemp.Status = (DroneStatuses)2;
+            //droneTemp.Status = (DroneStatuses)2;
             DataSource.droneList[droneIndex] = droneTemp;
         }
         /// <summary>
@@ -137,7 +137,7 @@ namespace DalObject
         {
             int droneIndex = DataSource.droneList.FindIndex(x => x.Id == droneId);
             Drone droneTemp = DataSource.droneList[droneIndex];
-            droneTemp.Status = (DroneStatuses)1;
+            //droneTemp.Status = (DroneStatuses)1;
             DataSource.droneList[droneIndex] = droneTemp;
 
             int BaseStationIndex = DataSource.BaseStationList.FindIndex(x => x.Id == baseStationId);
@@ -161,7 +161,7 @@ namespace DalObject
             //Drone update.
             int droneIndex = DataSource.droneList.FindIndex(x => x.Id == droneId);
             Drone droneTemp = DataSource.droneList[droneIndex];
-            droneTemp.Status = (DroneStatuses)0;
+            //droneTemp.Status = (DroneStatuses)0;
             DataSource.droneList[droneIndex] = droneTemp;
             //find the Station Id and remove from the droneChargeList.
             int chargeSlotIndex = DataSource.droneChargeList.FindIndex(x => x.DroneId == droneId);
@@ -221,7 +221,7 @@ namespace DalObject
         /// The function returns an array of all base stations.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public List<BaseStation> GetBaseStationList()
+        public IEnumerable<BaseStation> GetBaseStationList()
         {
             List<BaseStation> temp = new List<BaseStation>();
             for(int i=0;i<DataSource.BaseStationList.Count();i++)
@@ -234,7 +234,7 @@ namespace DalObject
         /// The function returns an array of all Drone.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public List <Drone> GetDroneList()
+        public IEnumerable<Drone> GetDroneList()
         {
             List<Drone> temp = new List<Drone>();
             for (int i = 0; i < DataSource.droneList.Count(); i++)
@@ -248,7 +248,7 @@ namespace DalObject
         /// The function returns an array of all Customer.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public List <Customer> GetCustomerList()
+        public IEnumerable<Customer> GetCustomerList()
         {
             List<Customer> temp = new List<Customer>();
             for (int i = 0; i < DataSource.CustomerList.Count(); i++)
@@ -262,7 +262,7 @@ namespace DalObject
         /// The function returns an array of all Parcel.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public List <Parcel> GetParcelList()
+        public IEnumerable<Parcel> GetParcelList()
         {
             List<Parcel> temp = new List<Parcel>();
             for (int i = 0; i < DataSource.ParcelList.Count(); i++)
@@ -275,7 +275,7 @@ namespace DalObject
         /// The function returns an array of all packages not associated with the Drone.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public List <Parcel> GetFreeParcelList()
+        public IEnumerable <Parcel> GetFreeParcelList()
         {
             List<Parcel> temp = new List<Parcel>();
             for (int i = 0; i < DataSource.ParcelList.Count(); i++)
@@ -292,7 +292,7 @@ namespace DalObject
         /// The function returns base stations with free charge positions.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public List <BaseStation> GetBaseStationFreeChargeSlots()
+        public IEnumerable<BaseStation> GetBaseStationFreeChargeSlots()
         {
             List<BaseStation> temp = new List<BaseStation>();
             for (int i = 0; i < DataSource.BaseStationList.Count(); i++)
