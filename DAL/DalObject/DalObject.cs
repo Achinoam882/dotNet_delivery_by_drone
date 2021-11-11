@@ -28,7 +28,7 @@ namespace DalObject
             DataSource.Config.DroneChargingRate };
             return temp;
         }
-
+        //hhhh
 
 
 
