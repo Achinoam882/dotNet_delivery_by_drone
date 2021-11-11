@@ -3,14 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using IDAL;
 using IDAL.DO;
+using DalObject;
 using System.ComponentModel;
 
 namespace ConsoleUI
 {
     class Program
     {
+        #region main options
+
+        #region insert options
         /// <summary>
         /// The function handles various addition options.
         /// </summary>
@@ -29,7 +33,7 @@ choose:
             add = (Add)number;
             switch (add)
             {
-                case Add.basestation:
+                case Add.Basestation:
                     int idStation, chargeSlots;
                     double latitude, longitude;
                     string name;
@@ -45,9 +49,17 @@ please enter the id of the new station");
                     double.TryParse(Console.ReadLine(), out longitude);
                     Console.WriteLine(" please enter the amount of charge slots in the new station");
                     int.TryParse(Console.ReadLine(), out chargeSlots);
-                    dal.SetBaseStation(idStation, name, longitude, latitude, chargeSlots);
+                    BaseStation newBaseStation = new BaseStation
+                    {
+                        Id = idStation,
+                        Name = name,
+                        Longitude = longitude,
+                        Latitude = latitude,
+                        ChargeSlots = chargeSlots,
+                    };
+                    dal.SetBaseStation(newBaseStation);
                     break;
-                case Add.drone:
+                case Add.Drone:
                     int idDrone;
                     string model;
                     WeightCategories maxWeight;
@@ -65,9 +77,17 @@ please enter the id of the new drone");
                     //DroneStatuses.TryParse(Console.ReadLine(), out status);
                     Console.WriteLine("please enter the charge level of  the battery");
                     double.TryParse(Console.ReadLine(), out battery);
-                    dal.SetDrone(idDrone, model, maxWeight/*, status*/, battery);
+                    Drone newDrone = new Drone
+                    {
+                        Id = idDrone,
+                        Model = model,
+                        MaxWeight = maxWeight,
+                        //Status = status,
+                        //Battery = battery,
+                    };
+                    dal.SetDrone(newDrone);
                     break;
-                case Add.newcustomer:
+                case Add.NewCustomer:
                     int idCustomer;
                     string nameCustomer;
                     string phoneNumber;
@@ -80,17 +100,23 @@ please enter the id of the new customer");
                     Console.WriteLine("please enter the name of the new customer");
                     nameCustomer = Console.ReadLine();
                     Console.WriteLine("please enter the phone number of the new customer");
-                    phoneNumber= Console.ReadLine();
+                    phoneNumber = Console.ReadLine();
                     Console.WriteLine("please enter the latitude of the new customer");
                     double.TryParse(Console.ReadLine(), out latitudeCustomer);
                     Console.WriteLine("please enter the longitude of the new customer");
                     double.TryParse(Console.ReadLine(), out longitudeCustomer);
-                    dal.SetCustomer(idCustomer, nameCustomer, longitudeCustomer, latitudeCustomer, phoneNumber);
+                    Customer newCustomer = new Customer { 
+                    Id = idCustomer,
+                    Name = nameCustomer,
+                    Longitude = longitudeCustomer,
+                    Latitude = latitudeCustomer,
+                    PhoneNumber = phoneNumber,};
+                    dal.SetCustomer(newCustomer);
                     break;
-                case Add.parcelDelivery:
+                case Add.ParcelDelivery:
                     int senderId, targetId;
                     WeightCategories weightParcel;
-                    Priorities Priority;
+                    Priorities newPriority;
                     Console.WriteLine(@"
 You have chosen to add a new parcel to delivery,
 please enter the id of the sender");
@@ -100,14 +126,25 @@ please enter the id of the sender");
                     Console.WriteLine(" please enter the weight of the new parcel:0 for light,1 for medium,2 for heavy");
                     WeightCategories.TryParse(Console.ReadLine(), out weightParcel);
                     Console.WriteLine(" please enter the priority of the new parcel:0 for regular,1 for fast,2 for urgent");
-                    Priorities.TryParse(Console.ReadLine(), out Priority);
-                    int counterParcel = dal.SetParcel(senderId, targetId, weightParcel, Priority);
+                    Priorities.TryParse(Console.ReadLine(), out newPriority);
+                    Parcel newParcel = new Parcel
+                    {
+                        SenderId = senderId,
+                        TargetId = targetId,
+                        Weight = weightParcel,
+                        Priority = newPriority,
+                        //Requested = DateTime.Now,
+                    };
+                    int counterParcel = dal.SetParcel(newParcel);
                     break;
                 default:
                     break;
             }
 
         }
+        #endregion insert options
+
+        #region update options
         /// <summary>
         /// The function handles various update options.
         /// </summary>
@@ -128,37 +165,33 @@ choose:
             int parcelId, baseStationId, droneId;
             switch (update)
             {
-                case Update.parcelToDrone:
+                case Update.ParcelToDrone:
                     Console.WriteLine("please enter the id of the parcel");
                     int.TryParse(Console.ReadLine(), out parcelId);
                     Console.WriteLine("please enter the id of the drone");
                     int.TryParse(Console.ReadLine(), out droneId);
                     dal.SetParcelToDrone(parcelId, droneId);
                     break;
-                case Update.pickUp:
+                case Update.PickUp:
                     Console.WriteLine("please enter the id of the parcel");
                     int.TryParse(Console.ReadLine(), out parcelId);
                     dal.PickUpParcel(parcelId);
                     break;
-                case Update.delivered:
+                case Update.Delivered:
                     Console.WriteLine("please enter the id of the parcel");
                     int.TryParse(Console.ReadLine(), out parcelId);
                     dal.DeliverToCustomer(parcelId);
                     break;
-                case Update.inCharging:
+                case Update.InCharging:
                     Console.WriteLine("please enter the id of the drone");
                     int.TryParse(Console.ReadLine(), out droneId);
                     Console.WriteLine("please select a base station id");
-                    List<BaseStation> FreeChargeSlotsInBaseStation = new List<BaseStation>();
-                    FreeChargeSlotsInBaseStation = dal.GetBaseStationFreeChargeSlots();
-                    for (int i= 0; i < FreeChargeSlotsInBaseStation.Count(); i++)
-                    {
-                        Console.WriteLine(FreeChargeSlotsInBaseStation[i].ToString());
-                    }
+                    foreach (BaseStation item in (List<BaseStation>)dal.GetBaseStationFreeChargeSlots())
+                        Console.WriteLine(item.ToString());
                     int.TryParse(Console.ReadLine(), out baseStationId);
                     dal.SendDroneToCharge(droneId,baseStationId);
                     break;
-                case Update.outCharging:
+                case Update.OutCharging:
                     Console.WriteLine("please enter the id of the drone");
                     int.TryParse(Console.ReadLine(), out droneId);
                     dal.ReleaseFromCharging(droneId);
@@ -167,6 +200,9 @@ choose:
                     break;
             }
         }
+        #endregion update options
+
+        #region display options
         /// <summary>
         /// The function handles display options.
         /// </summary>
@@ -186,22 +222,22 @@ choose:
             display = (Display)number;
             switch (display)
             {
-                case Display.viewBaseStation:
+                case Display.ViewBaseStation:
                     Console.WriteLine("please enter the id of the base station ");
                     int.TryParse(Console.ReadLine(), out idForAllObjects);
                     Console.WriteLine(dal.GetBaseStation(idForAllObjects).ToString());
                     break;
-                case Display.viewDrone:
+                case Display.ViewDrone:
                     Console.WriteLine("please enter the id of the drone ");
                     int.TryParse(Console.ReadLine(), out idForAllObjects);
                     Console.WriteLine(dal.GetDrone(idForAllObjects).ToString());
                     break;
-                case Display.viewCustomer:
+                case Display.ViewCustomer:
                     Console.WriteLine("please enter the id of the customer ");
                     int.TryParse(Console.ReadLine(), out idForAllObjects);
                     Console.WriteLine(dal.GetCustomer(idForAllObjects).ToString());
                     break;
-                case Display.viewParcel:
+                case Display.ViewParcel:
                     Console.WriteLine("please enter the id of the parcel ");
                     int.TryParse(Console.ReadLine(), out idForAllObjects);
                     Console.WriteLine(dal.GetParcel(idForAllObjects).ToString());
@@ -211,6 +247,9 @@ choose:
             }
 
         }
+        #endregion display  options
+
+        #region display lists options
         /// <summary>
         /// The function handles list view options.
         /// </summary>
@@ -231,53 +270,29 @@ choose:
             viewList = (ViewList)number;
             switch (viewList)
             {
-                case ViewList.listBaseStation:
-                    List<BaseStation> BaseStationList = new List<BaseStation>();
-                    BaseStationList=dal.GetBaseStationList();
-                    for(int i=0;i< BaseStationList.Count();i++)
-                    {
-                        Console.WriteLine(BaseStationList[i].ToString());
-                    }
+                case ViewList.ListBaseStation:
+                    foreach (BaseStation item in (List<BaseStation>)dal.GetBaseStationList())
+                        Console.WriteLine(item);
                     break;
-                case ViewList.listDrone:
-                    List<Drone> DroneList = new List<Drone>();
-                    DroneList = dal.GetDroneList();
-                    for (int i = 0; i < DroneList.Count(); i++)
-                    {
-                        Console.WriteLine(DroneList[i].ToString());
-                    }
+                case ViewList.ListDrone:
+                    foreach (Drone item in (List<Drone>)dal.GetDroneList())
+                        Console.WriteLine(item);
                     break;
-                case ViewList.listCustomer:
-                    List<Customer> CustomerList = new List<Customer>();
-                    CustomerList = dal.GetCustomerList();
-                    for (int i = 0; i < CustomerList.Count(); i++)
-                    {
-                        Console.WriteLine(CustomerList[i].ToString());
-                    }
+                case ViewList.ListCustomer:
+                    foreach (Customer item in (List<Customer>)dal.GetCustomerList())
+                        Console.WriteLine(item);
                     break;
-                case ViewList.listParcel:
-                    List<Parcel> ParcelList = new List<Parcel>();
-                    ParcelList = dal.GetParcelList();
-                    for (int i = 0; i < ParcelList.Count(); i++)
-                    {
-                        Console.WriteLine(ParcelList[i].ToString());
-                    }
+                case ViewList.ListParcel:
+                    foreach (Parcel item in (List<Parcel>)dal.GetParcelList())
+                        Console.WriteLine(item);
                     break;
-                case ViewList.listFreeParcel:
-                    List<Parcel> FreeParcelList = new List<Parcel>();
-                    FreeParcelList = dal.GetFreeParcelList();
-                    for (int i = 0; i < FreeParcelList.Count(); i++)
-                    {
-                        Console.WriteLine(FreeParcelList[i].ToString());
-                    }
+                case ViewList.ListFreeParcel:
+                    foreach (Parcel item in (List<Parcel>)dal.GetFreeParcelList())
+                        Console.WriteLine(item);
                     break;
-                case ViewList.listFreeChargeSlotsInBaseStation:
-                    List<BaseStation> FreeChargeSlotsInBaseStationList = new List<BaseStation>();
-                    FreeChargeSlotsInBaseStationList = dal.GetBaseStationFreeChargeSlots();
-                    for (int i = 0; i < FreeChargeSlotsInBaseStationList.Count(); i++)
-                    {
-                        Console.WriteLine(FreeChargeSlotsInBaseStationList[i].ToString());
-                    }
+                case ViewList.ListFreeChargeSlotsInBaseStation:
+                    foreach (BaseStation item in (List<BaseStation>)dal.GetBaseStationFreeChargeSlots())
+                        Console.WriteLine(item);
                     break;
                 default:
                     break;
@@ -285,6 +300,11 @@ choose:
  
 
         }
+        #endregion display lists options
+
+
+        #endregion main options
+
         static void Main(string[] args)
         {
             DalObject.DalObject dalObject = new DalObject.DalObject();
@@ -302,19 +322,19 @@ choose:
                 choice = (Choice)number;
                 switch (choice)
                 {
-                    case Choice.add:
+                    case Choice.Add:
                         AddOptions(dalObject);
                         break;
-                    case Choice.update:
+                    case Choice.Update:
                         UpDateOptions(dalObject);
                         break;
-                    case Choice.display:
+                    case Choice.Display:
                         DisplayOptions(dalObject);
                         break;
-                    case Choice.viewLists:
+                    case Choice.ViewLists:
                         DisplayListsOptions(dalObject);
                         break;
-                    case Choice.exit:
+                    case Choice.Exit:
                         Console.WriteLine("Have a great day");
                         break;
                     default:

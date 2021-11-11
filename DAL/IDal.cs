@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IDAL.DO;
+using IDAL;
 namespace IDAL
 {
     interface IDal
@@ -11,19 +12,19 @@ namespace IDAL
         /// The function adds a drone to the list of drones.
         /// </summary>
         /// <param name="newDrone"></param>
-        public void SetDrone(int id, string model, WeightCategories maxWeight/*,DroneStatuses status*/, double battery);
+       void SetDrone(Drone newDrone);
 
         /// <summary>
         /// The function adds a station to the list of Basestations.
         /// </summary>
         /// <param name="newbaseStation"></param>
-        public void SetBaseStation(int id, string name, double longitude, double latitude, int chargeSlots);
+        void SetBaseStation(BaseStation newBaseStation);
 
         /// <summary>
         /// The function adds a customer to the list of customers.
         /// </summary>
         /// <param name="newCustomer"></param>
-        public void SetCustomer(int id, string name, double longitude, double latitude, string phoneNumber);
+        void SetCustomer(Customer newCustomer);
 
     
     /// <summary>
@@ -31,7 +32,7 @@ namespace IDAL
     /// </summary>
     /// <param name="newParcel"></param>
     /// <returns></returns>
-    public int SetParcel(int senderId, int targetId, WeightCategories weightParcel, Priorities priority);
+    int SetParcel(Parcel newParcel);
 
     
     /// <summary>
@@ -39,33 +40,33 @@ namespace IDAL
     /// </summary>
     /// <param name="parcelId">Id of Parcel</param>
     /// <param name="droneId">Id of drone</param>
-    public void SetParcelToDrone(int parcelId, int droneId);
+    void SetParcelToDrone(int parcelId, int droneId);
 
 
         /// <summary>
         /// picked up package by the drone.
         /// </summary>
         /// <param name="parcelId">Id of Parcel</param>
-        public void PickUpParcel(int parcelId);
+        void PickUpParcel(int parcelId);
 
         /// <summary>
         /// delivery package to the customer.
         /// </summary>
         /// <param name="parcelId">Id of Parcel</param>
-        public void DeliverToCustomer(int parcelId);
+       void DeliverToCustomer(int parcelId);
 
         /// <summary>
         /// sending drone for charging at BaseStation.
         /// </summary>
         /// <param name="baseStationId">Id of baseStation</param>
         /// <param name="droneId">Id of drone</param>
-        public void SendDroneToCharge(int droneId, int baseStationId);
+         void SendDroneToCharge(int droneId, int baseStationId);
 
         /// <summary>
         /// release drone from charging at BaseStation.
         /// </summary>
         /// <param name="droneId">Id of drone</param>
-        public void ReleaseFromCharging(int droneId);
+        void ReleaseFromCharging(int droneId);
 
 
         /// <summary>
@@ -73,21 +74,21 @@ namespace IDAL
         /// </summary>
         /// <param name="idForAllObjects">Id of a selected BaseStation </param>
         /// <returns> return empty ubjact if its not there</returns>
-        public BaseStation GetBaseStation(int idForAllObjects);
+         BaseStation GetBaseStation(int idForAllObjects);
 
         /// <summary>
         /// The function returns the selected Drone.
         /// </summary>
         /// <param name="idForAllObjects">Id of a selected Drone</param>
         /// <returns>return empty ubjact if its not there</returns>
-        public Drone GetDrone(int idForAllObjects);
+         Drone GetDrone(int idForAllObjects);
 
         /// <summary>
         /// The function returns the selected Customer.
         /// </summary>
         /// <param name="idForAllObjects">Id of a selected Customer</param>
         /// <returns>return empty ubjact if its not there</returns>
-        public Customer GetCustomer(int idForAllObjects);
+        Customer GetCustomer(int idForAllObjects);
 
 
         /// <summary>
@@ -95,43 +96,46 @@ namespace IDAL
         /// </summary>
         /// <param name="idForAllObjects">Id of a selected Parcel</param>
         /// <returns>return empty ubjact if its not there</returns>
-        public Parcel GetParcel(int idForAllObjects);
+      Parcel GetParcel(int idForAllObjects);
 
         /// <summary>
         /// The function returns an array of all base stations.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<BaseStation> GetBaseStationList();
+        IEnumerable<BaseStation> GetBaseStationList();
 
         /// <summary>
         /// The function returns an array of all Drone.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<Drone> GetDroneList();
+        IEnumerable<Drone> GetDroneList();
 
         /// <summary>
         /// The function returns an array of all Customer.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<Customer> GetCustomerList();
+        IEnumerable<Customer> GetCustomerList();
 
         /// <summary>
         /// The function returns an array of all Parcel.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<Parcel> GetParcelList();
+         IEnumerable<Parcel> GetParcelList();
 
         /// <summary>
         /// The function returns an array of all packages not associated with the Drone.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<Parcel> GetFreeParcelList();
+        IEnumerable<Parcel> GetFreeParcelList();
 
         /// <summary>
         /// The function returns base stations with free charge positions.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<BaseStation> GetBaseStationFreeChargeSlots();
+        IEnumerable<BaseStation> GetBaseStationFreeChargeSlots();
+
+
+        public  double[] RequestPowerbyDrone();
 
 
 
