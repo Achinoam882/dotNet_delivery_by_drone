@@ -5,10 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using IDAL.DO;
 using IDAL;
+
+
 namespace IDAL
 {
-    interface IDal
+  public  interface IDal
     {
+       
         /// The function adds a drone to the list of drones.
         /// </summary>
         /// <param name="newDrone"></param>
