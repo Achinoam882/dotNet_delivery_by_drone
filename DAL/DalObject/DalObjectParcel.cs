@@ -97,9 +97,9 @@ namespace DalObject
         /// The function returns an array of all Parcel.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<Parcel> GetParcelList()
+        public IEnumerable<Parcel> GetParcelList(Predicate<Parcel>parcelpredicate=null)
         {
-            return DataSource.ParcelList.Take(DataSource.ParcelList.Count).ToList();
+            return DataSource.ParcelList.FindAll(x => parcelpredicate == null ? true : parcelpredicate(x)).ToList();
         }
         #endregion parcel list
 
