@@ -65,5 +65,13 @@ namespace DalObject
             return DataSource.BaseStationList.FindAll(x => x.ChargeSlots > 0).ToList();
         }
         #endregion print free charge slots base station list
+
+
+        #region to update a BaseStation
+        public void UpDateBaseStation(BaseStation newBaseStation)
+        {
+            DataSource.BaseStationList[DataSource.BaseStationList.FindIndex(x => x.Id == newBaseStation.Id)] = newBaseStation;
+        }
+        #endregion to update a BaseStation
     }
 }

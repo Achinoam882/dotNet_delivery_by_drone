@@ -30,7 +30,7 @@ namespace IDAL
 
 
         [Serializable]
-        class NonExistingObjectException : Exception
+       public  class  NonExistingObjectException : Exception
         {
             public NonExistingObjectException() : base() { }
             public NonExistingObjectException(string message) : base(message) { }

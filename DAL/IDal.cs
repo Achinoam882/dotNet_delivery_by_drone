@@ -123,7 +123,7 @@ namespace IDAL
         /// The function returns an array of all Parcel.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-         IEnumerable<Parcel> GetParcelList();
+         IEnumerable<Parcel> GetParcelList(Predicate<Parcel> parcelpredicate = null);
 
         /// <summary>
         /// The function returns an array of all packages not associated with the Drone.
@@ -138,7 +138,14 @@ namespace IDAL
         IEnumerable<BaseStation> GetBaseStationFreeChargeSlots();
 
 
+        public IEnumerable<DroneCharge> GetChargeSlotsList(Predicate<DroneCharge> DroneChargepredicate = null);
+
+
         public  double[] RequestPowerbyDrone();
+        public void UpDateDrone(Drone newDrone);
+        public void UpDateCustomer(Customer newCustomer);
+        public void UpdateBaseStation(BaseStation newBaseStation);
+        public void UpDateParcel(Parcel newParcel);
 
 
 

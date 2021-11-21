@@ -122,5 +122,12 @@ namespace DalObject
         }
         #endregion  drone list
 
+        #region to update a drone
+        public void UpDateDrone(Drone newDrone)
+        {
+             DataSource.DroneList[DataSource.DroneList.FindIndex(x => x.Id == newDrone.Id)] = newDrone;
+        }
+        #endregion to update a drone
+
     }
 }

@@ -132,5 +132,12 @@ namespace DalObject
             // DataSource.ParcelList[parcelIndex].Delivered= DateTime.Now;
         }
         #endregion deliver to customer
+
+        #region to update a newParcel
+        public void UpDateParcel(Parcel newParcel)
+        {
+            DataSource.ParcelList[DataSource.ParcelList.FindIndex(x => x.Id == newParcel.Id)] = newParcel;
+        }
+        #endregion to update a newParcel
     }
 }
