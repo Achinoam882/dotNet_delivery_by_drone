@@ -105,7 +105,7 @@ namespace IDAL
         /// The function returns an array of all base stations.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        IEnumerable<BaseStation> GetBaseStationList();
+        IEnumerable<BaseStation> GetBaseStationList(Predicate<BaseStation> BaseStationpredicate = null);
 
         /// <summary>
         /// The function returns an array of all Drone.
@@ -146,6 +146,9 @@ namespace IDAL
         public void UpDateCustomer(Customer newCustomer);
         public void UpdateBaseStation(BaseStation newBaseStation);
         public void UpDateParcel(Parcel newParcel);
+        public void LessChargeSlots(int droneId);
+        public void MoreChargeSlots(int baseStationId);
+        public DroneCharge GetDroneCharge(int idForAllObjects);
 
 
 
