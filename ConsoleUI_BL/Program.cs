@@ -30,7 +30,7 @@ choose:
 1- To add a drone to the list,
 2- To add a new customer to the list,
 3- To add a package for delivery");
-            int.TryParse(Console.ReadLine(), out number);
+            while (!int.TryParse(Console.ReadLine(), out number));
             add = (Add)number;
             switch (add)
             {
@@ -59,7 +59,14 @@ please enter the id of the new station");
                         FreeChargeSlots = chargeSlots,
                         DroneChargingList = new List<DroneCharging>()
                     };
-                    bl.SetBaseStation(newBaseStation);
+                    try
+                    {
+                        bl.SetBaseStation(newBaseStation);
+                    }
+                    catch (AddingProblemException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
 
 
@@ -72,7 +79,7 @@ please enter the id of the new station");
                     Console.WriteLine(@"
 You have chosen to add a new  drone,
 please enter the id of the new drone");
-                    int.TryParse(Console.ReadLine(), out idDrone);
+                    while (!int.TryParse(Console.ReadLine(), out idDrone));
                     Console.WriteLine(" please enter the model of the new drone");
                     model = Console.ReadLine();
                     Console.WriteLine(" please enter the weight of the new drone:0 for light,1 for medium,2 for heavy");
@@ -80,9 +87,9 @@ please enter the id of the new drone");
                     // Console.WriteLine(" please enter the status of the new drone:0 for free,1 for inMaintenance,2 for busy");
                     //DroneStatuses.TryParse(Console.ReadLine(), out status);
                     Console.WriteLine("please enter the Station number  to put the drone for charging");
-                    int.TryParse(Console.ReadLine(), out firstChargingStation);
+                    while (!int.TryParse(Console.ReadLine(), out firstChargingStation));
                     Console.WriteLine("please enter the Station number  to put the drone for charging");
-                    int.TryParse(Console.ReadLine(), out firstChargingStation);
+                    while (!int.TryParse(Console.ReadLine(), out firstChargingStation));
                     DroneToList newDrone = new DroneToList
                     {
                         Id = idDrone,
@@ -91,7 +98,14 @@ please enter the id of the new drone");
                         //firstchargingStation???
                      
                     };
-                    bl.SetDrone(newDrone,firstChargingStation);
+                    try
+                    {
+                        bl.SetDrone(newDrone, firstChargingStation);
+                    }
+                    catch (AddingProblemException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
 
 
@@ -122,8 +136,15 @@ please enter the id of the new customer");
                         CustomerLocation=customerLocation,
                         PhoneNumber = phoneNumber,
                     };
-                     bl.SetCustomer(newCustomer);
-                     break;
+                    try
+                    {
+                        bl.SetCustomer(newCustomer);
+                    }
+                    catch (AddingProblemException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
+                    break;
 
                 case Add.ParcelDelivery:
                     int senderId, targetId;
@@ -151,12 +172,20 @@ please enter the id of the sender");
                         Sender = newCustomerParcelSender,
                         Receiving = newCustomerParcelTarget, 
                         Weight = weightParcel,
-                        Priority = newPriority,
-                        //Requested = DateTime.Now,
+                        Priority = newPriority,                      
                     };
-                   bl.SetParcel(newParcel);
+                    try
+                    {
+                        bl.SetParcel(newParcel);
+                    }
+                    catch (AddingProblemException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
                 default:
+                    Console.WriteLine(@"you entered a wrong number.
+please try again");
                     break;
             }
 
@@ -182,7 +211,7 @@ choose:
 5-To update a parcel to drone
 6- To pick up parcel by drone
 7-To deliver parcel by drone");
-            int.TryParse(Console.ReadLine(), out number);
+            while (!int.TryParse(Console.ReadLine(), out number));
             update = (Update)number;
             int customerId, baseStationId, droneId;
             string newDroneModel,baseStationName, customerName, phoneNumber,chargeSlots;
@@ -193,17 +222,31 @@ choose:
                     Console.WriteLine("please enter the id of the drone");
                    while(! int.TryParse(Console.ReadLine(), out droneId));
                     Console.WriteLine("please enter the new model name of the drone");
-                    newDroneModel = Console.ReadLine(); 
-                    bl.ChangeDroneModel (droneId, newDroneModel);
+                    newDroneModel = Console.ReadLine();
+                    try
+                    {
+                        bl.ChangeDroneModel(droneId, newDroneModel);
+                    }
+                    catch (UpdateProblemException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
                 case Update.BaseStationUpDate:
                     Console.WriteLine("please enter base station ID to update");
-                    int.TryParse(Console.ReadLine(), out baseStationId);
+                    while (!int.TryParse(Console.ReadLine(), out baseStationId));
                     Console.WriteLine("please enter the updated base station name if there isnt send an empty line");
                     baseStationName = Console.ReadLine();//אם נשלח ריק השדה לא מתעדכן
                     Console.WriteLine("please enter the updated amount of  Charge slots if there isnt send an empty line");
                     chargeSlots= Console.ReadLine();//אם נשלח ריק השדה לא מתעדכן
-                    bl.UpdateBaseStaison(baseStationId, baseStationName, chargeSlots);
+                    try
+                    {
+                        bl.UpdateBaseStaison(baseStationId, baseStationName, chargeSlots);
+                    }
+                    catch (UpdateProblemException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
                 case Update.CustomerUpDate:
                     Console.WriteLine("please enter the updated id of the customer ");
@@ -212,36 +255,80 @@ choose:
                     customerName = Console.ReadLine();//אם נשלח ריק השדה לא מתעדכן
                     Console.WriteLine("please enter the  updated customer's phone number if there isnt send an empty line");
                     phoneNumber=Console.ReadLine();//אם נשלח ריק השדה לא מתעדכן
-                    bl.UpdateCustomer(customerId, customerName, phoneNumber);
+                    try
+                    {
+                        bl.UpdateCustomer(customerId, customerName, phoneNumber);
+                    }
+                    catch (UpdateProblemException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
                 case Update.InChargingDrone:
                     Console.WriteLine("please enter the id of the drone");
                    while(! int.TryParse(Console.ReadLine(), out droneId));
-                    bl.SendDroneToCharge(droneId);
+                    try
+                    {
+                        bl.SendDroneToCharge(droneId);
+                    }
+                    catch (UpdateProblemException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
                 case Update.OutChargingDrone:
                     Console.WriteLine("please enter the id of the drone");
                     while(!int.TryParse(Console.ReadLine(), out droneId));
                     Console.WriteLine("Please enter the length of time the drone has been charging:");
                     DateTime.TryParse(Console.ReadLine(), out time);
-                    bl.ReleaseFromCharging(droneId,time);
+                    try
+                    {
+                        bl.ReleaseFromCharging(droneId, time);
+                    }
+                    catch (UpdateProblemException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
                 case Update.AssignDrone:
                     Console.WriteLine("please enter the id of the drone");
                     while (!int.TryParse(Console.ReadLine(), out droneId)) ;
-                    bl.AssignParcelToDrone(droneId);
+                    try
+                    {
+                        bl.AssignParcelToDrone(droneId);
+                    }
+                    catch (UpdateProblemException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
                 case Update.PickUp:
                     Console.WriteLine("please enter the id of the drone");
                     while (!int.TryParse(Console.ReadLine(), out droneId)) ;
-                    bl.PickUpParcelByDrone(droneId);
+                    try
+                    { 
+                        bl.PickUpParcelByDrone(droneId);
+                    }
+                    catch (UpdateProblemException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
                 case Update.Deliver:
                     Console.WriteLine("please enter the id of the drone");
                     while (!int.TryParse(Console.ReadLine(), out droneId)) ;
-                    bl.DroneDeliverParcel(droneId);
+                    try
+                    {
+                        bl.DroneDeliverParcel(droneId);
+                    }
+                    catch (UpdateProblemException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
                 default:
+                    Console.WriteLine(@"you entered a wrong number.
+please choose again");
                     break;
             }
         }
@@ -263,31 +350,61 @@ choose:
 1- To view Drone,
 2- To view Customer, 
 3- To view Parcel");
-            int.TryParse(Console.ReadLine(), out number);
+            while (!int.TryParse(Console.ReadLine(), out number));
             display = (Display)number;
             switch (display)
             {
                 case Display.ViewBaseStation:
                     Console.WriteLine("please enter the id of the base station ");
-                    int.TryParse(Console.ReadLine(), out idForAllObjects);
+                    while (!int.TryParse(Console.ReadLine(), out idForAllObjects));
+                    try 
+                    { 
                     Console.WriteLine(bl.GetBaseStation(idForAllObjects).ToString());
+                    }
+                    catch (GetDetailsProblemException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
                 case Display.ViewDrone:
                     Console.WriteLine("please enter the id of the drone ");
-                    int.TryParse(Console.ReadLine(), out idForAllObjects);
-                    Console.WriteLine(bl.GetDrone(idForAllObjects).ToString());
+                    while (!int.TryParse(Console.ReadLine(), out idForAllObjects));
+                    try
+                    {
+                        Console.WriteLine(bl.GetDrone(idForAllObjects).ToString());
+                    }
+                    catch (GetDetailsProblemException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
                 case Display.ViewCustomer:
                     Console.WriteLine("please enter the id of the customer ");
-                    int.TryParse(Console.ReadLine(), out idForAllObjects);
-                    Console.WriteLine(bl.GetCustomer(idForAllObjects).ToString());
+                    while (!int.TryParse(Console.ReadLine(), out idForAllObjects));
+                    try
+                    {
+                        Console.WriteLine(bl.GetCustomer(idForAllObjects).ToString());
+                    }
+                    catch (GetDetailsProblemException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
                 case Display.ViewParcel:
                     Console.WriteLine("please enter the id of the parcel ");
-                    int.TryParse(Console.ReadLine(), out idForAllObjects);
-                    Console.WriteLine(bl.GetParcel(idForAllObjects).ToString());
+                    while (!int.TryParse(Console.ReadLine(), out idForAllObjects));
+                    try
+                    {
+                        Console.WriteLine(bl.GetParcel(idForAllObjects).ToString());
+                    }
+                    catch (GetDetailsProblemException ex)
+                    {
+                        Console.WriteLine(ex);
+                    }
                     break;
                 default:
+                    Console.WriteLine(@"you entered a wrong number.
+please try again");
                     break;
             }
 
@@ -340,10 +457,10 @@ choose:
                     PrintList(bl.GetParcelList().ToList()) ;                     
                     break;
                 case ViewList.ListFreeParcel:
-                    PrintList(bl.GetFreeParcelList().ToList()) ;                    
+                    PrintList(bl.GetParcelList(x => x.Status == ParcelStatus.Requested).ToList());
                     break;
                 case ViewList.ListFreeChargeSlotsInBaseStation:
-                    PrintList(bl.GetBaseStationFreeChargeSlots().ToList());                    
+                    PrintList(bl.GetBaseStationList(x => x.FreeChargeSlots > 0).ToList());
                     break;
                 default:
                     break;

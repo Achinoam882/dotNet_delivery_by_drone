@@ -48,9 +48,9 @@ namespace DalObject
         /// The function returns an array of all base stations.
         /// </summary>
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
-        public IEnumerable<BaseStation> GetBaseStationList()
+        public IEnumerable<BaseStation> GetBaseStationList(Predicate<BaseStation> BaseStationpredicate = null)
         {
-            return DataSource.BaseStationList.Take(DataSource.BaseStationList.Count).ToList();
+            return DataSource.BaseStationList.FindAll(x => BaseStationpredicate == null ? true : BaseStationpredicate(x)).ToList();
         }
         #endregion add base station list
 
@@ -73,5 +73,32 @@ namespace DalObject
             DataSource.BaseStationList[DataSource.BaseStationList.FindIndex(x => x.Id == newBaseStation.Id)] = newBaseStation;
         }
         #endregion to update a BaseStation
+
+
+        #region to update less Charge Slots
+        public void LessChargeSlots(int baseStationId)
+        {
+
+            BaseStation temp = GetBaseStation(baseStationId);
+            temp.ChargeSlots--;
+            DataSource.BaseStationList[DataSource.BaseStationList.FindIndex(x => x.Id == baseStationId)] = temp;
+
+        }
+        #endregion to update  less Charge Slots
+
+
+
+        #region to update more Charge Slots
+        public void MoreChargeSlots(int baseStationId)
+        {
+
+            BaseStation temp = GetBaseStation(baseStationId);
+            temp.ChargeSlots++;
+            DataSource.BaseStationList[DataSource.BaseStationList.FindIndex(x => x.Id == baseStationId)] = temp;
+
+        }
+        #endregion to update more Charge Slots
     }
+
+
 }

@@ -39,6 +39,22 @@ namespace IBL
         public void UpdateBaseStaison(int baseStationId, string baseStationName, string chargeSlots);
         public void UpdateCustomer(int customerId, string customerName, string phoneNumber);
         public void SendDroneToCharge(int droneId);
+        public void ReleaseFromCharging(int droneId, DateTime time);
+        public void AssignParcelToDrone(int droneId);
+        public IEnumerable<BaseStationToList> GetBaseStationList(Predicate<BaseStationToList> predicate = null);
+        public BaseStation GetBaseStation(int idForDisplayBaseStation);
+        public Drone GetDrone(int idForDisplayDrone);
+        public IEnumerable<ParcelToList> GetParcelList(Predicate<ParcelToList> predicate = null);
+        public Parcel GetParcel(int idForDisplayParcel);
+        public Customer GetCustomer(int idForDisplayCustomer);
+        public IEnumerable<CustomerToList> GetCustomerList(Predicate<CustomerToList> predicate = null);
+        public IEnumerable<DroneToList> GetDroneList(Predicate<DroneToList> predicate = null);
+      //  private List<IDAL.DO.Parcel> ParcelHighestPriorityList(DroneToList drone);
+       // private List<IDAL.DO.Parcel> FindingHeaviestList(List<IDAL.DO.Parcel> parcels, DroneToList myDrone);
+       // private bool DistancePossibleForDrone(IDAL.DO.Parcel item, DroneToList drone);
+       // private IDAL.DO.Parcel MinDistaceFromDroneToParcel(List<IDAL.DO.Parcel> heaviest, Location location);
+        public void PickUpParcelByDrone(int droneId);
+        public void DroneDeliverParcel(int droneId);
 
 
     }

@@ -69,7 +69,6 @@ namespace DalObject
             }
             int droneIndex = DataSource.DroneList.FindIndex(x => x.Id == droneId);
             Drone droneTemp = DataSource.DroneList[droneIndex];
-            //droneTemp.Status = (DroneStatuses)2;
             DataSource.DroneList[droneIndex] = droneTemp;
         }
         #endregion to set a parcel to drone

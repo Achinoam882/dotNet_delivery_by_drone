@@ -26,5 +26,22 @@ namespace DalObject
         //}
         //#endregion to update a Drone Charge
 
+        #region print drone  charge
+        /// <summary>
+        /// The function returns the selected Drone charge.
+        /// </summary>
+        /// <param name="idForAllObjects">Id of a selected Drone</param>
+        /// <returns>return empty ubjact if its not there</returns>
+        public DroneCharge GetDroneCharge(int idForAllObjects)
+        {
+            if (!(DataSource.DroneChargeList.Exists(x => x.DroneId == idForAllObjects)))
+            {
+                throw new NonExistingObjectException();
+            }
+            return DataSource.DroneChargeList.Find(x => x.DroneId == idForAllObjects);
+
+        }
+        #endregion print drone charge
+
     }
 }

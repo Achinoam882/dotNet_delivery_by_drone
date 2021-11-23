@@ -23,4 +23,12 @@ namespace IBL.BO
         public UpdateProblemException(string message, Exception inner) : base(message, inner) { }
         protected UpdateProblemException(SerializationInfo info, StreamingContext context) : base(info, context) { }
     }
+    [Serializable]
+    public class GetDetailsProblemException : Exception
+    {
+        public GetDetailsProblemException() : base() { }
+        public GetDetailsProblemException(string message) : base(message) { }
+        public GetDetailsProblemException(string message, Exception inner) : base(message, inner) { }
+        protected GetDetailsProblemException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    }
 }
