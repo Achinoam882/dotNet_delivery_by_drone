@@ -21,5 +21,9 @@ namespace IBL.BO
         public DateTime Delivered { get; set; }//זמן הגעת החבילה למקבל,זמן אספקה
 
         public DateTime Requested { get; set; } //זמן יצירת חבילה למשלוח
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
     }
 }

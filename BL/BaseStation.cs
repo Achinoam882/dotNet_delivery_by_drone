@@ -14,6 +14,10 @@ namespace IBL.BO
         public int FreeChargeSlots { get; set; }//מספר עמדות טעינה פנויות
         public Location BaseStationLocation { get; set; }
         public IEnumerable<DroneCharging> DroneChargingList { get; set; }
-       
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
+
     }
 }

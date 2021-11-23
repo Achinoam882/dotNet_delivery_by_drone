@@ -17,5 +17,9 @@ namespace IBL.BO
         public int Parcelsnet { get; set; }//not provided
         public int ParcelReceived { get; set; }
         public int ParcelOnTheWay { get; set; }//on the way to customer
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
     }
 }

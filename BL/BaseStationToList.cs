@@ -13,5 +13,9 @@ namespace IBL.BO
         public string Name { get; set; }
         public int FreeChargeSlots { get; set; }//מספר עמדות טעינה פנויות
         public int TakenChargeSlots { get; set; }//  תפוסות מספר עמדות טעינה 
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
     }
 }

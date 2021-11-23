@@ -14,6 +14,10 @@ namespace IBL.BO
         public WeightCategories Weight { get; set; }//light,medium,heavy
         public Priorities Priority { get; set; }//regular, fast, urgent
         public ParcelStatus Status { get; set; }//נוצר, שויך, נאסף, סופק
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
 
     }
 }

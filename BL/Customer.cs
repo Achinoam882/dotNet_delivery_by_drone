@@ -18,5 +18,9 @@ namespace IBL.BO
 
         public IEnumerable<ParcelAtCustomer> ParcelFromCustomer { get; set; }
         public IEnumerable<ParcelAtCustomer> ParcelToCustomer { get; set; }
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
     }
 }

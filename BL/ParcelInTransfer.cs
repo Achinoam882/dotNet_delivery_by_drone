@@ -16,7 +16,10 @@ namespace IBL.BO
         public CustomerParcel Receiving { get; set; }
         public Location CollectionLocation { get; set; }//מיקום איסוף
         public Location DeliveryDestination { get; set; }//יעד אספקה
-        public int TransportDistance { get; set; }
-
+        public double TransportDistance { get; set; }
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
     }
 }

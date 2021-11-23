@@ -15,5 +15,9 @@ namespace IBL.BO
         public double Battery { get; set; }
         public ParcelInTransfer DroneParcel { get; set; }
         public Location DroneLocation { get; set; }
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
     }
 }

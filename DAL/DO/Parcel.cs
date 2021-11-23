@@ -28,14 +28,18 @@ namespace IDAL
             public DateTime Delivered { get; set; }//זמן הגעת החבילה למקבל
 
             public DateTime Requested { get; set; } //זמן יצירת חבילה למשלוח
+            /*  public override string ToString()
+              {
+                  return string.Format("Id is:{0,-14}\tSender Id is:{1,-14}\tTarget Id is:{2,-14}\t " +
+                      " Drone Weight is:{3,-14}\tPriority is:{4,-14}\tDrone Id is:{5,-14}\tScheduled time is:{6,-14}\t " +
+                      " PickUp time is:{7,-14}\tDelivered time is:{8,-14}\tRequested time is:{9,-14}\t", Id, SenderId,
+                      TargetId, Weight, Priority, DroneId, Scheduled, PickUp, Delivered, Requested);
+              }
+            */
             public override string ToString()
             {
-                return string.Format("Id is:{0,-14}\tSender Id is:{1,-14}\tTarget Id is:{2,-14}\t " +
-                    " Drone Weight is:{3,-14}\tPriority is:{4,-14}\tDrone Id is:{5,-14}\tScheduled time is:{6,-14}\t " +
-                    " PickUp time is:{7,-14}\tDelivered time is:{8,-14}\tRequested time is:{9,-14}\t", Id, SenderId,
-                    TargetId, Weight, Priority, DroneId, Scheduled, PickUp, Delivered, Requested);
+                return this.ToStringProperty();
             }
-
         }
     }
 }

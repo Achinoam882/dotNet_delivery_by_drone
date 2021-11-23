@@ -7,9 +7,6 @@ using IBL.BO;
 using IBL;
 //using IDAL;
 //using IDAL.DO;
-
-
-
 namespace IBL
 {
     public partial class BL : IBL
@@ -201,32 +198,12 @@ namespace IBL
              
                 }
             }
-
+          
 
 
 
         }
-
-
-
-
-
-
-
-    }
-     
-       
-       
-
-
-
-
-
-
-
-
-
-       
-
-   
 }
+    }
+
+

@@ -10,5 +10,9 @@ namespace IBL.BO
     {
         public int Id { get; set; }
         public double Battery { get; set; }
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
     }
 }

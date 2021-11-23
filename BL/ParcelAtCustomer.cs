@@ -16,5 +16,9 @@ namespace IBL.BO
 
         public Priorities Priority { get; set; }//regular, fast, urgent
          public CustomerParcel OtherSide   { get; set; }
+        public override string ToString()
+        {
+            return this.ToStringProperty();
+        }
     }
 }
