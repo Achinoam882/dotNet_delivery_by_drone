@@ -52,5 +52,13 @@ namespace DalObject
         }
         #endregion customer list
 
+
+        #region to update a Customer
+        public void UpDateCustomer(Customer newCustomer)
+        {
+            DataSource.CustomerList[DataSource.CustomerList.FindIndex(x => x.Id == newCustomer.Id)] = newCustomer;
+        }
+        #endregion to update a Customer
+
     }
 }

@@ -57,13 +57,14 @@ please enter the id of the new station");
                         Name = name,
                         BaseStationLocation= newLocation,
                         FreeChargeSlots = chargeSlots,
+                        DroneChargingList = new List<DroneCharging>()
                     };
                     bl.SetBaseStation(newBaseStation);
                     break;
 
 
                 case Add.Drone:
-                    int idDrone;
+                    int idDrone, firstChargingStation;
                     string model;
                     WeightCategories maxWeight;
                     //DroneStatuses status;
@@ -75,21 +76,22 @@ please enter the id of the new drone");
                     Console.WriteLine(" please enter the model of the new drone");
                     model = Console.ReadLine();
                     Console.WriteLine(" please enter the weight of the new drone:0 for light,1 for medium,2 for heavy");
-                    while(!WeightCategories.TryParse(Console.ReadLine(), out maxWeight));
-                   // Console.WriteLine(" please enter the status of the new drone:0 for free,1 for inMaintenance,2 for busy");
+                     WeightCategories.TryParse(Console.ReadLine(), out maxWeight);
+                    // Console.WriteLine(" please enter the status of the new drone:0 for free,1 for inMaintenance,2 for busy");
                     //DroneStatuses.TryParse(Console.ReadLine(), out status);
-                   // Console.WriteLine("please enter the charge level of  the battery");
-                   // double.TryParse(Console.ReadLine(), out battery);
-                    Drone newDrone = new Drone
+                    Console.WriteLine("please enter the Station number  to put the drone for charging");
+                    int.TryParse(Console.ReadLine(), out firstChargingStation);
+                    Console.WriteLine("please enter the Station number  to put the drone for charging");
+                    int.TryParse(Console.ReadLine(), out firstChargingStation);
+                    DroneToList newDrone = new DroneToList
                     {
                         Id = idDrone,
                         Model = model,
                         MaxWeight = maxWeight,
                         //firstchargingStation???
-                        //Status = status,
-                        //Battery = battery,
+                     
                     };
-                    bl.SetDrone(newDrone);
+                    bl.SetDrone(newDrone,firstChargingStation);
                     break;
 
 
@@ -152,7 +154,7 @@ please enter the id of the sender");
                         Priority = newPriority,
                         //Requested = DateTime.Now,
                     };
-                    int counterParcel = bl.SetParcel(newParcel);
+                   bl.SetParcel(newParcel);
                     break;
                 default:
                     break;
@@ -182,8 +184,8 @@ choose:
 7-To deliver parcel by drone");
             int.TryParse(Console.ReadLine(), out number);
             update = (Update)number;
-            int customerId, baseStationId, droneId, chargeSlots;
-            string newDroneModel,baseStationName, customerName, phoneNumber;
+            int customerId, baseStationId, droneId;
+            string newDroneModel,baseStationName, customerName, phoneNumber,chargeSlots;
             DateTime time;
             switch (update)
             {
@@ -200,7 +202,7 @@ choose:
                     Console.WriteLine("please enter the updated base station name if there isnt send an empty line");
                     baseStationName = Console.ReadLine();//אם נשלח ריק השדה לא מתעדכן
                     Console.WriteLine("please enter the updated amount of  Charge slots if there isnt send an empty line");
-                    int.TryParse(Console.ReadLine(), out chargeSlots);//אם נשלח ריק השדה לא מתעדכן
+                    chargeSlots= Console.ReadLine();//אם נשלח ריק השדה לא מתעדכן
                     bl.UpdateBaseStaison(baseStationId, baseStationName, chargeSlots);
                     break;
                 case Update.CustomerUpDate:
