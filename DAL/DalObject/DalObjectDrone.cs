@@ -50,28 +50,18 @@ namespace DalObject
         /// <param name="droneId">Id of drone</param>
         public void SendDroneToCharge(int droneId, int baseStationId)
         {
-            if (!(DataSource.DroneList.Exists(x => x.Id == droneId)))
+            if (DataSource.DroneList.FindIndex(x => x.Id == droneId) == -1)
             {
                 throw new NonExistingObjectException();
             }
-            int droneIndex = DataSource.DroneList.FindIndex(x => x.Id == droneId);
-            Drone droneTemp = DataSource.DroneList[droneIndex];
-            //droneTemp.Status = (DroneStatuses)1;
-            DataSource.DroneList[droneIndex] = droneTemp;
-
-            if (!(DataSource.BaseStationList.Exists(x => x.Id == baseStationId)))
+            if (DataSource.BaseStationList.FindIndex(x => x.Id == baseStationId) == -1)
             {
                 throw new NonExistingObjectException();
             }
-            int BaseStationIndex = DataSource.BaseStationList.FindIndex(x => x.Id == baseStationId);
-            BaseStation temp = DataSource.BaseStationList[BaseStationIndex];
-            temp.ChargeSlots--;
-            DataSource.BaseStationList[BaseStationIndex] = temp;
-
-            DataSource.DroneChargeList.Add(new DroneCharge
+            DataSource.DroneChargeList.Add(new DroneCharge()
             {
-                DroneId = droneId,
                 StationId = baseStationId,
+                DroneId = droneId
             });
 
         }
@@ -103,10 +93,10 @@ namespace DalObject
             {
                 throw new NonExistingObjectException();
             }
-            int BaseStationIndex = DataSource.BaseStationList.FindIndex(x => x.Id == baseStationId);
-            BaseStation temp = DataSource.BaseStationList[BaseStationIndex];
-            temp.ChargeSlots++;
-            DataSource.BaseStationList[BaseStationIndex] = temp;
+            //int BaseStationIndex = DataSource.BaseStationList.FindIndex(x => x.Id == baseStationId);
+            //BaseStation temp = DataSource.BaseStationList[BaseStationIndex];
+            //temp.ChargeSlots++;
+            //DataSource.BaseStationList[BaseStationIndex] = temp;
         }
         #endregion to release a drone from charging
 

@@ -28,11 +28,7 @@ namespace DalObject
             DataSource.Config.DroneChargingRate };
             return temp;
         }
-        public static void UpDateObject<T>(T obj)
-        {
-            DataSource.List
-
-        }
+        
 
 
 

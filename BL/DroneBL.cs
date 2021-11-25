@@ -19,13 +19,22 @@ namespace IBL
         /// <param name="firstChargingStation"></param>
         public void SetDrone(DroneToList newDrone, int firstChargingStation)
         {
-            //exception of the logical layer//Model???
+            //exception of the logical layer//
             if (newDrone.Id < 0)
-                throw new AddingProblemException(" מספר סידורי זה לא יכול להיות מספר שלילי");
+                throw new AddingProblemException(" this number cant be  negative ");
             if (newDrone.MaxWeight < (WeightCategories)0 || newDrone.MaxWeight > (WeightCategories)2)
-                throw new AddingProblemException("משקל לא תקין");
+                throw new AddingProblemException("Improper weight");
+
+            try
+            {
+                dalObject.GetBaseStation(firstChargingStation);
+            }
+            catch (IDAL.DO.NonExistingObjectException)
+            {
+                throw new AddingProblemException("ID doesnt exists");
+            }
             if (dalObject.GetBaseStation(firstChargingStation).ChargeSlots == 0)
-                throw new AddingProblemException("אין עמדות טעינה פנויות");
+                throw new AddingProblemException("no free charge slots");
             IDAL.DO.Drone DroneDal = new IDAL.DO.Drone()
             {
                 Id = newDrone.Id,
@@ -37,17 +46,23 @@ namespace IBL
             {
                 dalObject.SetDrone(DroneDal);
             }
-            catch (IDAL.DO.AddExistingObjectException ex)
+            catch (IDAL.DO.AddExistingObjectException)
             {
-                throw new AddingProblemException("קוד זה כבר קיים במערכת", ex);
+                throw new AddingProblemException("ID already exists");
             }
             newDrone.Battery = random.Next(20, 41);
             newDrone.Status = DroneStatuses.InMaintenance;
-            newDrone.DroneLocation.Latitude = dalObject.GetBaseStation(firstChargingStation).Latitude;
-            newDrone.DroneLocation.Longitude = dalObject.GetBaseStation(firstChargingStation).Longitude;
-            dronesListBL.Add(newDrone);
+            Location location = new Location()
+            {
+             Longitude = dalObject.GetBaseStation(firstChargingStation).Longitude,
+            Latitude = dalObject.GetBaseStation(firstChargingStation).Latitude 
+            };
+
+        
+            newDrone.DroneLocation=location;          
             dalObject.LessChargeSlots(firstChargingStation);
-            dalObject.SendDroneToCharge(firstChargingStation, newDrone.Id);
+            dalObject.SendDroneToCharge(newDrone.Id,firstChargingStation);
+            dronesListBL.Add(newDrone);
 
         }
         #endregion add drone
@@ -67,13 +82,13 @@ namespace IBL
                 newDrone.Model = newDroneModel;
                 dalObject.UpDateDrone(newDrone);
             }
-            catch (IDAL.DO.NonExistingObjectException ex)
+            catch (IDAL.DO.NonExistingObjectException )
             {
-                throw new UpdateProblemException("קוד  זה לא קיים במערכת", ex);
+                throw new UpdateProblemException("ID doesnt exists in the system");
 
             }
             if (!dronesListBL.Exists(x => x.Id == droneId))
-                throw new UpdateProblemException("קוד זה לא קיים");
+                throw new UpdateProblemException("ID  doesnt exists in the system");
             dronesListBL.Find(x => x.Id == droneId).Model = newDroneModel;//update bl
         }
         #endregion update Drone Model
@@ -88,12 +103,11 @@ namespace IBL
 
             DroneToList droneToCharge = dronesListBL.Find(x => x.Id == droneId);
             if (droneToCharge == default)//if there is no drone with that id in the drone to list
-                throw new UpdateProblemException("קוד  זה לא קיים במערכת");
+                throw new UpdateProblemException("ID drone doesnt exists in the system");
             if (droneToCharge.Status != DroneStatuses.Free)//if the drone isnt free
-                throw new UpdateProblemException("אין אפשרות לשלוח רחפן לטעינה שאינו פנוי");
-            List<IDAL.DO.BaseStation> BaseStationDal = dalObject.GetBaseStationFreeChargeSlots().ToList();/*(x => x.ChargeSlots > 0).ToList();*///to filter the basesattion with free chargeslots
-            if (BaseStationDal.Count == 0)//no frre stations with charge slots
-                throw new UpdateProblemException("לא קיים  תחנה במערכת עם עמדות טעינה פנויות");
+                throw new UpdateProblemException("not possible to send a drone for charging if its not free ");
+            List<IDAL.DO.BaseStation> BaseStationDal = dalObject.GetBaseStationList(x => x.ChargeSlots > 0).ToList();/*(x => x.ChargeSlots > 0).ToList();*///to filter the basesattion with free chargeslots
+            
             List<BaseStation> BaseStationBl = new List<BaseStation>();
             foreach (var item in BaseStationDal)
             {
@@ -103,27 +117,26 @@ namespace IBL
                     Name = item.Name,
                     FreeChargeSlots = item.ChargeSlots,
                     BaseStationLocation = new Location() { Longitude = item.Longitude, Latitude = item.Latitude },
-                    DroneChargingList = new List<DroneCharging>()
+                   // DroneChargingList = new List<DroneCharging>()
                 });
             }
+            if (!BaseStationBl.Any())//no frre stations with charge slots
+                throw new UpdateProblemException("no base station with free charge slots");
 
             double stationDistance = mindistanceBetweenLocationBaseStation(BaseStationBl, droneToCharge.DroneLocation).Item2;
             double batteryUse = stationDistance * Available;
             if (droneToCharge.Battery - batteryUse < 0)
-                throw new UpdateProblemException("אין אפשרות לשלוח רחפן לטעינה");
+                throw new UpdateProblemException("not possible to send a drone to be charged");
             droneToCharge.Status = DroneStatuses.InMaintenance;
             droneToCharge.DroneLocation = mindistanceBetweenLocationBaseStation(BaseStationBl, droneToCharge.DroneLocation).Item1;
             droneToCharge.Battery -= batteryUse;
-            dalObject.LessChargeSlots(BaseStationBl.Find(x => x.BaseStationLocation == droneToCharge.DroneLocation).Id);
-            try
-            {
+            
+                dalObject.LessChargeSlots(BaseStationBl.Find(x => x.BaseStationLocation == droneToCharge.DroneLocation).Id);
                 dalObject.SendDroneToCharge(droneId, BaseStationBl.Find(x => x.BaseStationLocation == droneToCharge.DroneLocation).Id);
-            }
-            catch (IDAL.DO.NonExistingObjectException ex)
-            {
-                throw new UpdateProblemException("קוד  זה לא קיים במערכת", ex);
+            
+            
 
-            }
+
 
         }
         #endregion Send Drone To Charge
@@ -137,16 +150,23 @@ namespace IBL
         {
             DroneToList droneToCharge = dronesListBL.Find(x => x.Id == droneId);
             if (droneToCharge == default)//if there is no drone with that id in the drone to list
-                throw new UpdateProblemException("קוד  זה לא קיים במערכת");
+                throw new UpdateProblemException("ID  doesnt exists");
             if (droneToCharge.Status != DroneStatuses.InMaintenance)//if the drone isnt free
-                throw new UpdateProblemException("אין אפשרות לשחרר רחפן מטעינה שאינו בתחזוקה");
+                throw new UpdateProblemException("not possible to release  a drone from charging if it is not in maintenance");
             double batteryLevel = (((time.Hour + (time.Minute) % 60 + (time.Second) % 3600) * DroneChargingRate) + droneToCharge.Battery);
             if (batteryLevel > 100) { batteryLevel = 100; }
             droneToCharge.Battery = batteryLevel;
             droneToCharge.Status = DroneStatuses.Free;
-            dalObject.MoreChargeSlots(dalObject.GetDroneCharge(droneId).StationId);
-            dalObject.ReleaseFromCharging(droneId);
-        }
+            //try
+            //{
+                dalObject.MoreChargeSlots(dalObject.GetDroneCharge(droneId).StationId);
+                dalObject.ReleaseFromCharging(droneId);
+            //}
+            //catch (IDAL.DO.NonExistingObjectException)
+            //{
+            //    throw new UpdateProblemException("קוד  זה לא קיים במערכת");
+            //}
+}
         #endregion Release Drone  From Charging
 
         #region display drone
@@ -154,7 +174,7 @@ namespace IBL
         {
             DroneToList droneToList = dronesListBL.Find(x => x.Id == idForDisplayDrone);
             if (droneToList == default)
-                throw new GetDetailsProblemException("רחפן לא קיים");
+                throw new GetDetailsProblemException("Drone doesnt exists in the system");
             Drone displayDrone = new Drone()
             {
                 Id = droneToList.Id,
@@ -162,9 +182,11 @@ namespace IBL
                 DroneLocation = droneToList.DroneLocation,
                 MaxWeight = droneToList.MaxWeight,
                 Model = droneToList.Model,
-                Status = droneToList.Status
+                Status = droneToList.Status,
+                DroneParcel=new ParcelInTransfer()
+
             };
-            if (droneToList.Status == DroneStatuses.Busy)
+            if (droneToList.Status == DroneStatuses.Busy )
             {
                 IDAL.DO.Parcel DalParcel = dalObject.GetParcel(droneToList.NumParcelTransfer);
                 IDAL.DO.Customer DalSender = dalObject.GetCustomer(DalParcel.SenderId);
@@ -174,25 +196,23 @@ namespace IBL
                 Location locationOfReciver = new Location() { Longitude = DalReciver.Longitude, Latitude = DalReciver.Latitude };
 
                 //sender
-                displayDrone.DroneParcel.Sender.Id = DalParcel.SenderId;
-                displayDrone.DroneParcel.Sender.Name = DalSender.Name;
+                displayDrone.DroneParcel.Sender = new CustomerParcel() { Id = DalParcel.SenderId, Name = DalSender.Name };
                 displayDrone.DroneParcel.CollectionLocation = locationOfSender;
 
+
                 // reciver
-                displayDrone.DroneParcel.Receiving.Id = DalReciver.Id;
-                displayDrone.DroneParcel.Receiving.Name = DalReciver.Name;
+                displayDrone.DroneParcel.Receiving = new CustomerParcel() { Id = DalReciver.Id, Name = DalReciver.Name };
                 displayDrone.DroneParcel.DeliveryDestination = locationOfReciver;
                 displayDrone.DroneParcel.TransportDistance = GetDistance(locationOfSender, locationOfReciver);
                 displayDrone.DroneParcel.Weight = (WeightCategories)DalParcel.Weight;
                 displayDrone.DroneParcel.Priority = (Priorities)DalParcel.Priority;
                 displayDrone.DroneParcel.Id = DalParcel.Id;
                 if (DalParcel.PickUp != DateTime.MinValue)
-
-                    displayDrone.DroneParcel.ParcelStatus = true;
-
+                   displayDrone.DroneParcel.ParcelStatus = true;
                 else
                     displayDrone.DroneParcel.ParcelStatus = false;
             }
+
             return displayDrone;
         }
         #endregion display drone

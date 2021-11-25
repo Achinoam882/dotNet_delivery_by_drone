@@ -73,7 +73,7 @@ please enter the id of the new station");
                 case Add.Drone:
                     int idDrone, firstChargingStation;
                     string model;
-                    WeightCategories maxWeight;
+                    int maxWeight;
                     //DroneStatuses status;
                     //double battery;
                     Console.WriteLine(@"
@@ -83,19 +83,15 @@ please enter the id of the new drone");
                     Console.WriteLine(" please enter the model of the new drone");
                     model = Console.ReadLine();
                     Console.WriteLine(" please enter the weight of the new drone:0 for light,1 for medium,2 for heavy");
-                     WeightCategories.TryParse(Console.ReadLine(), out maxWeight);
-                    // Console.WriteLine(" please enter the status of the new drone:0 for free,1 for inMaintenance,2 for busy");
-                    //DroneStatuses.TryParse(Console.ReadLine(), out status);
-                    Console.WriteLine("please enter the Station number  to put the drone for charging");
-                    while (!int.TryParse(Console.ReadLine(), out firstChargingStation));
+                   while(! int.TryParse(Console.ReadLine(), out maxWeight));
                     Console.WriteLine("please enter the Station number  to put the drone for charging");
                     while (!int.TryParse(Console.ReadLine(), out firstChargingStation));
                     DroneToList newDrone = new DroneToList
                     {
                         Id = idDrone,
                         Model = model,
-                        MaxWeight = maxWeight,
-                        //firstchargingStation???
+                        MaxWeight =(WeightCategories)maxWeight,
+                        
                      
                     };
                     try
@@ -147,10 +143,8 @@ please enter the id of the new customer");
                     break;
 
                 case Add.ParcelDelivery:
-                    int senderId, targetId;
+                    int senderId, targetId, weightParcel, newPriority;
                     string senderName, targetName;
-                    WeightCategories weightParcel;
-                    Priorities newPriority;
                     Console.WriteLine(@"
 You have chosen to add a new parcel to delivery,
 please enter the id of the sender");
@@ -162,17 +156,17 @@ please enter the id of the sender");
                     Console.WriteLine("Next Please enter the name of the customer:");
                     targetName = Console.ReadLine();
                     Console.WriteLine(" please enter the weight of the new parcel:0 for light,1 for medium,2 for heavy");
-                    while(!WeightCategories.TryParse(Console.ReadLine(), out weightParcel));
+                    while(!int.TryParse(Console.ReadLine(), out weightParcel));
                     Console.WriteLine(" please enter the priority of the new parcel:0 for regular,1 for fast,2 for urgent");
-                    while(!Priorities.TryParse(Console.ReadLine(), out newPriority));
+                    while(!int.TryParse(Console.ReadLine(), out newPriority));
                     CustomerParcel newCustomerParcelSender = new CustomerParcel {Id= senderId,Name = senderName };
                     CustomerParcel newCustomerParcelTarget = new CustomerParcel { Id = targetId, Name = targetName };
                     Parcel newParcel = new Parcel
                     {
                         Sender = newCustomerParcelSender,
                         Receiving = newCustomerParcelTarget, 
-                        Weight = weightParcel,
-                        Priority = newPriority,                      
+                        Weight = (WeightCategories)weightParcel,
+                        Priority = (Priorities)newPriority,                      
                     };
                     try
                     {
@@ -463,6 +457,8 @@ choose:
                     PrintList(bl.GetBaseStationList(x => x.FreeChargeSlots > 0).ToList());
                     break;
                 default:
+                    Console.WriteLine(@"you entered a wrong number.
+please try again");
                     break;
             }
 

@@ -13,11 +13,17 @@ namespace IBL.BO
         public string Name { get; set; }
         public int FreeChargeSlots { get; set; }//מספר עמדות טעינה פנויות
         public Location BaseStationLocation { get; set; }
-        public IEnumerable<DroneCharging> DroneChargingList { get; set; }
+        public List<DroneCharging> DroneChargingList { get; set; }
         public override string ToString()
         {
-            return this.ToStringProperty();
+            return string.Format("Id is:{0}\nName of Base Station is:{1}\nNumber of Charge Slots is:{2}\nlocation:{3}\n", Id, Name, FreeChargeSlots, BaseStationLocation)
+                + "Drone in charge slots:" +String.Join(Environment.NewLine, DroneChargingList)+"\n";
         }
+
+
+
+        
+        
 
     }
 }

@@ -11,7 +11,7 @@ namespace IBL.BO
         public int Id { get; set; }
 
         public ParcelStatus Status{ get; set; }//נוצר, שויך, נאסף, סופק
-
+       
         public WeightCategories Weight { get; set; }//light,medium,heavy
 
         public Priorities Priority { get; set; }//regular, fast, urgent

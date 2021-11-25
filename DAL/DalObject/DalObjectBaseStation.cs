@@ -70,18 +70,24 @@ namespace DalObject
         #region to update a BaseStation
         public void UpDateBaseStation(BaseStation newBaseStation)
         {
+            if (!(DataSource.BaseStationList.Exists(x => x.Id == newBaseStation.Id)))
+                throw new NonExistingObjectException();
             DataSource.BaseStationList[DataSource.BaseStationList.FindIndex(x => x.Id == newBaseStation.Id)] = newBaseStation;
         }
         #endregion to update a BaseStation
+
+        //BaseStation update.
+       
 
 
         #region to update less Charge Slots
         public void LessChargeSlots(int baseStationId)
         {
 
-            BaseStation temp = GetBaseStation(baseStationId);
+            int indexaforBaseStationId = DataSource.BaseStationList.FindIndex(x => x.Id == baseStationId);
+            BaseStation temp = DataSource.BaseStationList[indexaforBaseStationId];
             temp.ChargeSlots--;
-            DataSource.BaseStationList[DataSource.BaseStationList.FindIndex(x => x.Id == baseStationId)] = temp;
+            DataSource.BaseStationList[indexaforBaseStationId] = temp;
 
         }
         #endregion to update  less Charge Slots

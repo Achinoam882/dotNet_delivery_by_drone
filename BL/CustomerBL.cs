@@ -19,9 +19,9 @@ namespace IBL
 
             //exception of the logical layer//name,phonenumber???
             if (newCustomer.Id < 0)
-                throw new AddingProblemException(" תהודת זהות  לא יכול להיות מספר שלילי");
+                throw new AddingProblemException(" ID cant be a negative number");
             if (newCustomer.CustomerLocation.Longitude < 34.3 || newCustomer.CustomerLocation.Latitude > 35.5)
-                throw new AddingProblemException("המיקום שנבחר לא נמצא בגבולות הארץ");
+                throw new AddingProblemException("the location that was chosen isnt in the country");
 
             IDAL.DO.Customer CustomerDal = new IDAL.DO.Customer()
             {
@@ -36,9 +36,9 @@ namespace IBL
             {
                 dalObject.SetCustomer(CustomerDal);
             }
-            catch (IDAL.DO.AddExistingObjectException ex)
+            catch (IDAL.DO.AddExistingObjectException )
             {
-                throw new AddingProblemException("קוד  זה כבר קיים במערכת", ex);
+                throw new AddingProblemException("ID already exists");
 
             }
         }
@@ -58,9 +58,9 @@ namespace IBL
                     newCustomer.PhoneNumber = phoneNumber;
                 dalObject.UpDateCustomer(newCustomer);
             }
-            catch (IDAL.DO.NonExistingObjectException ex)
+            catch (IDAL.DO.NonExistingObjectException )
             {
-                throw new UpdateProblemException("קוד  זה לא קיים במערכת", ex);
+                throw new UpdateProblemException("ID  doesnt exists in the system");
             }
         }
 
@@ -77,7 +77,7 @@ namespace IBL
             }
             catch (IDAL.DO.NonExistingObjectException)
             {
-                throw new GetDetailsProblemException("לקוח זה לא קיים");
+                throw new GetDetailsProblemException("ID customer doesnt exists in the system");
             }
             Location dalocation = new Location() { Latitude = dalCustomer.Latitude, Longitude = dalCustomer.Longitude };
             Customer DisPlayCustomer = new Customer()
@@ -98,7 +98,7 @@ namespace IBL
                     Id = item.Id,
                     Priority = (Priorities)item.Priority,
                     Weight = (WeightCategories)item.Weight,
-                    OtherSide = customerParcel,
+                    OtherSide = customerParcel
                 };
                 if (item.Delivered != DateTime.MinValue)
                     parcelAtCustomer.Status = ParcelStatus.Delivered;
@@ -109,7 +109,7 @@ namespace IBL
                 else
                     parcelAtCustomer.Status = ParcelStatus.Requested;
 
-                DisPlayCustomer.ParcelFromCustomer.ToList().Add(parcelAtCustomer);
+                DisPlayCustomer.ParcelFromCustomer.Add(parcelAtCustomer);
 
             }
             List<IDAL.DO.Parcel> dalSentParcelList = dalObject.GetParcelList(i => i.TargetId == idForDisplayCustomer).ToList();
@@ -132,7 +132,7 @@ namespace IBL
                 else
                     parcelAtCustomer.Status = ParcelStatus.Requested;
 
-                DisPlayCustomer.ParcelToCustomer.ToList().Add(parcelAtCustomer);
+                DisPlayCustomer.ParcelToCustomer.Add(parcelAtCustomer);
 
             }
             return DisPlayCustomer;

@@ -56,7 +56,7 @@ namespace IBL
             var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
 
 
-            return (double)(6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3))));
+            return (((double)(6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)))))/1000);
         }
         #endregion   calculating distance between  2 location
 
@@ -91,11 +91,11 @@ namespace IBL
         }
         #endregion Calculate Electricity Use
 
-        public double Available;
-        public double LightWeightCarrier;
-        public double MediumWeightCarrier;
-        public double HeavyWeightCarrier;
-        public double DroneChargingRate;
+        public static double Available = 0.005;
+        public static double LightWeightCarrier = 0.1;
+        public static double MediumWeightCarrier = 2.00;
+        public static double HeavyWeightCarrier = 3.000;
+        public static double DroneChargingRate = 1.5;
 
         public List<DroneToList> dronesListBL;
         IDAL.IDal dalObject;
@@ -196,17 +196,17 @@ namespace IBL
                     {
                         BaseStation baseStation = baseStationBL[random.Next(0, baseStationBL.Count)];
                         item.DroneLocation = baseStation.BaseStationLocation;
-                        dalObject.SendDroneToCharge(baseStation.Id, item.Id);
+                        dalObject.SendDroneToCharge(item.Id, baseStation.Id);
                         dalObject.LessChargeSlots(baseStation.Id);
                         item.Battery = random.Next(0, 21);
                     }
                     if (item.Status == DroneStatuses.Free)
                     {
                         List<IDAL.DO.Parcel> parcelListDeliveredByThisDrone = parcelListDal.FindAll(x => x.DroneId == item.Id && x.Delivered != DateTime.MinValue);
-                        if (parcelListDeliveredByThisDrone.Count != 0)
+                        if (parcelListDeliveredByThisDrone.Any())
                         {
-                            int i = random.Next(0, parcelListDeliveredByThisDrone.Count);
-                            item.DroneLocation = customerListBL.Find(x => x.Id == parcelListDeliveredByThisDrone[i].TargetId).CustomerLocation;
+                           
+                            item.DroneLocation = customerListBL.Find(x => x.Id == parcelListDeliveredByThisDrone[random.Next(0, parcelListDeliveredByThisDrone.Count)].TargetId).CustomerLocation;
                             double batteryUse = mindistanceBetweenLocationBaseStation(baseStationBL, item.DroneLocation).Item2 * Available;
                             item.Battery = (float)((float)(random.NextDouble() * (100 - batteryUse)) + batteryUse);
 

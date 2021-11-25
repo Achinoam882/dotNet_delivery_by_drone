@@ -18,12 +18,11 @@ namespace DalObject
         /// <returns></returns>
         public int SetParcel(Parcel newParcel)
         {
-            if (DataSource.ParcelList.FindIndex(x => x.Id == newParcel.Id) != -1)
-            {
-                throw new AddExistingObjectException();
-            }
+           
+
+            newParcel.Id = DataSource.Config.IdParcel++;
             DataSource.ParcelList.Add(newParcel);
-            return DataSource.Config.IdParcel++;
+            return newParcel.Id;
 
         }
         #endregion add parcel
@@ -36,7 +35,7 @@ namespace DalObject
         /// <returns>return empty ubjact if its not there</returns>
         public Parcel GetParcel(int idForAllObjects)
         {
-            if (!(DataSource.ParcelList.Exists(x => x.Id == idForAllObjects)))
+            if ((DataSource.ParcelList.FindIndex(x => x.Id == idForAllObjects)==-1))
             {
                 throw new NonExistingObjectException();
             }

@@ -20,14 +20,24 @@ namespace IBL
 
             //exception of the logical layer
             if (newParcel.Sender.Id < 0 || newParcel.Receiving.Id < 0)
-                throw new AddingProblemException(" תהודת זהות  לא יכול להיות מספר שלילי");
+                throw new AddingProblemException(" ID cant be a negative number");
             if (newParcel.Weight < (WeightCategories)0 || newParcel.Weight > (WeightCategories)2)
-                throw new AddingProblemException("משקל לא תקין");
+                throw new AddingProblemException("Improper weight");
             if (newParcel.Priority < (Priorities)0 || newParcel.Priority > (Priorities)2)
-                throw new AddingProblemException("מס שהוכנס לא תקין");
+                throw new AddingProblemException("Improper number");
+            try
+            {
+                dalObject.GetCustomer(newParcel.Sender.Id);
+                dalObject.GetCustomer(newParcel.Receiving.Id);
+            }
+            catch (IDAL.DO.NonExistingObjectException)
+            {
+                throw new AddingProblemException("ID doesnt exists in the system");
+
+            }
             IDAL.DO.Parcel ParcelDal = new IDAL.DO.Parcel()
             {
-                Id = newParcel.Id,
+                //Id = newParcel.Id,
                 SenderId = newParcel.Sender.Id,
                 TargetId = newParcel.Receiving.Id,
                 Weight = (IDAL.DO.WeightCategories)newParcel.Weight,
@@ -35,15 +45,10 @@ namespace IBL
                 DroneId = 0,
                 Requested = DateTime.Now
             };
-            try
-            {
+           
                 dalObject.SetParcel(ParcelDal);
-            }
-            catch (IDAL.DO.AddExistingObjectException ex)
-            {
-                throw new AddingProblemException("קוד  זה כבר קיים במערכת", ex);
-
-            }
+            
+           
 
 
         }
@@ -54,26 +59,26 @@ namespace IBL
         {
             DroneToList drone = dronesListBL.Find(x => x.Id == droneId);
             if (drone == default)//if there is no drone with that id in the drone to list
-                throw new UpdateProblemException("קוד  זה לא קיים במערכת");
+                throw new UpdateProblemException("ID doesnt exists in the system");
             if (drone.Status != DroneStatuses.Free)//if the drone isnt free
-                throw new UpdateProblemException("אין אפשרות לשייך רחפן לחבילה שאינו פנוי");
+                throw new UpdateProblemException("not possible to assign a drone to a packadge if its not free ");
 
             List<IDAL.DO.Parcel> highestPriority = ParcelHighestPriorityList(drone);
             List<IDAL.DO.Parcel> heaviest = FindingHeaviestList(highestPriority, drone);
             if (heaviest.Count == 0)
-                throw new UpdateProblemException("לא קיים חבילות לשיוך");
+                throw new UpdateProblemException("no parcels waiting to be assign");
             IDAL.DO.Parcel closestParcel = MinDistaceFromDroneToParcel(heaviest, drone.DroneLocation);
             drone.Status = DroneStatuses.Busy;
             drone.NumParcelTransfer = closestParcel.Id;
-            try
-            {
+            //try
+            //{
                 dalObject.SetParcelToDrone(closestParcel.Id, droneId);
-            }
-            catch (IDAL.DO.NonExistingObjectException ex)
-            {
-                throw new UpdateProblemException("קוד  זה לא קיים במערכת", ex);
+            //}
+            //catch (IDAL.DO.NonExistingObjectException)
+            //{
+            //    throw new UpdateProblemException("קוד  זה לא קיים במערכת");
 
-            }
+            //}
         }
         #endregion Assign Parcel To Drone
 
@@ -232,23 +237,23 @@ namespace IBL
             DroneToList drone = dronesListBL.Find(x => x.Id == droneId);
             IDAL.DO.Parcel myParcel = dalObject.GetParcel(drone.NumParcelTransfer);
             if (drone == default)//if there is no drone with that id in the drone to list
-                throw new UpdateProblemException("קוד  זה לא קיים במערכת");
+                throw new UpdateProblemException("ID doesnt exists in the system");
             if (drone.NumParcelTransfer == 0)//if the drone isnt free
-                throw new UpdateProblemException("אין אפשרות לאסוף חבילה שלא שויכה לרחפן");
+                throw new UpdateProblemException("not possible to pick up a package that has not been assign to a drone");
             if (myParcel.PickUp != DateTime.MinValue)
-                throw new UpdateProblemException("אין אפשרות לאסוף חבילה שנאספה כבר");
+                throw new UpdateProblemException("not possible to pick up a package that has already been picked up");
             Location senderLocation = GetCustomer(myParcel.SenderId).CustomerLocation;
             drone.Battery = GetDistance(drone.DroneLocation, senderLocation) * Available;
             drone.DroneLocation = senderLocation;
-            try
-            {
+            //try
+            //{
                 dalObject.PickUpParcel(myParcel.Id);
-            }
-            catch (IDAL.DO.NonExistingObjectException ex)
-            {
-                throw new UpdateProblemException("קוד  זה לא קיים במערכת", ex);
+            //}
+            //catch (IDAL.DO.NonExistingObjectException )
+            //{
+            //    throw new UpdateProblemException("קוד  זה לא קיים במערכת");
 
-            }
+            //}
         }
         #endregion  picking up a parcel by drone
 
@@ -263,13 +268,13 @@ namespace IBL
             DroneToList drone = dronesListBL.Find(x => x.Id == droneId);
             IDAL.DO.Parcel myParcel = dalObject.GetParcel(drone.NumParcelTransfer);
             if (drone == default)//if there is no drone with that id in the drone to list
-                throw new UpdateProblemException("קוד  זה לא קיים במערכת");
+                throw new UpdateProblemException("ID  doesnt exists in the system");
             if (drone.NumParcelTransfer == 0)//if the drone isnt free
-                throw new UpdateProblemException("אין אפשרות למסור חבילה שלא שויכה לרחפן");
+                throw new UpdateProblemException("not possible to deliver a package that has not  been assign to a drone");
             if (myParcel.PickUp == DateTime.MinValue)
-                throw new UpdateProblemException("אין אפשרות למסור חבילה  שלא נאספה ");
+                throw new UpdateProblemException("not possible to deliver a package that has not  been picked up ");
             if (myParcel.Delivered != DateTime.MinValue)
-                throw new UpdateProblemException("אין אפשרות למסור חבילה  שנמסרה כבר ");
+                throw new UpdateProblemException("not possible to deliver a package that has already been delivered ");
             if (myParcel.PickUp != DateTime.MinValue && myParcel.Delivered == DateTime.MinValue)
             {
                 Location targetLocation = GetCustomer(myParcel.TargetId).CustomerLocation;
@@ -291,15 +296,15 @@ namespace IBL
                 drone.DroneLocation = targetLocation;
                 drone.Status = DroneStatuses.Free;
                 drone.NumParcelTransfer = 0;
-                try
-                {
+                //try
+                //{
                     dalObject.DeliverToCustomer(myParcel.Id);
-                }
-                catch (IDAL.DO.NonExistingObjectException ex)
-                {
-                    throw new UpdateProblemException("קוד  זה לא קיים במערכת", ex);
+                //}
+                //catch (IDAL.DO.NonExistingObjectException )
+                //{
+                //    throw new UpdateProblemException("קוד  זה לא קיים במערכת");
 
-                }
+                //}
             }
 
         }
@@ -315,7 +320,7 @@ namespace IBL
             }
             catch (IDAL.DO.NonExistingObjectException)
             {
-                throw new GetDetailsProblemException("קוד זה לא קיים");
+                throw new GetDetailsProblemException("ID  doesnt exists in the system");
             }
 
             DroneToList droneToList = dronesListBL.Find(x => x.Id == dalParcel.DroneId);
