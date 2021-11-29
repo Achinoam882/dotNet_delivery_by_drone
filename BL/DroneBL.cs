@@ -146,26 +146,21 @@ namespace IBL
         /// release drone from charging at BaseStation.
         /// </summary>
         /// <param name="droneId">Id of drone</param>
-        public void ReleaseFromCharging(int droneId, DateTime time)
+        public void ReleaseFromCharging(int droneId, TimeSpan time)
         {
             DroneToList droneToCharge = dronesListBL.Find(x => x.Id == droneId);
             if (droneToCharge == default)//if there is no drone with that id in the drone to list
                 throw new UpdateProblemException("ID  doesnt exists");
             if (droneToCharge.Status != DroneStatuses.InMaintenance)//if the drone isnt free
                 throw new UpdateProblemException("not possible to release  a drone from charging if it is not in maintenance");
-            double batteryLevel = (((time.Hour + (time.Minute) % 60 + (time.Second) % 3600) * DroneChargingRate) + droneToCharge.Battery);
+            double timeCharging = time.Hours;
+            double batteryLevel = ((timeCharging * DroneChargingRate) + droneToCharge.Battery);
             if (batteryLevel > 100) { batteryLevel = 100; }
             droneToCharge.Battery = batteryLevel;
             droneToCharge.Status = DroneStatuses.Free;
-            //try
-            //{
-                dalObject.MoreChargeSlots(dalObject.GetDroneCharge(droneId).StationId);
-                dalObject.ReleaseFromCharging(droneId);
-            //}
-            //catch (IDAL.DO.NonExistingObjectException)
-            //{
-            //    throw new UpdateProblemException("קוד  זה לא קיים במערכת");
-            //}
+            dalObject.MoreChargeSlots(dalObject.GetDroneCharge(droneId).StationId);
+            dalObject.ReleaseFromCharging(droneId);
+            
 }
         #endregion Release Drone  From Charging
 

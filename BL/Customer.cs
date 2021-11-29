@@ -20,9 +20,9 @@ namespace IBL.BO
         public List<ParcelAtCustomer> ParcelToCustomer { get; set; }
         public override string ToString()
         {
-            return string.Format("Id is:{0}\nName of Base Station is:{1}\nPhone Number :{2}\nlocation:{3}\n", Id, Name, PhoneNumber, CustomerLocation)
-                + "Parcel From Customer:\n" + String.Join(Environment.NewLine, ParcelFromCustomer) + 
-                "Parcel To Customer:" + String.Join(Environment.NewLine, ParcelToCustomer) + "\n";
+            return string.Format("Id is:{0}\nName of customer is:{1}\nPhone Number :{2}\nlocation:{3}\n", Id, Name, PhoneNumber, CustomerLocation)
+                + "Parcel From Customer:\n" + String.Join(Environment.NewLine, ParcelFromCustomer) +
+                "Parcel To Customer:\n" + String.Join(Environment.NewLine, ParcelToCustomer) + "\n";
         }
     }
 }

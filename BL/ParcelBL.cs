@@ -65,20 +65,15 @@ namespace IBL
 
             List<IDAL.DO.Parcel> highestPriority = ParcelHighestPriorityList(drone);
             List<IDAL.DO.Parcel> heaviest = FindingHeaviestList(highestPriority, drone);
-            if (heaviest.Count == 0)
+            if (!heaviest.Any())
+            {
                 throw new UpdateProblemException("no parcels waiting to be assign");
+            }
             IDAL.DO.Parcel closestParcel = MinDistaceFromDroneToParcel(heaviest, drone.DroneLocation);
             drone.Status = DroneStatuses.Busy;
             drone.NumParcelTransfer = closestParcel.Id;
-            //try
-            //{
-                dalObject.SetParcelToDrone(closestParcel.Id, droneId);
-            //}
-            //catch (IDAL.DO.NonExistingObjectException)
-            //{
-            //    throw new UpdateProblemException("קוד  זה לא קיים במערכת");
-
-            //}
+            dalObject.SetParcelToDrone(closestParcel.Id, droneId);
+            
         }
         #endregion Assign Parcel To Drone
 
@@ -116,7 +111,7 @@ namespace IBL
 
                 }
             }
-            return (urgentList.Count != 0 ? urgentList : fastList.Count != 0 ? fastList : regularList);
+            return (urgentList.Any() ? urgentList : fastList.Any() ? fastList : regularList);
         }
         #endregion Highest Priority List
 
@@ -149,7 +144,7 @@ namespace IBL
                         break;
                 }
             }
-            return (heavyList.Count != 0 ? heavyList : mediumList.Count != 0 ? mediumList : lightList);
+            return (heavyList.Any() ? heavyList : mediumList.Any() ? mediumList : lightList);
 
 
         }
@@ -183,10 +178,14 @@ namespace IBL
                     break;
             }
 
-            if (drone.Battery - batteryUse < 0) { return false; }
+            if (drone.Battery - batteryUse < 0) 
+            { 
+                return false;   
+            }
 
-            List<IDAL.DO.BaseStation> baseStationsDal = dalObject.GetBaseStationList().ToList();
+            
             List<BaseStation> blBaseStationList = new List<BaseStation>();
+            List<IDAL.DO.BaseStation> baseStationsDal = dalObject.GetBaseStationList().ToList();
             foreach (var x in baseStationsDal)
             {
                 blBaseStationList.Add(new BaseStation
@@ -197,9 +196,13 @@ namespace IBL
                     BaseStationLocation = new Location() { Longitude = x.Longitude, Latitude = x.Latitude }
                 });
             }
-            batteryUse += mindistanceBetweenLocationBaseStation(blBaseStationList, GetCustomer(item.TargetId).CustomerLocation).Item2;
-            if (drone.Battery - batteryUse < 0) { return false; }
-            return true;
+            batteryUse += mindistanceBetweenLocationBaseStation(blBaseStationList, GetCustomer(item.TargetId).CustomerLocation).Item2*Available;
+            if (drone.Battery - batteryUse < 0) 
+            { 
+                return false; 
+            }
+            else 
+               return true;
         }
         #endregion possible distace for drone
 
@@ -243,17 +246,10 @@ namespace IBL
             if (myParcel.PickUp != DateTime.MinValue)
                 throw new UpdateProblemException("not possible to pick up a package that has already been picked up");
             Location senderLocation = GetCustomer(myParcel.SenderId).CustomerLocation;
-            drone.Battery = GetDistance(drone.DroneLocation, senderLocation) * Available;
+            drone.Battery-= GetDistance(drone.DroneLocation, senderLocation) * Available;
             drone.DroneLocation = senderLocation;
-            //try
-            //{
-                dalObject.PickUpParcel(myParcel.Id);
-            //}
-            //catch (IDAL.DO.NonExistingObjectException )
-            //{
-            //    throw new UpdateProblemException("קוד  זה לא קיים במערכת");
-
-            //}
+            dalObject.PickUpParcel(myParcel.Id);
+            
         }
         #endregion  picking up a parcel by drone
 
@@ -281,13 +277,13 @@ namespace IBL
                 switch ((WeightCategories)myParcel.Weight)
                 {
                     case WeightCategories.Light:
-                        drone.Battery -= GetDistance(drone.DroneLocation, targetLocation) * LightWeightCarrier;
+                        drone.Battery -= GetDistance(targetLocation, drone.DroneLocation) * LightWeightCarrier;
                         break;
                     case WeightCategories.Medium:
-                        drone.Battery -= GetDistance(drone.DroneLocation, targetLocation) * MediumWeightCarrier;
+                        drone.Battery -= GetDistance(targetLocation, drone.DroneLocation) * MediumWeightCarrier;
                         break;
                     case WeightCategories.Heavy:
-                        drone.Battery -= GetDistance(drone.DroneLocation, targetLocation) * HeavyWeightCarrier;
+                        drone.Battery -= GetDistance( targetLocation, drone.DroneLocation) * HeavyWeightCarrier;
                         break;
                     default:
                         break;
@@ -296,15 +292,8 @@ namespace IBL
                 drone.DroneLocation = targetLocation;
                 drone.Status = DroneStatuses.Free;
                 drone.NumParcelTransfer = 0;
-                //try
-                //{
-                    dalObject.DeliverToCustomer(myParcel.Id);
-                //}
-                //catch (IDAL.DO.NonExistingObjectException )
-                //{
-                //    throw new UpdateProblemException("קוד  זה לא קיים במערכת");
-
-                //}
+                dalObject.DeliverToCustomer(myParcel.Id);
+               
             }
 
         }

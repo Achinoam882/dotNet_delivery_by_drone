@@ -30,12 +30,12 @@ namespace DalObject
 
         internal class Config
         {
-            public static int IdParcel = 1;
-            public static double Available=2.00;
-            public static double LightWeightCarrier=3.00;
-            public static double MediumWeightCarrier=4.00;
-            public static double HeavyWeightCarrier=5.000;
-            public static double DroneChargingRate=2.5;
+            public static int IdParcel=1;
+            public static double Available = 0.5;
+            public static double LightWeightCarrier = 0.6;
+            public static double MediumWeightCarrier = 0.7;
+            public static double HeavyWeightCarrier = 0.800;
+            public static double DroneChargingRate = 100;
 
         }
        
@@ -47,17 +47,17 @@ namespace DalObject
             {
 
                 Id = /*R.Next(100000000, 999999999),*/ 10,
-                Name = "Eilat",
-                Latitude = 35.789900,
-                Longitude = 33.268437,
+                Name = "beit shemesh",
+                Latitude = 31.78272,
+                Longitude = 35.18722,
                 ChargeSlots = /*R.Next(5, 10)*/6
             });
             BaseStationList.Add(new BaseStation()
             { 
                     Id = /*R.Next(100000000, 999999999)*/11,
-                    Name = "Tel Aviv",
-                    Latitude = 35.239900,
-                    Longitude = 33.678437,
+                    Name = "jerusalem",
+                    Latitude = 31.783333,
+                    Longitude = 35.316667,
                     ChargeSlots = /*R.Next(5, 10)*/ 10
              });
             #endregion base station initialization
@@ -93,9 +93,11 @@ namespace DalObject
                         Id = R.Next(100000000, 999999999),
                         Name = CustomerNameArr[i],
                         PhoneNumber="0"+R.Next(50,60)+"-"+ R.Next(0000000,9999999),
-                        Longitude= R.Next(31,36)+R.NextDouble(),
-                        Latitude = R.Next(31, 36) + R.NextDouble(),
-                    });
+                    Latitude  =  (float)((float)(R.NextDouble()*(31.783333 - 31.78272))+ 31.78272),
+                    Longitude = (float)((float)(R.NextDouble() * (35.316667 - 35.18722)) + 35.18722)
+                    //35.216667 
+
+                });
 
                 }
             #endregion customer initialization

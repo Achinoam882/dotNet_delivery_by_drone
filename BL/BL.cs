@@ -53,10 +53,10 @@ namespace IBL
             var num2 = location2.Longitude * (Math.PI / 180.0) - num1;
             var d2 = location2.Latitude * (Math.PI / 180.0);
 
-            var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
-
-
-            return (((double)(6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3)))))/1000);
+            var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0); //https://iw.waldorf-am-see.org/588999-calculating-distance-between-two-latitude-QPAAIP
+                                                                                                                                   //We calculate the distance according to a formula that
+                                                                                                                                   // also takes into account the curvature of the earth
+            return ((double)(6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3))))) / 1000;
         }
         #endregion   calculating distance between  2 location
 
@@ -91,11 +91,11 @@ namespace IBL
         }
         #endregion Calculate Electricity Use
 
-        public static double Available = 0.005;
-        public static double LightWeightCarrier = 0.1;
-        public static double MediumWeightCarrier = 2.00;
-        public static double HeavyWeightCarrier = 3.000;
-        public static double DroneChargingRate = 1.5;
+        public static double Available ;
+        public static double LightWeightCarrier ;
+        public static double MediumWeightCarrier ;
+        public static double HeavyWeightCarrier ;
+        public static double DroneChargingRate ;
 
         public List<DroneToList> dronesListBL;
         IDAL.IDal dalObject;

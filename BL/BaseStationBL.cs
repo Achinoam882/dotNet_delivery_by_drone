@@ -52,7 +52,9 @@ namespace IBL
             {
                 newBaseStation = dalObject.GetBaseStation(baseStationId);
                 if (baseStationName != "")
+                {
                     newBaseStation.Name = baseStationName;
+                }
             }
             catch (IDAL.DO.NonExistingObjectException)
             {
@@ -69,11 +71,9 @@ namespace IBL
                         throw new UpdateProblemException("number of charging slotes were not received");
                     }
                     newBaseStation.ChargeSlots = chargeSlotsTottal - usedChargeSlotsTottal;
-                    dalObject.UpDateBaseStation(newBaseStation);
-
                 }
-            
-           
+            dalObject.UpDateBaseStation(newBaseStation);
+
         }
 
         #endregion update Base Staison

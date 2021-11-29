@@ -209,7 +209,7 @@ choose:
             update = (Update)number;
             int customerId, baseStationId, droneId;
             string newDroneModel,baseStationName, customerName, phoneNumber,chargeSlots;
-            DateTime time;
+            TimeSpan time;
             switch (update)
             {
                 case Update.DroneName:
@@ -274,7 +274,7 @@ choose:
                     Console.WriteLine("please enter the id of the drone");
                     while(!int.TryParse(Console.ReadLine(), out droneId));
                     Console.WriteLine("Please enter the length of time the drone has been charging:");
-                    DateTime.TryParse(Console.ReadLine(), out time);
+                    TimeSpan.TryParse(Console.ReadLine(), out time);
                     try
                     {
                         bl.ReleaseFromCharging(droneId, time);

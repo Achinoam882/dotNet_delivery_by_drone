@@ -34,27 +34,24 @@ namespace IBL
         /// </summary>
         /// <param name="newParcel"></param>
       
-        public void SetParcel(Parcel newParcel);
-        public void ChangeDroneModel(int droneId, string newDroneModel);
-        public void UpdateBaseStaison(int baseStationId, string baseStationName, string chargeSlots);
-        public void UpdateCustomer(int customerId, string customerName, string phoneNumber);
-        public void SendDroneToCharge(int droneId);
-        public void ReleaseFromCharging(int droneId, DateTime time);
-        public void AssignParcelToDrone(int droneId);
-        public IEnumerable<BaseStationToList> GetBaseStationList(Predicate<BaseStationToList> predicate = null);
-        public BaseStation GetBaseStation(int idForDisplayBaseStation);
-        public Drone GetDrone(int idForDisplayDrone);
-        public IEnumerable<ParcelToList> GetParcelList(Predicate<ParcelToList> predicate = null);
-        public Parcel GetParcel(int idForDisplayParcel);
-        public Customer GetCustomer(int idForDisplayCustomer);
-        public IEnumerable<CustomerToList> GetCustomerList(Predicate<CustomerToList> predicate = null);
-        public IEnumerable<DroneToList> GetDroneList(Predicate<DroneToList> predicate = null);
-      //  private List<IDAL.DO.Parcel> ParcelHighestPriorityList(DroneToList drone);
-       // private List<IDAL.DO.Parcel> FindingHeaviestList(List<IDAL.DO.Parcel> parcels, DroneToList myDrone);
-       // private bool DistancePossibleForDrone(IDAL.DO.Parcel item, DroneToList drone);
-       // private IDAL.DO.Parcel MinDistaceFromDroneToParcel(List<IDAL.DO.Parcel> heaviest, Location location);
-        public void PickUpParcelByDrone(int droneId);
-        public void DroneDeliverParcel(int droneId);
+         void SetParcel(Parcel newParcel);
+         void ChangeDroneModel(int droneId, string newDroneModel);
+        void UpdateBaseStaison(int baseStationId, string baseStationName, string chargeSlots);
+         void UpdateCustomer(int customerId, string customerName, string phoneNumber);
+         void SendDroneToCharge(int droneId);
+         void ReleaseFromCharging(int droneId, TimeSpan time);
+      void AssignParcelToDrone(int droneId);
+       IEnumerable<BaseStationToList> GetBaseStationList(Predicate<BaseStationToList> predicate = null);
+         BaseStation GetBaseStation(int idForDisplayBaseStation);
+        Drone GetDrone(int idForDisplayDrone);
+         IEnumerable<ParcelToList> GetParcelList(Predicate<ParcelToList> predicate = null);
+        Parcel GetParcel(int idForDisplayParcel);
+        Customer GetCustomer(int idForDisplayCustomer);
+        IEnumerable<CustomerToList> GetCustomerList(Predicate<CustomerToList> predicate = null);
+        IEnumerable<DroneToList> GetDroneList(Predicate<DroneToList> predicate = null);
+     
+        void PickUpParcelByDrone(int droneId);
+         void DroneDeliverParcel(int droneId);
 
 
     }
