@@ -95,7 +95,7 @@ namespace DalObject
                         PhoneNumber="0"+R.Next(50,60)+"-"+ R.Next(0000000,9999999),
                     Latitude  =  (float)((float)(R.NextDouble()*(31.783333 - 31.78272))+ 31.78272),
                     Longitude = (float)((float)(R.NextDouble() * (35.316667 - 35.18722)) + 35.18722)
-                    //35.216667 
+                    
 
                 });
 

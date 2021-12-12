@@ -100,11 +100,11 @@ namespace IBL
                     Weight = (WeightCategories)item.Weight,
                     OtherSide = customerParcel
                 };
-                if (item.Delivered != DateTime.MinValue)
+                if (item.Delivered != null)
                     parcelAtCustomer.Status = ParcelStatus.Delivered;
-                else if (item.PickUp != DateTime.MinValue)
+                else if (item.PickUp != null)
                     parcelAtCustomer.Status = ParcelStatus.PickUp;
-                else if (item.Scheduled != DateTime.MinValue)
+                else if (item.Scheduled != null)
                     parcelAtCustomer.Status = ParcelStatus.Scheduled;
                 else
                     parcelAtCustomer.Status = ParcelStatus.Requested;
@@ -123,11 +123,11 @@ namespace IBL
                     Weight = (WeightCategories)item.Weight,
                     OtherSide = customerParcel,
                 };
-                if (item.Delivered != DateTime.MinValue)
+                if (item.Delivered != null)
                     parcelAtCustomer.Status = ParcelStatus.Delivered;
-                else if (item.PickUp != DateTime.MinValue)
+                else if (item.PickUp != null)
                     parcelAtCustomer.Status = ParcelStatus.PickUp;
-                else if (item.Scheduled != DateTime.MinValue)
+                else if (item.Scheduled != null)
                     parcelAtCustomer.Status = ParcelStatus.Scheduled;
                 else
                     parcelAtCustomer.Status = ParcelStatus.Requested;
@@ -154,16 +154,16 @@ namespace IBL
                     Name = item.Name,
                     PhoneNumber = item.PhoneNumber,
                     ParcelProvided = dalObject.GetParcelList
-                    (x => x.Delivered != DateTime.MinValue && x.SenderId == item.Id).ToList().Count,
+                    (x => x.Delivered != null && x.SenderId == item.Id).ToList().Count,
 
                     Parcelsnet = dalObject.GetParcelList
-                    (x => x.PickUp != DateTime.MinValue && x.Delivered == DateTime.MinValue && x.SenderId == item.Id).ToList().Count,
+                    (x => x.PickUp != null && x.Delivered == null && x.SenderId == item.Id).ToList().Count,
 
                     ParcelReceived = dalObject.GetParcelList
-                    (x => x.Delivered != DateTime.MinValue && x.TargetId == item.Id).ToList().Count,
+                    (x => x.Delivered != null && x.TargetId == item.Id).ToList().Count,
 
                     ParcelOnTheWay = dalObject.GetParcelList
-                    (x => x.PickUp != DateTime.MinValue && x.Delivered == DateTime.MinValue && x.TargetId == item.Id).ToList().Count,
+                    (x => x.PickUp != null && x.Delivered == null && x.TargetId == item.Id).ToList().Count,
                 });
             }
 

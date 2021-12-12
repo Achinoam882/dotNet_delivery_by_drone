@@ -31,7 +31,7 @@ namespace IBL
             }
             catch (IDAL.DO.NonExistingObjectException)
             {
-                throw new AddingProblemException("ID doesnt exists");
+                throw new AddingProblemException("ID  Of BaseStation doesnt exists");
             }
             if (dalObject.GetBaseStation(firstChargingStation).ChargeSlots == 0)
                 throw new AddingProblemException("no free charge slots");
@@ -202,7 +202,7 @@ namespace IBL
                 displayDrone.DroneParcel.Weight = (WeightCategories)DalParcel.Weight;
                 displayDrone.DroneParcel.Priority = (Priorities)DalParcel.Priority;
                 displayDrone.DroneParcel.Id = DalParcel.Id;
-                if (DalParcel.PickUp != DateTime.MinValue)
+                if (DalParcel.PickUp != null)
                    displayDrone.DroneParcel.ParcelStatus = true;
                 else
                     displayDrone.DroneParcel.ParcelStatus = false;

@@ -21,13 +21,13 @@ namespace IDAL
 
             public int DroneId { get; set; }
 
-            public DateTime Scheduled { get; set; }//זמן שיוך החבילה לרחפן
+            public DateTime? Scheduled { get; set; }//זמן שיוך החבילה לרחפן
 
-            public DateTime PickUp { get; set; }///  זמן איסוף חבילה מהשולחן (מהרחפן
+            public DateTime? PickUp { get; set; }///  זמן איסוף חבילה מהשולחן (מהרחפן
 
-            public DateTime Delivered { get; set; }//זמן הגעת החבילה למקבל
+            public DateTime? Delivered { get; set; }//זמן הגעת החבילה למקבל
 
-            public DateTime Requested { get; set; } //זמן יצירת חבילה למשלוח
+            public DateTime? Requested { get; set; } //זמן יצירת חבילה למשלוח
             /*  public override string ToString()
               {
                   return string.Format("Id is:{0,-14}\tSender Id is:{1,-14}\tTarget Id is:{2,-14}\t " +

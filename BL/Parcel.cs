@@ -14,13 +14,13 @@ namespace IBL.BO
         public WeightCategories Weight { get; set; }//light,medium,heavy
         public Priorities Priority { get; set; }//regular, fast, urgent
         public DroneParcel DroneAtParcel { get; set; }//רחפן בחבילה
-        public DateTime Scheduled { get; set; }//זמן שיוך החבילה לרחפן
+        public DateTime? Scheduled { get; set; }//זמן שיוך החבילה לרחפן
 
-        public DateTime PickUp { get; set; }///  זמן איסוף חבילה מהשולח (מהרחפן
+        public DateTime? PickUp { get; set; }///  זמן איסוף חבילה מהשולח (מהרחפן
 
-        public DateTime Delivered { get; set; }//זמן הגעת החבילה למקבל,זמן אספקה
+        public DateTime? Delivered { get; set; }//זמן הגעת החבילה למקבל,זמן אספקה
 
-        public DateTime Requested { get; set; } //זמן יצירת חבילה למשלוח
+        public DateTime? Requested { get; set; } //זמן יצירת חבילה למשלוח
         public override string ToString()
         {
             return this.ToStringProperty();

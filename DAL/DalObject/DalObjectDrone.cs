@@ -93,10 +93,7 @@ namespace DalObject
             {
                 throw new NonExistingObjectException();
             }
-            //int BaseStationIndex = DataSource.BaseStationList.FindIndex(x => x.Id == baseStationId);
-            //BaseStation temp = DataSource.BaseStationList[BaseStationIndex];
-            //temp.ChargeSlots++;
-            //DataSource.BaseStationList[BaseStationIndex] = temp;
+            
         }
         #endregion to release a drone from charging
 

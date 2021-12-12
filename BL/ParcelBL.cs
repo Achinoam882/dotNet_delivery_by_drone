@@ -243,7 +243,7 @@ namespace IBL
                 throw new UpdateProblemException("ID doesnt exists in the system");
             if (drone.NumParcelTransfer == 0)//if the drone isnt free
                 throw new UpdateProblemException("not possible to pick up a package that has not been assign to a drone");
-            if (myParcel.PickUp != DateTime.MinValue)
+            if (myParcel.PickUp != null)
                 throw new UpdateProblemException("not possible to pick up a package that has already been picked up");
             Location senderLocation = GetCustomer(myParcel.SenderId).CustomerLocation;
             drone.Battery-= GetDistance(drone.DroneLocation, senderLocation) * Available;
@@ -267,11 +267,11 @@ namespace IBL
                 throw new UpdateProblemException("ID  doesnt exists in the system");
             if (drone.NumParcelTransfer == 0)//if the drone isnt free
                 throw new UpdateProblemException("not possible to deliver a package that has not  been assign to a drone");
-            if (myParcel.PickUp == DateTime.MinValue)
+            if (myParcel.PickUp == null)
                 throw new UpdateProblemException("not possible to deliver a package that has not  been picked up ");
-            if (myParcel.Delivered != DateTime.MinValue)
+            if (myParcel.Delivered != null)
                 throw new UpdateProblemException("not possible to deliver a package that has already been delivered ");
-            if (myParcel.PickUp != DateTime.MinValue && myParcel.Delivered == DateTime.MinValue)
+            if (myParcel.PickUp != null && myParcel.Delivered == null)
             {
                 Location targetLocation = GetCustomer(myParcel.TargetId).CustomerLocation;
                 switch ((WeightCategories)myParcel.Weight)
@@ -327,7 +327,7 @@ namespace IBL
                 PickUp = dalParcel.PickUp,
                 Delivered = dalParcel.Delivered
             };
-            if (disPlayParcel.Scheduled != DateTime.MinValue)
+            if (disPlayParcel.Scheduled != null)
             {
                 DroneParcel droneInThePackage = new DroneParcel()
                 {
@@ -351,11 +351,11 @@ namespace IBL
             foreach (var item in holdDalParcels)
             {
                 ParcelStatus currentStatus;
-                if (item.Delivered != DateTime.MinValue)
+                if (item.Delivered != null)
                     currentStatus = ParcelStatus.Delivered;
-                else if (item.PickUp != DateTime.MinValue)
+                else if (item.PickUp != null)
                     currentStatus = ParcelStatus.PickUp;
-                else if (item.Scheduled != DateTime.MinValue)
+                else if (item.Scheduled != null)
                     currentStatus = ParcelStatus.Scheduled;
                 else
                     currentStatus = ParcelStatus.Requested;

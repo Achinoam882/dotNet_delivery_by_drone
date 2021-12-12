@@ -1,0 +1,27 @@
+﻿<Window x:Class="PL.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+
+        <Grid.Background>
+            <ImageBrush ImageSource="/3005346.jpg"/>
+        </Grid.Background>
+        <Button x:Name="DroneListButtom" Content="List Of Drones" HorizontalAlignment="Left" Margin="614,339,0,0"   Background="#FF216882"
+                Foreground="White"  VerticalAlignment="Top" Height="29" Width="160"  FontSize="15" Click="ShowDroneListButtom" BorderBrush="#FF216882" FontWeight="Normal" FontFamily="HP Simplified" FontStyle="Normal">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Button.Resources>
+
+        </Button>
+
+
+
+    </Grid>
+</Window>
