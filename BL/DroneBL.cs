@@ -119,9 +119,9 @@ namespace IBL
             {
                 dalObject.SendDroneToCharge(droneId, BaseStationBl.Find(x => x.BaseStationLocation == droneToCharge.DroneLocation).Id);
             }
-            catch (IDAL.DO.NonExistingObjectException ex)
+            catch (IDAL.DO.NonExistingObjectException )
             {
-                throw new UpdateProblemException("קוד  זה לא קיים במערכת", ex);
+                throw new UpdateProblemException("קוד  זה לא קיים במערכת");
 
             }
 

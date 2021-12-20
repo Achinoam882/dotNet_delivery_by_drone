@@ -140,11 +140,10 @@ namespace IDAL
 
         public IEnumerable<DroneCharge> GetChargeSlotsList(Predicate<DroneCharge> DroneChargepredicate = null);
 
-
+        public void UpDateBaseStation(BaseStation newBaseStation);
         public  double[] RequestPowerbyDrone();
         public void UpDateDrone(Drone newDrone);
         public void UpDateCustomer(Customer newCustomer);
-        public void UpdateBaseStation(BaseStation newBaseStation);
         public void UpDateParcel(Parcel newParcel);
         public void LessChargeSlots(int droneId);
         public void MoreChargeSlots(int baseStationId);

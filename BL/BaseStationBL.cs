@@ -62,7 +62,7 @@ namespace IBL
                         throw new UpdateProblemException("מספר עמדות טעינה לא התקבל");
                     }
                     newBaseStation.ChargeSlots = chargeSlotsTottal - usedChargeSlotsTottal;
-                    dalObject.UpdateBaseStation(newBaseStation);
+                    dalObject.UpDateBaseStation(newBaseStation);
 
                 }
             }
