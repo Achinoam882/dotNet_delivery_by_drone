@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
+using BO;
+using BlApi;
 
-namespace IBL
+namespace BL
 {
     public partial class BL
     {
@@ -29,24 +30,24 @@ namespace IBL
             {
                 dalObject.GetBaseStation(firstChargingStation);
             }
-            catch (IDAL.DO.NonExistingObjectException)
+            catch (DO.NonExistingObjectException)
             {
                 throw new AddingProblemException("ID  Of BaseStation doesnt exists");
             }
             if (dalObject.GetBaseStation(firstChargingStation).ChargeSlots == 0)
                 throw new AddingProblemException("no free charge slots");
-            IDAL.DO.Drone DroneDal = new IDAL.DO.Drone()
+            DO.Drone DroneDal = new DO.Drone()
             {
                 Id = newDrone.Id,
                 Model = newDrone.Model,
-                MaxWeight = (IDAL.DO.WeightCategories)newDrone.MaxWeight,
+                MaxWeight = (DO.WeightCategories)newDrone.MaxWeight,
 
             };
             try
             {
                 dalObject.SetDrone(DroneDal);
             }
-            catch (IDAL.DO.AddExistingObjectException)
+            catch (DO.AddExistingObjectException)
             {
                 throw new AddingProblemException("ID already exists");
             }
@@ -78,11 +79,11 @@ namespace IBL
            
             try
             {
-                IDAL.DO.Drone newDrone = dalObject.GetDrone(droneId);
+                DO.Drone newDrone = dalObject.GetDrone(droneId);
                 newDrone.Model = newDroneModel;
                 dalObject.UpDateDrone(newDrone);
             }
-            catch (IDAL.DO.NonExistingObjectException )
+            catch (DO.NonExistingObjectException )
             {
                 throw new UpdateProblemException("ID doesnt exists in the system");
 
@@ -106,7 +107,7 @@ namespace IBL
                 throw new UpdateProblemException("ID drone doesnt exists in the system");
             if (droneToCharge.Status != DroneStatuses.Free)//if the drone isnt free
                 throw new UpdateProblemException("not possible to send a drone for charging if its not free ");
-            List<IDAL.DO.BaseStation> BaseStationDal = dalObject.GetBaseStationList(x => x.ChargeSlots > 0).ToList();/*(x => x.ChargeSlots > 0).ToList();*///to filter the basesattion with free chargeslots
+            List<DO.BaseStation> BaseStationDal = dalObject.GetBaseStationList(x => x.ChargeSlots > 0).ToList();/*(x => x.ChargeSlots > 0).ToList();*///to filter the basesattion with free chargeslots
             
             List<BaseStation> BaseStationBl = new List<BaseStation>();
             foreach (var item in BaseStationDal)
@@ -183,9 +184,9 @@ namespace IBL
             };
             if (droneToList.Status == DroneStatuses.Busy )
             {
-                IDAL.DO.Parcel DalParcel = dalObject.GetParcel(droneToList.NumParcelTransfer);
-                IDAL.DO.Customer DalSender = dalObject.GetCustomer(DalParcel.SenderId);
-                IDAL.DO.Customer DalReciver = dalObject.GetCustomer(DalParcel.TargetId);
+                DO.Parcel DalParcel = dalObject.GetParcel(droneToList.NumParcelTransfer);
+                DO.Customer DalSender = dalObject.GetCustomer(DalParcel.SenderId);
+                DO.Customer DalReciver = dalObject.GetCustomer(DalParcel.TargetId);
 
                 Location locationOfSender = new Location() { Longitude = DalSender.Longitude, Latitude = DalSender.Latitude };
                 Location locationOfReciver = new Location() { Longitude = DalReciver.Longitude, Latitude = DalReciver.Latitude };

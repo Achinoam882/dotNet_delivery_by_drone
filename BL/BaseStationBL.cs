@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
+using BO;
 
-namespace IBL
+namespace BL
 {
     public partial class BL
     {
@@ -23,7 +23,7 @@ namespace IBL
                 throw new AddingProblemException("free charge slots cant be a negative number");
             if (newBaseStation.BaseStationLocation.Latitude < 34.3 || newBaseStation.BaseStationLocation.Longitude > 35.5)
                 throw new AddingProblemException("the location that was chosen isnt in the country");
-            IDAL.DO.BaseStation baseStationDal = new IDAL.DO.BaseStation()
+            DO.BaseStation baseStationDal = new DO.BaseStation()
             {
                 Id = newBaseStation.Id,
                 ChargeSlots = newBaseStation.FreeChargeSlots,
@@ -36,7 +36,7 @@ namespace IBL
             {
                 dalObject.SetBaseStation(baseStationDal);
             }
-            catch (IDAL.DO.AddExistingObjectException )
+            catch (DO.AddExistingObjectException )
             {
                 throw new AddingProblemException("Base station excits already");
 
@@ -47,7 +47,7 @@ namespace IBL
         #region update Base Staison
         public void UpdateBaseStaison(int baseStationId, string baseStationName, string chargeSlots)
         {
-            IDAL.DO.BaseStation newBaseStation = new IDAL.DO.BaseStation();
+            DO.BaseStation newBaseStation = new DO.BaseStation();
             try
             {
                 newBaseStation = dalObject.GetBaseStation(baseStationId);
@@ -56,7 +56,7 @@ namespace IBL
                     newBaseStation.Name = baseStationName;
                 }
             }
-            catch (IDAL.DO.NonExistingObjectException)
+            catch (DO.NonExistingObjectException)
             {
                 throw new UpdateProblemException("ID base station  doesnt exists in the system");
             }
@@ -81,12 +81,12 @@ namespace IBL
         #region display base station
         public BaseStation GetBaseStation(int idForDisplayBaseStation)
         {
-            IDAL.DO.BaseStation dalBase = new IDAL.DO.BaseStation();
+            DO.BaseStation dalBase = new DO.BaseStation();
             try
             {
                 dalBase = dalObject.GetBaseStation(idForDisplayBaseStation);
             }
-            catch (IDAL.DO.NonExistingObjectException)
+            catch (DO.NonExistingObjectException)
             {
                 throw new GetDetailsProblemException("ID  doesnt exists");
             }
@@ -99,7 +99,7 @@ namespace IBL
                 FreeChargeSlots = dalBase.ChargeSlots,
                 DroneChargingList = new List<DroneCharging>()
             };
-            List<IDAL.DO.DroneCharge> droneInCharge = dalObject.GetChargeSlotsList(i => i.StationId == idForDisplayBaseStation).ToList();
+            List<DO.DroneCharge> droneInCharge = dalObject.GetChargeSlotsList(i => i.StationId == idForDisplayBaseStation).ToList();
             foreach (var item in droneInCharge)
             {
                 blBaseStation.DroneChargingList.Add(new DroneCharging { Id = item.DroneId, Battery = dronesListBL.Find(x => x.Id == item.DroneId).Battery });
@@ -112,7 +112,7 @@ namespace IBL
         public IEnumerable<BaseStationToList> GetBaseStationList(Predicate<BaseStationToList> predicate = null)
         {
             List<BaseStationToList> baseStationBL = new List<BaseStationToList>();
-            List<IDAL.DO.BaseStation> holdDalBaseStation = dalObject.GetBaseStationList().ToList();
+            List<DO.BaseStation> holdDalBaseStation = dalObject.GetBaseStationList().ToList();
             foreach (var item in holdDalBaseStation)
             {
                 baseStationBL.Add(new BaseStationToList

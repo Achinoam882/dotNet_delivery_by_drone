@@ -5,21 +5,33 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+          WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <Style TargetType="Button" >
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Normal"/>
+            <Setter Property="Background" Value="#FF216882"/>
+            <Setter Property="BorderBrush" Value="#FF216882"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="HP Simplified"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Style.Resources>
+        </Style>
+    </Window.Resources>
     <Grid>
 
         <Grid.Background>
             <ImageBrush ImageSource="/3005346.jpg"/>
         </Grid.Background>
-        <Button x:Name="DroneListButtom" Content="List Of Drones" HorizontalAlignment="Left" Margin="614,339,0,0"   Background="#FF216882"
-                Foreground="White"  VerticalAlignment="Top" Height="29" Width="160"  FontSize="15" Click="ShowDroneListButtom" BorderBrush="#FF216882" FontWeight="Normal" FontFamily="HP Simplified" FontStyle="Normal">
-            <Button.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="20"/>
-                </Style>
-            </Button.Resources>
+        <Button x:Name="DroneListButtom" Content=" Drone List" HorizontalAlignment="Left" Margin="614,339,0,0" 
+                VerticalAlignment="Top" Height="29" Width="160"  Click="ShowDroneListButtom" />
 
-        </Button>
+        <Button x:Name="BaseStationList" Content=" Base Station List" HorizontalAlignment="Left" Height="29" Width="160" Margin="614,283,0,0" VerticalAlignment="Top" Click="BaseStation_Click" />
+
 
 
 

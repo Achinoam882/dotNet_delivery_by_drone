@@ -3,24 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL;
-using IDAL.DO;
+using DO;
+using DalApi;
 namespace DalObject
-{ 
+{
 
     /// <summary>
     /// matods that use from the main 
     /// </summary>
-    public partial class DalObject :IDal
+    sealed partial class DalObject :IDal
+
     {
+
+        #region singelton
+
+
+        internal static readonly IDal instance = new DalObject();
+        
+        static DalObject() { }
+        DalObject()
+        {
+            DataSource.Initialize();
+        }
+        public static IDal Instance { get {return instance;} }
+
+        #endregion
 
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public DalObject()
-        {
-            DataSource.Initialize();
-        }
+       
         public double[] RequestPowerbyDrone()
         {
             double[] temp = { DataSource.Config.Available, DataSource.Config.LightWeightCarrier, 

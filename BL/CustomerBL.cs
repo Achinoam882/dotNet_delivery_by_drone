@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
+using BO;
 
-namespace IBL
+namespace BL
 {
     public partial class BL
     {
@@ -23,7 +23,7 @@ namespace IBL
             if (newCustomer.CustomerLocation.Longitude < 34.3 || newCustomer.CustomerLocation.Latitude > 35.5)
                 throw new AddingProblemException("the location that was chosen isnt in the country");
 
-            IDAL.DO.Customer CustomerDal = new IDAL.DO.Customer()
+            DO.Customer CustomerDal = new DO.Customer()
             {
                 Id = newCustomer.Id,
                 Name = newCustomer.Name,
@@ -36,7 +36,7 @@ namespace IBL
             {
                 dalObject.SetCustomer(CustomerDal);
             }
-            catch (IDAL.DO.AddExistingObjectException )
+            catch (DO.AddExistingObjectException )
             {
                 throw new AddingProblemException("ID already exists");
 
@@ -51,14 +51,14 @@ namespace IBL
         {
             try
             {
-                IDAL.DO.Customer newCustomer = dalObject.GetCustomer(customerId);
+                DO.Customer newCustomer = dalObject.GetCustomer(customerId);
                 if (customerName != "")
                     newCustomer.Name = customerName;
                 if (phoneNumber != "")
                     newCustomer.PhoneNumber = phoneNumber;
                 dalObject.UpDateCustomer(newCustomer);
             }
-            catch (IDAL.DO.NonExistingObjectException )
+            catch (DO.NonExistingObjectException )
             {
                 throw new UpdateProblemException("ID  doesnt exists in the system");
             }
@@ -70,12 +70,12 @@ namespace IBL
         #region display customer
         public Customer GetCustomer(int idForDisplayCustomer)
         {
-            IDAL.DO.Customer dalCustomer = new IDAL.DO.Customer();
+            DO.Customer dalCustomer = new DO.Customer();
             try
             {
                 dalCustomer = dalObject.GetCustomer(idForDisplayCustomer);
             }
-            catch (IDAL.DO.NonExistingObjectException)
+            catch (DO.NonExistingObjectException)
             {
                 throw new GetDetailsProblemException("ID customer doesnt exists in the system");
             }
@@ -89,7 +89,7 @@ namespace IBL
                 ParcelFromCustomer = new List<ParcelAtCustomer>(),
                 ParcelToCustomer = new List<ParcelAtCustomer>(),
             };
-            List<IDAL.DO.Parcel> dalParcelList = dalObject.GetParcelList(i => i.SenderId == idForDisplayCustomer).ToList();
+            List<DO.Parcel> dalParcelList = dalObject.GetParcelList(i => i.SenderId == idForDisplayCustomer).ToList();
             foreach (var item in dalParcelList)
             {
                 CustomerParcel customerParcel = new CustomerParcel() { Id = item.TargetId, Name = dalObject.GetCustomer(item.TargetId).Name };
@@ -112,7 +112,7 @@ namespace IBL
                 DisPlayCustomer.ParcelFromCustomer.Add(parcelAtCustomer);
 
             }
-            List<IDAL.DO.Parcel> dalSentParcelList = dalObject.GetParcelList(i => i.TargetId == idForDisplayCustomer).ToList();
+            List<DO.Parcel> dalSentParcelList = dalObject.GetParcelList(i => i.TargetId == idForDisplayCustomer).ToList();
             foreach (var item in dalSentParcelList)
             {
                 CustomerParcel customerParcel = new CustomerParcel() { Id = item.SenderId, Name = dalObject.GetCustomer(item.SenderId).Name };
@@ -144,7 +144,7 @@ namespace IBL
         public IEnumerable<CustomerToList> GetCustomerList(Predicate<CustomerToList> predicate = null)
         {
             List<CustomerToList> customerBL = new List<CustomerToList>();
-            List<IDAL.DO.Customer> holdDalCustomer = dalObject.GetCustomerList().ToList();
+            List<DO.Customer> holdDalCustomer = dalObject.GetCustomerList().ToList();
             // run on all the customer list and put the correct info into   
             foreach (var item in holdDalCustomer)
             {

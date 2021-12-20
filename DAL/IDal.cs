@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL.DO;
-using IDAL;
+using DO;
 
 
-namespace IDAL
+
+namespace DalApi
 {
   public  interface IDal
     {

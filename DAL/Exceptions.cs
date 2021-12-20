@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 using System.Runtime.Serialization;
 
 
-namespace IDAL
 
-{
     namespace DO
     {
         [Serializable]
@@ -43,6 +41,21 @@ namespace IDAL
                 return "Error updating an object with non-existing ID number";
             }
         }
+    [Serializable]
+    public class DalTypeCantBeShowen : Exception
+    {
+        public DalTypeCantBeShowen() : base() { }
+        public DalTypeCantBeShowen(string message) : base(message) { }
+        public DalTypeCantBeShowen(string message, Exception inner) : base(message, inner) { }
+        protected DalTypeCantBeShowen(SerializationInfo info, StreamingContext context)
+        : base(info, context) { }
+        public override string ToString()
+        {
+            return "Error adding an object with an existing ID";
+        }
+
+
     }
-    
 }
+    
+

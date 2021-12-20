@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL;
-using IBL.BO;
+using BO;
+using BlApi;
 
 
 
@@ -19,7 +19,7 @@ namespace ConsoleUI_BL
         /// The function handles various addition options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void AddOptions(IBL.IBL bl)
+        static public void AddOptions(BlApi.IBL bl)
         {
 
             Add add;
@@ -191,7 +191,7 @@ please try again");
         /// The function handles various update options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void UpDateOptions(IBL.IBL bl)
+        static public void UpDateOptions(BlApi.IBL bl)
         {
             Update update;
             int number = 0;
@@ -333,7 +333,7 @@ please choose again");
         /// The function handles display options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void DisplayOptions(IBL.IBL bl)
+        static public void DisplayOptions(BlApi.IBL bl)
         {
             int idForAllObjects;
             Display display;
@@ -422,7 +422,7 @@ please try again");
         /// The function handles list view options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void DisplayListsOptions(IBL.IBL bl)
+        static public void DisplayListsOptions(BlApi.IBL bl)
         {
             ViewList viewList;
             int number = 0;
@@ -470,8 +470,8 @@ please try again");
         #endregion main options
         static void Main(string[] args)
        {
-            
-            IBL.IBL BlObject = new IBL.BL();
+
+            IBL BlObject = BlFactory.GetBl();
             int number = 0;
             Choice choice;
             do

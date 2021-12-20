@@ -1,4 +1,4 @@
-﻿using IBL.BO;
+﻿using BO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,11 +23,11 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        IBL.IBL bl;
+        BlApi.IBL bl;
         public bool close = true;
         private DroneListWindow DroneListWindow;
         #region add drone
-        public DroneWindow(IBL.IBL blObject, DroneListWindow droneListWindow)
+        public DroneWindow(BlApi.IBL blObject, DroneListWindow droneListWindow)
         {
             InitializeComponent();
             AddDroneGrid.Visibility = Visibility.Visible;
@@ -156,7 +156,7 @@ namespace PL
          public Drone drone;
        
         #region  drone actions
-         public DroneWindow(IBL.IBL blObject, DroneListWindow droneListWindow, int Id,int Indexdrone)
+         public DroneWindow(BlApi.IBL blObject, DroneListWindow droneListWindow, int Id,int Indexdrone)
         {
             InitializeComponent();
            UpDateGrid.Visibility = Visibility.Visible;
@@ -384,7 +384,6 @@ namespace PL
             e.Cancel = close;
         }
 
-        
     }
 
 }

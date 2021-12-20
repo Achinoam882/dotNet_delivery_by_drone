@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL;
-using IDAL.DO;
-using DalObject;
+//using IDAL;
+using DO;
+using DalApi;
 using System.ComponentModel;
 
 namespace ConsoleUI
@@ -19,7 +19,7 @@ namespace ConsoleUI
         /// The function handles various addition options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void AddOptions(IDAL.IDal dal)
+        static public void AddOptions(DalApi.IDal dal)
         {
             Add add;
             int number = 0;
@@ -149,7 +149,7 @@ please enter the id of the sender");
         /// The function handles various update options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void UpDateOptions(IDAL.IDal dal)
+        static public void UpDateOptions(DalApi.IDal dal)
         {
             Update update;
             int number = 0;
@@ -207,7 +207,7 @@ choose:
         /// The function handles display options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void DisplayOptions(IDAL.IDal dal)
+        static public void DisplayOptions(DalApi.IDal dal)
         {
             int idForAllObjects;
             Display display;
@@ -266,7 +266,7 @@ choose:
         /// The function handles list view options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void DisplayListsOptions(IDAL.IDal dal)
+        static public void DisplayListsOptions(DalApi.IDal dal)
         {
             ViewList viewList;
             int number = 0;
@@ -313,7 +313,10 @@ choose:
 
         static void Main(string[] args)
         {
-           IDal dalObject = new DalObject.DalObject();
+            //IDal dalObject = new DalObject.DalObject();
+            IDal dalObject = DalFactory.GetDal("DalObject");
+
+
             int number=0;
             Choice choice;
             do

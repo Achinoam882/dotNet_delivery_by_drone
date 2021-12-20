@@ -1,4 +1,4 @@
-﻿using IBL.BO;
+﻿using BO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,14 +23,14 @@ namespace PL
     public partial class DroneListWindow : Window
     {
         bool close = true;
-        IBL.IBL bl;
-        public ObservableCollection<IBL.BO.DroneToList> droneToLists;
-        public DroneListWindow(IBL.IBL blObject)
+        BlApi.IBL bl;
+        public ObservableCollection<BO.DroneToList> droneToLists;
+        public DroneListWindow(BlApi.IBL blObject)
         {
             InitializeComponent();
             bl = blObject;
             droneToLists = new ObservableCollection<DroneToList>();
-            List<IBL.BO.DroneToList> dronesBl = bl.GetDroneList().ToList();
+            List<BO.DroneToList> dronesBl = bl.GetDroneList().ToList();
             foreach (var x in dronesBl)
             {
                 droneToLists.Add(x);
@@ -45,8 +45,7 @@ namespace PL
         {
             new DroneWindow(bl, this).Show();
             this.IsEnabled = false;
-           
-
+          
 
         }
         private void DroneToLists_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)

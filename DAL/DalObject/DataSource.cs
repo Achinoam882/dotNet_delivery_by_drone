@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL.DO;
+using DO;
+using DalApi;
 using System.ComponentModel;
 
 namespace DalObject
@@ -11,7 +12,7 @@ namespace DalObject
     /// <summary>
     /// Contains boot data and list structure
     /// </summary>
-    public static class DataSource
+     static class DataSource
     {
         #region lists of structs
         /// <summary> A static Random that sets the random to select a millisecond to repel collisions </summary>

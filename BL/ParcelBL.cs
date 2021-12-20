@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
+using BO;
 
-namespace IBL
+namespace BL
 {
     public partial class BL
     {
@@ -30,18 +30,18 @@ namespace IBL
                 dalObject.GetCustomer(newParcel.Sender.Id);
                 dalObject.GetCustomer(newParcel.Receiving.Id);
             }
-            catch (IDAL.DO.NonExistingObjectException)
+            catch (DO.NonExistingObjectException)
             {
                 throw new AddingProblemException("ID doesnt exists in the system");
 
             }
-            IDAL.DO.Parcel ParcelDal = new IDAL.DO.Parcel()
+            DO.Parcel ParcelDal = new DO.Parcel()
             {
                 //Id = newParcel.Id,
                 SenderId = newParcel.Sender.Id,
                 TargetId = newParcel.Receiving.Id,
-                Weight = (IDAL.DO.WeightCategories)newParcel.Weight,
-                Priority = (IDAL.DO.Priorities)newParcel.Priority,
+                Weight = (DO.WeightCategories)newParcel.Weight,
+                Priority = (DO.Priorities)newParcel.Priority,
                 DroneId = 0,
                 Requested = DateTime.Now
             };
@@ -63,13 +63,13 @@ namespace IBL
             if (drone.Status != DroneStatuses.Free)//if the drone isnt free
                 throw new UpdateProblemException("not possible to assign a drone to a packadge if its not free ");
 
-            List<IDAL.DO.Parcel> highestPriority = ParcelHighestPriorityList(drone);
-            List<IDAL.DO.Parcel> heaviest = FindingHeaviestList(highestPriority, drone);
+            List<DO.Parcel> highestPriority = ParcelHighestPriorityList(drone);
+            List<DO.Parcel> heaviest = FindingHeaviestList(highestPriority, drone);
             if (!heaviest.Any())
             {
                 throw new UpdateProblemException("no parcels waiting to be assign");
             }
-            IDAL.DO.Parcel closestParcel = MinDistaceFromDroneToParcel(heaviest, drone.DroneLocation);
+            DO.Parcel closestParcel = MinDistaceFromDroneToParcel(heaviest, drone.DroneLocation);
             drone.Status = DroneStatuses.Busy;
             drone.NumParcelTransfer = closestParcel.Id;
             dalObject.SetParcelToDrone(closestParcel.Id, droneId);
@@ -84,12 +84,12 @@ namespace IBL
         /// </summary>
         /// <param name="drone">drone object</param>
         /// <returns>list of the most urgent packages</returns>
-        private List<IDAL.DO.Parcel> ParcelHighestPriorityList(DroneToList drone)
+        private List<DO.Parcel> ParcelHighestPriorityList(DroneToList drone)
         {
-            List<IDAL.DO.Parcel> allParcels = dalObject.GetParcelList(x => x.DroneId == 0).ToList();
-            List<IDAL.DO.Parcel> regularList = new List<IDAL.DO.Parcel>();//creata regular priority list
-            List<IDAL.DO.Parcel> fastList = new List<IDAL.DO.Parcel>();//creata fastpriority list
-            List<IDAL.DO.Parcel> urgentList = new List<IDAL.DO.Parcel>();//creata urgent priority list
+            List<DO.Parcel> allParcels = dalObject.GetParcelList(x => x.DroneId == 0).ToList();
+            List<DO.Parcel> regularList = new List<DO.Parcel>();//creata regular priority list
+            List<DO.Parcel> fastList = new List<DO.Parcel>();//creata fastpriority list
+            List<DO.Parcel> urgentList = new List<DO.Parcel>();//creata urgent priority list
             foreach (var item in allParcels)
             {
                 if (drone.MaxWeight >= (WeightCategories)item.Weight && DistancePossibleForDrone(item, drone))
@@ -122,11 +122,11 @@ namespace IBL
         /// <param name="parcels">list of the most urgent parcels</param>
         /// <param name="drone">drone object</param>
         /// <returns></returns>
-        private List<IDAL.DO.Parcel> FindingHeaviestList(List<IDAL.DO.Parcel> allParcels, DroneToList drone)
+        private List<DO.Parcel> FindingHeaviestList(List<DO.Parcel> allParcels, DroneToList drone)
         {
-            List<IDAL.DO.Parcel> lightList = new List<IDAL.DO.Parcel>();//creata light weight list
-            List<IDAL.DO.Parcel> mediumList = new List<IDAL.DO.Parcel>();//creata medium weight list
-            List<IDAL.DO.Parcel> heavyList = new List<IDAL.DO.Parcel>();//creata heavy weight list
+            List<DO.Parcel> lightList = new List<DO.Parcel>();//creata light weight list
+            List<DO.Parcel> mediumList = new List<DO.Parcel>();//creata medium weight list
+            List<DO.Parcel> heavyList = new List<DO.Parcel>();//creata heavy weight list
             foreach (var item in allParcels)
             {
                 switch ((WeightCategories)item.Weight)
@@ -159,7 +159,7 @@ namespace IBL
         /// <param name="drone">drone object</param>
         /// <returns></returns>
 
-        private bool DistancePossibleForDrone(IDAL.DO.Parcel item, DroneToList drone)
+        private bool DistancePossibleForDrone(DO.Parcel item, DroneToList drone)
         {
             double batteryUse = GetDistance(drone.DroneLocation, GetCustomer(item.SenderId).CustomerLocation) * Available;
             double distanceSenderTarget = GetDistance(GetCustomer(item.SenderId).CustomerLocation, GetCustomer(item.TargetId).CustomerLocation);
@@ -185,7 +185,7 @@ namespace IBL
 
             
             List<BaseStation> blBaseStationList = new List<BaseStation>();
-            List<IDAL.DO.BaseStation> baseStationsDal = dalObject.GetBaseStationList().ToList();
+            List<DO.BaseStation> baseStationsDal = dalObject.GetBaseStationList().ToList();
             foreach (var x in baseStationsDal)
             {
                 blBaseStationList.Add(new BaseStation
@@ -213,7 +213,7 @@ namespace IBL
         /// <param name="heaviest">list of the most urgent  and heaviest parcels</param>
         /// <param name="location">location of the drone</param>
         /// <returns></returns>
-        private IDAL.DO.Parcel MinDistaceFromDroneToParcel(List<IDAL.DO.Parcel> heaviest, Location location)
+        private DO.Parcel MinDistaceFromDroneToParcel(List<DO.Parcel> heaviest, Location location)
         {
             List<double> distanceList = new List<double>();
             foreach (var x in heaviest)
@@ -238,7 +238,7 @@ namespace IBL
         {
 
             DroneToList drone = dronesListBL.Find(x => x.Id == droneId);
-            IDAL.DO.Parcel myParcel = dalObject.GetParcel(drone.NumParcelTransfer);
+           DO.Parcel myParcel = dalObject.GetParcel(drone.NumParcelTransfer);
             if (drone == default)//if there is no drone with that id in the drone to list
                 throw new UpdateProblemException("ID doesnt exists in the system");
             if (drone.NumParcelTransfer == 0)//if the drone isnt free
@@ -262,7 +262,7 @@ namespace IBL
         {
 
             DroneToList drone = dronesListBL.Find(x => x.Id == droneId);
-            IDAL.DO.Parcel myParcel = dalObject.GetParcel(drone.NumParcelTransfer);
+            DO.Parcel myParcel = dalObject.GetParcel(drone.NumParcelTransfer);
             if (drone == default)//if there is no drone with that id in the drone to list
                 throw new UpdateProblemException("ID  doesnt exists in the system");
             if (drone.NumParcelTransfer == 0)//if the drone isnt free
@@ -302,12 +302,12 @@ namespace IBL
         #region display parcel
         public Parcel GetParcel(int idForDisplayParcel)
         {
-            IDAL.DO.Parcel dalParcel = new IDAL.DO.Parcel();
+            DO.Parcel dalParcel = new DO.Parcel();
             try
             {
                 dalParcel = dalObject.GetParcel(idForDisplayParcel);
             }
-            catch (IDAL.DO.NonExistingObjectException)
+            catch (DO.NonExistingObjectException)
             {
                 throw new GetDetailsProblemException("ID  doesnt exists in the system");
             }
@@ -346,7 +346,7 @@ namespace IBL
         public IEnumerable<ParcelToList> GetParcelList(Predicate<ParcelToList> predicate = null)
         {
             List<ParcelToList> parcels = new List<ParcelToList>();
-            List<IDAL.DO.Parcel> holdDalParcels = dalObject.GetParcelList().ToList();
+            List<DO.Parcel> holdDalParcels = dalObject.GetParcelList().ToList();
 
             foreach (var item in holdDalParcels)
             {

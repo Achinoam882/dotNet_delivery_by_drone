@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 
 
-namespace IDAL
-{
+
     namespace DO
     {
        public static class ToStringObj
@@ -22,4 +21,4 @@ namespace IDAL
         }
     }
  
-}
+

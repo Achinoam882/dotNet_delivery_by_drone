@@ -48,7 +48,7 @@
 
 
 
-        <Grid Name="AddDroneGrid" Visibility="Hidden" >
+        <Grid Name="AddDroneGrid"  >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200*"/>
                 <ColumnDefinition Width="200*"/>

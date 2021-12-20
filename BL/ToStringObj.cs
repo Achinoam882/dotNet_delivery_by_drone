@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
-namespace IBL
-{
+
     namespace BO
     {
         public static class ToStringObj
@@ -19,4 +18,4 @@ namespace IBL
             }
         }
     }   
-}
+
