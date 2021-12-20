@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
+using BO;
 
-namespace IBL
+namespace BL
 {
     public partial class BL
     {
@@ -18,12 +18,12 @@ namespace IBL
         {
             //exception of the logical layer//name??
             if (newBaseStation.Id < 0)
-                throw new AddingProblemException("קוד תחנה לא יכול להיות מספר שלילי");
+                throw new AddingProblemException("ID cant be a negative number");
             if (newBaseStation.FreeChargeSlots < 0)
-                throw new AddingProblemException("מספר עמדות פנויות לא יכול להיות מספר שלילי");
-            if (newBaseStation.BaseStationLocation.Longitude < 34.3 || newBaseStation.BaseStationLocation.Latitude > 35.5)
-                throw new AddingProblemException("המיקום שנבחר לא נמצא בגבולות הארץ");
-            IDAL.DO.BaseStation baseStationDal = new IDAL.DO.BaseStation()
+                throw new AddingProblemException("free charge slots cant be a negative number");
+            if (newBaseStation.BaseStationLocation.Latitude < 34.3 || newBaseStation.BaseStationLocation.Longitude > 35.5)
+                throw new AddingProblemException("the location that was chosen isnt in the country");
+            DO.BaseStation baseStationDal = new DO.BaseStation()
             {
                 Id = newBaseStation.Id,
                 ChargeSlots = newBaseStation.FreeChargeSlots,
@@ -36,9 +36,9 @@ namespace IBL
             {
                 dalObject.SetBaseStation(baseStationDal);
             }
-            catch (IDAL.DO.AddExistingObjectException ex)
+            catch (DO.AddExistingObjectException )
             {
-                throw new AddingProblemException("קוד תחנה זה כבר קיים במערכת", ex);
+                throw new AddingProblemException("Base station excits already");
 
             }
         }
@@ -47,29 +47,33 @@ namespace IBL
         #region update Base Staison
         public void UpdateBaseStaison(int baseStationId, string baseStationName, string chargeSlots)
         {
+            DO.BaseStation newBaseStation = new DO.BaseStation();
             try
             {
-                int chargeSlotsTottal, usedChargeSlotsTottal;
-                IDAL.DO.BaseStation newBaseStation = dalObject.GetBaseStation(baseStationId);
+                newBaseStation = dalObject.GetBaseStation(baseStationId);
                 if (baseStationName != "")
-                    newBaseStation.Name = baseStationName;
-                if (chargeSlots != "")
                 {
-                    while (!int.TryParse(chargeSlots, out chargeSlotsTottal)) ;
+                    newBaseStation.Name = baseStationName;
+                }
+            }
+            catch (DO.NonExistingObjectException)
+            {
+                throw new UpdateProblemException("ID base station  doesnt exists in the system");
+            }
+           
+            if (chargeSlots != "")
+                {
+                int chargeSlotsTottal, usedChargeSlotsTottal;
+                while (!int.TryParse(chargeSlots, out chargeSlotsTottal)) ;
                     usedChargeSlotsTottal = dalObject.GetChargeSlotsList(x => x.StationId == baseStationId).ToList().Count;
                     if ((chargeSlotsTottal - usedChargeSlotsTottal) < 0)
                     {
-                        throw new UpdateProblemException("מספר עמדות טעינה לא התקבל");
+                        throw new UpdateProblemException("number of charging slotes were not received");
                     }
                     newBaseStation.ChargeSlots = chargeSlotsTottal - usedChargeSlotsTottal;
-                    dalObject.UpDateBaseStation(newBaseStation);
-
                 }
-            }
-            catch (IDAL.DO.NonExistingObjectException ex)
-            {
-                throw new UpdateProblemException("קוד תחנה זה לא קיים במערכת", ex);
-            }
+            dalObject.UpDateBaseStation(newBaseStation);
+
         }
 
         #endregion update Base Staison
@@ -77,14 +81,14 @@ namespace IBL
         #region display base station
         public BaseStation GetBaseStation(int idForDisplayBaseStation)
         {
-            IDAL.DO.BaseStation dalBase = new IDAL.DO.BaseStation();
+            DO.BaseStation dalBase = new DO.BaseStation();
             try
             {
                 dalBase = dalObject.GetBaseStation(idForDisplayBaseStation);
             }
-            catch (IDAL.DO.NonExistingObjectException)
+            catch (DO.NonExistingObjectException)
             {
-                throw new GetDetailsProblemException("קוד זה לא קיים");
+                throw new GetDetailsProblemException("ID  doesnt exists");
             }
             Location dalBaseStationLoc = new Location() { Longitude = dalBase.Longitude, Latitude = dalBase.Latitude };
             BaseStation blBaseStation = new BaseStation()
@@ -95,10 +99,10 @@ namespace IBL
                 FreeChargeSlots = dalBase.ChargeSlots,
                 DroneChargingList = new List<DroneCharging>()
             };
-            List<IDAL.DO.DroneCharge> droneInCharge = dalObject.GetChargeSlotsList(i => i.StationId == idForDisplayBaseStation).ToList();
+            List<DO.DroneCharge> droneInCharge = dalObject.GetChargeSlotsList(i => i.StationId == idForDisplayBaseStation).ToList();
             foreach (var item in droneInCharge)
             {
-                blBaseStation.DroneChargingList.ToList().Add(new DroneCharging { Id = item.DroneId, Battery = dronesListBL.Find(x => x.Id == item.DroneId).Battery });
+                blBaseStation.DroneChargingList.Add(new DroneCharging { Id = item.DroneId, Battery = dronesListBL.Find(x => x.Id == item.DroneId).Battery });
             }
             return blBaseStation;
         }
@@ -108,7 +112,7 @@ namespace IBL
         public IEnumerable<BaseStationToList> GetBaseStationList(Predicate<BaseStationToList> predicate = null)
         {
             List<BaseStationToList> baseStationBL = new List<BaseStationToList>();
-            List<IDAL.DO.BaseStation> holdDalBaseStation = dalObject.GetBaseStationList().ToList();
+            List<DO.BaseStation> holdDalBaseStation = dalObject.GetBaseStationList().ToList();
             foreach (var item in holdDalBaseStation)
             {
                 baseStationBL.Add(new BaseStationToList

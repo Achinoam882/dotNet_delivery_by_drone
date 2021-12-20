@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Serialization;
 
-namespace IBL.BO
+namespace BO
 {
     [Serializable]
     public class AddingProblemException : Exception

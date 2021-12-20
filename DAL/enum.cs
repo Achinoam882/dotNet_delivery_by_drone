@@ -4,8 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IDAL
-{
+
     namespace DO
     {
         /// <summary> enum for Priorities of the parcel </summary>
@@ -27,4 +26,4 @@ namespace IDAL
 
 
     }
-}
+

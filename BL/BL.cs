@@ -3,17 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
-using IBL;
+using BO;
+using BlApi;
+using DalApi;
 //using IDAL;
 //using IDAL.DO;
 
 
 
-namespace IBL
+namespace BL
 {
-    public partial class BL : IBL
+    public partial class BL : BlApi.IBL
     {
+
+
+
         #region finding the nearest base station to the location
         /// <summary>
         /// The function calculates the distance between a particular location and base stations.
@@ -53,10 +57,10 @@ namespace IBL
             var num2 = location2.Longitude * (Math.PI / 180.0) - num1;
             var d2 = location2.Latitude * (Math.PI / 180.0);
 
-            var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0);
-
-
-            return (double)(6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3))));
+            var d3 = Math.Pow(Math.Sin((d2 - d1) / 2.0), 2.0) + Math.Cos(d1) * Math.Cos(d2) * Math.Pow(Math.Sin(num2 / 2.0), 2.0); 
+                                                                                                                                   
+                                                                                                                                  
+            return ((double)(6376500.0 * (2.0 * Math.Atan2(Math.Sqrt(d3), Math.Sqrt(1.0 - d3))))) / 1000;
         }
         #endregion   calculating distance between  2 location
 
@@ -91,23 +95,37 @@ namespace IBL
         }
         #endregion Calculate Electricity Use
 
-        public double Available;
-        public double LightWeightCarrier;
-        public double MediumWeightCarrier;
-        public double HeavyWeightCarrier;
-        public double DroneChargingRate;
+        public static double Available ;
+        public static double LightWeightCarrier ;
+        public static double MediumWeightCarrier ;
+        public static double HeavyWeightCarrier ;
+        public static double DroneChargingRate ;
 
         public List<DroneToList> dronesListBL;
-        IDAL.IDal dalObject;
+        DalApi.IDal dalObject;
 
         //Create a Random object to be used to draw the battery status and Location of the drones.
         Random random = new Random(DateTime.Now.Millisecond);
 
+
+
+
+        #region singelton
+
+
+         static readonly IBL instance = new BL();
+
+        static BL() { }
+
+        public static IBL Instance { get => instance; }
+
+        #endregion
+
         #region constractor
-        public BL()
+         BL()
         {
             //Creates an object that will serve as an access point to methods in DAL.
-            dalObject = new DalObject.DalObject();
+            dalObject = DalFactory.GetDal("DalObject");
 
             double[] arrDrone = dalObject.RequestPowerbyDrone();
             Available = arrDrone[0];
@@ -117,7 +135,7 @@ namespace IBL
             DroneChargingRate = arrDrone[4];
 
             // Convert a layer dronelist to a logical layer drone list
-            List<IDAL.DO.Drone> dronesDal = dalObject.GetDroneList().ToList();
+            List<DO.Drone> dronesDal = dalObject.GetDroneList().ToList();
             dronesListBL = new List<DroneToList>();
             foreach (var item in dronesDal)
             {
@@ -128,7 +146,7 @@ namespace IBL
 
             //creating a customer list 
             List<Customer> customerListBL = new List<Customer>();
-            List<IDAL.DO.Customer> customerDal = dalObject.GetCustomerList().ToList();
+            List<DO.Customer> customerDal = dalObject.GetCustomerList().ToList();
             foreach (var item in customerDal)
             {
                 customerListBL.Add(new Customer
@@ -141,7 +159,7 @@ namespace IBL
             }
             //creating a basestationlist list
             List<BaseStation> baseStationBL = new List<BaseStation>();
-            List<IDAL.DO.BaseStation> baseStationDal = dalObject.GetBaseStationList().ToList();
+            List<DO.BaseStation> baseStationDal = dalObject.GetBaseStationList().ToList();
             foreach (var item in baseStationDal)
             {
                
@@ -156,7 +174,7 @@ namespace IBL
             }
 
             //creating a parcel list of parcel fro the data layer that were set to a drone already
-            List<IDAL.DO.Parcel> parcelListDal = dalObject.GetParcelList(x => x.DroneId != 0).ToList();
+            List<DO.Parcel> parcelListDal = dalObject.GetParcelList(x => x.DroneId != 0).ToList();
 
 
 
@@ -196,17 +214,17 @@ namespace IBL
                     {
                         BaseStation baseStation = baseStationBL[random.Next(0, baseStationBL.Count)];
                         item.DroneLocation = baseStation.BaseStationLocation;
-                        dalObject.SendDroneToCharge(baseStation.Id, item.Id);
+                        dalObject.SendDroneToCharge(item.Id, baseStation.Id);
                         dalObject.LessChargeSlots(baseStation.Id);
                         item.Battery = random.Next(0, 21);
                     }
                     if (item.Status == DroneStatuses.Free)
                     {
-                        List<IDAL.DO.Parcel> parcelListDeliveredByThisDrone = parcelListDal.FindAll(x => x.DroneId == item.Id && x.Delivered != DateTime.MinValue);
-                        if (parcelListDeliveredByThisDrone.Count != 0)
+                        List<DO.Parcel> parcelListDeliveredByThisDrone = parcelListDal.FindAll(x => x.DroneId == item.Id && x.Delivered != DateTime.MinValue);
+                        if (parcelListDeliveredByThisDrone.Any())
                         {
-                            int i = random.Next(0, parcelListDeliveredByThisDrone.Count);
-                            item.DroneLocation = customerListBL.Find(x => x.Id == parcelListDeliveredByThisDrone[i].TargetId).CustomerLocation;
+                           
+                            item.DroneLocation = customerListBL.Find(x => x.Id == parcelListDeliveredByThisDrone[random.Next(0, parcelListDeliveredByThisDrone.Count)].TargetId).CustomerLocation;
                             double batteryUse = mindistanceBetweenLocationBaseStation(baseStationBL, item.DroneLocation).Item2 * Available;
                             item.Battery = (float)((float)(random.NextDouble() * (100 - batteryUse)) + batteryUse);
 

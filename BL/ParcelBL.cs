@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
+using BO;
 
-namespace IBL
+namespace BL
 {
     public partial class BL
     {
@@ -20,30 +20,35 @@ namespace IBL
 
             //exception of the logical layer
             if (newParcel.Sender.Id < 0 || newParcel.Receiving.Id < 0)
-                throw new AddingProblemException(" תהודת זהות  לא יכול להיות מספר שלילי");
+                throw new AddingProblemException(" ID cant be a negative number");
             if (newParcel.Weight < (WeightCategories)0 || newParcel.Weight > (WeightCategories)2)
-                throw new AddingProblemException("משקל לא תקין");
+                throw new AddingProblemException("Improper weight");
             if (newParcel.Priority < (Priorities)0 || newParcel.Priority > (Priorities)2)
-                throw new AddingProblemException("מס שהוכנס לא תקין");
-            IDAL.DO.Parcel ParcelDal = new IDAL.DO.Parcel()
+                throw new AddingProblemException("Improper number");
+            try
             {
-                Id = newParcel.Id,
+                dalObject.GetCustomer(newParcel.Sender.Id);
+                dalObject.GetCustomer(newParcel.Receiving.Id);
+            }
+            catch (DO.NonExistingObjectException)
+            {
+                throw new AddingProblemException("ID doesnt exists in the system");
+
+            }
+            DO.Parcel ParcelDal = new DO.Parcel()
+            {
+                //Id = newParcel.Id,
                 SenderId = newParcel.Sender.Id,
                 TargetId = newParcel.Receiving.Id,
-                Weight = (IDAL.DO.WeightCategories)newParcel.Weight,
-                Priority = (IDAL.DO.Priorities)newParcel.Priority,
+                Weight = (DO.WeightCategories)newParcel.Weight,
+                Priority = (DO.Priorities)newParcel.Priority,
                 DroneId = 0,
                 Requested = DateTime.Now
             };
-            try
-            {
+           
                 dalObject.SetParcel(ParcelDal);
-            }
-            catch (IDAL.DO.AddExistingObjectException ex)
-            {
-                throw new AddingProblemException("קוד  זה כבר קיים במערכת", ex);
-
-            }
+            
+           
 
 
         }
@@ -54,26 +59,21 @@ namespace IBL
         {
             DroneToList drone = dronesListBL.Find(x => x.Id == droneId);
             if (drone == default)//if there is no drone with that id in the drone to list
-                throw new UpdateProblemException("קוד  זה לא קיים במערכת");
+                throw new UpdateProblemException("ID doesnt exists in the system");
             if (drone.Status != DroneStatuses.Free)//if the drone isnt free
-                throw new UpdateProblemException("אין אפשרות לשייך רחפן לחבילה שאינו פנוי");
+                throw new UpdateProblemException("not possible to assign a drone to a packadge if its not free ");
 
-            List<IDAL.DO.Parcel> highestPriority = ParcelHighestPriorityList(drone);
-            List<IDAL.DO.Parcel> heaviest = FindingHeaviestList(highestPriority, drone);
-            if (heaviest.Count == 0)
-                throw new UpdateProblemException("לא קיים חבילות לשיוך");
-            IDAL.DO.Parcel closestParcel = MinDistaceFromDroneToParcel(heaviest, drone.DroneLocation);
+            List<DO.Parcel> highestPriority = ParcelHighestPriorityList(drone);
+            List<DO.Parcel> heaviest = FindingHeaviestList(highestPriority, drone);
+            if (!heaviest.Any())
+            {
+                throw new UpdateProblemException("no parcels waiting to be assign");
+            }
+            DO.Parcel closestParcel = MinDistaceFromDroneToParcel(heaviest, drone.DroneLocation);
             drone.Status = DroneStatuses.Busy;
             drone.NumParcelTransfer = closestParcel.Id;
-            try
-            {
-                dalObject.SetParcelToDrone(closestParcel.Id, droneId);
-            }
-            catch (IDAL.DO.NonExistingObjectException ex)
-            {
-                throw new UpdateProblemException("קוד  זה לא קיים במערכת", ex);
-
-            }
+            dalObject.SetParcelToDrone(closestParcel.Id, droneId);
+            
         }
         #endregion Assign Parcel To Drone
 
@@ -84,12 +84,12 @@ namespace IBL
         /// </summary>
         /// <param name="drone">drone object</param>
         /// <returns>list of the most urgent packages</returns>
-        private List<IDAL.DO.Parcel> ParcelHighestPriorityList(DroneToList drone)
+        private List<DO.Parcel> ParcelHighestPriorityList(DroneToList drone)
         {
-            List<IDAL.DO.Parcel> allParcels = dalObject.GetParcelList(x => x.DroneId == 0).ToList();
-            List<IDAL.DO.Parcel> regularList = new List<IDAL.DO.Parcel>();//creata regular priority list
-            List<IDAL.DO.Parcel> fastList = new List<IDAL.DO.Parcel>();//creata fastpriority list
-            List<IDAL.DO.Parcel> urgentList = new List<IDAL.DO.Parcel>();//creata urgent priority list
+            List<DO.Parcel> allParcels = dalObject.GetParcelList(x => x.DroneId == 0).ToList();
+            List<DO.Parcel> regularList = new List<DO.Parcel>();//creata regular priority list
+            List<DO.Parcel> fastList = new List<DO.Parcel>();//creata fastpriority list
+            List<DO.Parcel> urgentList = new List<DO.Parcel>();//creata urgent priority list
             foreach (var item in allParcels)
             {
                 if (drone.MaxWeight >= (WeightCategories)item.Weight && DistancePossibleForDrone(item, drone))
@@ -111,7 +111,7 @@ namespace IBL
 
                 }
             }
-            return (urgentList.Count != 0 ? urgentList : fastList.Count != 0 ? fastList : regularList);
+            return (urgentList.Any() ? urgentList : fastList.Any() ? fastList : regularList);
         }
         #endregion Highest Priority List
 
@@ -122,11 +122,11 @@ namespace IBL
         /// <param name="parcels">list of the most urgent parcels</param>
         /// <param name="drone">drone object</param>
         /// <returns></returns>
-        private List<IDAL.DO.Parcel> FindingHeaviestList(List<IDAL.DO.Parcel> allParcels, DroneToList drone)
+        private List<DO.Parcel> FindingHeaviestList(List<DO.Parcel> allParcels, DroneToList drone)
         {
-            List<IDAL.DO.Parcel> lightList = new List<IDAL.DO.Parcel>();//creata light weight list
-            List<IDAL.DO.Parcel> mediumList = new List<IDAL.DO.Parcel>();//creata medium weight list
-            List<IDAL.DO.Parcel> heavyList = new List<IDAL.DO.Parcel>();//creata heavy weight list
+            List<DO.Parcel> lightList = new List<DO.Parcel>();//creata light weight list
+            List<DO.Parcel> mediumList = new List<DO.Parcel>();//creata medium weight list
+            List<DO.Parcel> heavyList = new List<DO.Parcel>();//creata heavy weight list
             foreach (var item in allParcels)
             {
                 switch ((WeightCategories)item.Weight)
@@ -144,7 +144,7 @@ namespace IBL
                         break;
                 }
             }
-            return (heavyList.Count != 0 ? heavyList : mediumList.Count != 0 ? mediumList : lightList);
+            return (heavyList.Any() ? heavyList : mediumList.Any() ? mediumList : lightList);
 
 
         }
@@ -159,7 +159,7 @@ namespace IBL
         /// <param name="drone">drone object</param>
         /// <returns></returns>
 
-        private bool DistancePossibleForDrone(IDAL.DO.Parcel item, DroneToList drone)
+        private bool DistancePossibleForDrone(DO.Parcel item, DroneToList drone)
         {
             double batteryUse = GetDistance(drone.DroneLocation, GetCustomer(item.SenderId).CustomerLocation) * Available;
             double distanceSenderTarget = GetDistance(GetCustomer(item.SenderId).CustomerLocation, GetCustomer(item.TargetId).CustomerLocation);
@@ -178,10 +178,14 @@ namespace IBL
                     break;
             }
 
-            if (drone.Battery - batteryUse < 0) { return false; }
+            if (drone.Battery - batteryUse < 0) 
+            { 
+                return false;   
+            }
 
-            List<IDAL.DO.BaseStation> baseStationsDal = dalObject.GetBaseStationList().ToList();
+            
             List<BaseStation> blBaseStationList = new List<BaseStation>();
+            List<DO.BaseStation> baseStationsDal = dalObject.GetBaseStationList().ToList();
             foreach (var x in baseStationsDal)
             {
                 blBaseStationList.Add(new BaseStation
@@ -192,9 +196,13 @@ namespace IBL
                     BaseStationLocation = new Location() { Longitude = x.Longitude, Latitude = x.Latitude }
                 });
             }
-            batteryUse += mindistanceBetweenLocationBaseStation(blBaseStationList, GetCustomer(item.TargetId).CustomerLocation).Item2;
-            if (drone.Battery - batteryUse < 0) { return false; }
-            return true;
+            batteryUse += mindistanceBetweenLocationBaseStation(blBaseStationList, GetCustomer(item.TargetId).CustomerLocation).Item2*Available;
+            if (drone.Battery - batteryUse < 0) 
+            { 
+                return false; 
+            }
+            else 
+               return true;
         }
         #endregion possible distace for drone
 
@@ -205,7 +213,7 @@ namespace IBL
         /// <param name="heaviest">list of the most urgent  and heaviest parcels</param>
         /// <param name="location">location of the drone</param>
         /// <returns></returns>
-        private IDAL.DO.Parcel MinDistaceFromDroneToParcel(List<IDAL.DO.Parcel> heaviest, Location location)
+        private DO.Parcel MinDistaceFromDroneToParcel(List<DO.Parcel> heaviest, Location location)
         {
             List<double> distanceList = new List<double>();
             foreach (var x in heaviest)
@@ -230,25 +238,18 @@ namespace IBL
         {
 
             DroneToList drone = dronesListBL.Find(x => x.Id == droneId);
-            IDAL.DO.Parcel myParcel = dalObject.GetParcel(drone.NumParcelTransfer);
+           DO.Parcel myParcel = dalObject.GetParcel(drone.NumParcelTransfer);
             if (drone == default)//if there is no drone with that id in the drone to list
-                throw new UpdateProblemException("קוד  זה לא קיים במערכת");
+                throw new UpdateProblemException("ID doesnt exists in the system");
             if (drone.NumParcelTransfer == 0)//if the drone isnt free
-                throw new UpdateProblemException("אין אפשרות לאסוף חבילה שלא שויכה לרחפן");
-            if (myParcel.PickUp != DateTime.MinValue)
-                throw new UpdateProblemException("אין אפשרות לאסוף חבילה שנאספה כבר");
+                throw new UpdateProblemException("not possible to pick up a package that has not been assign to a drone");
+            if (myParcel.PickUp != null)
+                throw new UpdateProblemException("not possible to pick up a package that has already been picked up");
             Location senderLocation = GetCustomer(myParcel.SenderId).CustomerLocation;
-            drone.Battery = GetDistance(drone.DroneLocation, senderLocation) * Available;
+            drone.Battery-= GetDistance(drone.DroneLocation, senderLocation) * Available;
             drone.DroneLocation = senderLocation;
-            try
-            {
-                dalObject.PickUpParcel(myParcel.Id);
-            }
-            catch (IDAL.DO.NonExistingObjectException ex)
-            {
-                throw new UpdateProblemException("קוד  זה לא קיים במערכת", ex);
-
-            }
+            dalObject.PickUpParcel(myParcel.Id);
+            
         }
         #endregion  picking up a parcel by drone
 
@@ -261,28 +262,28 @@ namespace IBL
         {
 
             DroneToList drone = dronesListBL.Find(x => x.Id == droneId);
-            IDAL.DO.Parcel myParcel = dalObject.GetParcel(drone.NumParcelTransfer);
+            DO.Parcel myParcel = dalObject.GetParcel(drone.NumParcelTransfer);
             if (drone == default)//if there is no drone with that id in the drone to list
-                throw new UpdateProblemException("קוד  זה לא קיים במערכת");
+                throw new UpdateProblemException("ID  doesnt exists in the system");
             if (drone.NumParcelTransfer == 0)//if the drone isnt free
-                throw new UpdateProblemException("אין אפשרות למסור חבילה שלא שויכה לרחפן");
-            if (myParcel.PickUp == DateTime.MinValue)
-                throw new UpdateProblemException("אין אפשרות למסור חבילה  שלא נאספה ");
-            if (myParcel.Delivered != DateTime.MinValue)
-                throw new UpdateProblemException("אין אפשרות למסור חבילה  שנמסרה כבר ");
-            if (myParcel.PickUp != DateTime.MinValue && myParcel.Delivered == DateTime.MinValue)
+                throw new UpdateProblemException("not possible to deliver a package that has not  been assign to a drone");
+            if (myParcel.PickUp == null)
+                throw new UpdateProblemException("not possible to deliver a package that has not  been picked up ");
+            if (myParcel.Delivered != null)
+                throw new UpdateProblemException("not possible to deliver a package that has already been delivered ");
+            if (myParcel.PickUp != null && myParcel.Delivered == null)
             {
                 Location targetLocation = GetCustomer(myParcel.TargetId).CustomerLocation;
                 switch ((WeightCategories)myParcel.Weight)
                 {
                     case WeightCategories.Light:
-                        drone.Battery -= GetDistance(drone.DroneLocation, targetLocation) * LightWeightCarrier;
+                        drone.Battery -= GetDistance(targetLocation, drone.DroneLocation) * LightWeightCarrier;
                         break;
                     case WeightCategories.Medium:
-                        drone.Battery -= GetDistance(drone.DroneLocation, targetLocation) * MediumWeightCarrier;
+                        drone.Battery -= GetDistance(targetLocation, drone.DroneLocation) * MediumWeightCarrier;
                         break;
                     case WeightCategories.Heavy:
-                        drone.Battery -= GetDistance(drone.DroneLocation, targetLocation) * HeavyWeightCarrier;
+                        drone.Battery -= GetDistance( targetLocation, drone.DroneLocation) * HeavyWeightCarrier;
                         break;
                     default:
                         break;
@@ -291,15 +292,8 @@ namespace IBL
                 drone.DroneLocation = targetLocation;
                 drone.Status = DroneStatuses.Free;
                 drone.NumParcelTransfer = 0;
-                try
-                {
-                    dalObject.DeliverToCustomer(myParcel.Id);
-                }
-                catch (IDAL.DO.NonExistingObjectException ex)
-                {
-                    throw new UpdateProblemException("קוד  זה לא קיים במערכת", ex);
-
-                }
+                dalObject.DeliverToCustomer(myParcel.Id);
+               
             }
 
         }
@@ -308,14 +302,14 @@ namespace IBL
         #region display parcel
         public Parcel GetParcel(int idForDisplayParcel)
         {
-            IDAL.DO.Parcel dalParcel = new IDAL.DO.Parcel();
+            DO.Parcel dalParcel = new DO.Parcel();
             try
             {
                 dalParcel = dalObject.GetParcel(idForDisplayParcel);
             }
-            catch (IDAL.DO.NonExistingObjectException)
+            catch (DO.NonExistingObjectException)
             {
-                throw new GetDetailsProblemException("קוד זה לא קיים");
+                throw new GetDetailsProblemException("ID  doesnt exists in the system");
             }
 
             DroneToList droneToList = dronesListBL.Find(x => x.Id == dalParcel.DroneId);
@@ -333,7 +327,7 @@ namespace IBL
                 PickUp = dalParcel.PickUp,
                 Delivered = dalParcel.Delivered
             };
-            if (disPlayParcel.Scheduled != DateTime.MinValue)
+            if (disPlayParcel.Scheduled != null)
             {
                 DroneParcel droneInThePackage = new DroneParcel()
                 {
@@ -352,16 +346,16 @@ namespace IBL
         public IEnumerable<ParcelToList> GetParcelList(Predicate<ParcelToList> predicate = null)
         {
             List<ParcelToList> parcels = new List<ParcelToList>();
-            List<IDAL.DO.Parcel> holdDalParcels = dalObject.GetParcelList().ToList();
+            List<DO.Parcel> holdDalParcels = dalObject.GetParcelList().ToList();
 
             foreach (var item in holdDalParcels)
             {
                 ParcelStatus currentStatus;
-                if (item.Delivered != DateTime.MinValue)
+                if (item.Delivered != null)
                     currentStatus = ParcelStatus.Delivered;
-                else if (item.PickUp != DateTime.MinValue)
+                else if (item.PickUp != null)
                     currentStatus = ParcelStatus.PickUp;
-                else if (item.Scheduled != DateTime.MinValue)
+                else if (item.Scheduled != null)
                     currentStatus = ParcelStatus.Scheduled;
                 else
                     currentStatus = ParcelStatus.Requested;

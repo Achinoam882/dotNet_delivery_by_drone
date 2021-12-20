@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBL.BO
+namespace BO
 {
    public class Customer
     {
@@ -16,11 +16,13 @@ namespace IBL.BO
 
         public Location CustomerLocation { get; set; }
 
-        public IEnumerable<ParcelAtCustomer> ParcelFromCustomer { get; set; }
-        public IEnumerable<ParcelAtCustomer> ParcelToCustomer { get; set; }
+        public List<ParcelAtCustomer> ParcelFromCustomer { get; set; }
+        public List<ParcelAtCustomer> ParcelToCustomer { get; set; }
         public override string ToString()
         {
-            return this.ToStringProperty();
+            return string.Format("Id is:{0}\nName of customer is:{1}\nPhone Number :{2}\nlocation:{3}\n", Id, Name, PhoneNumber, CustomerLocation)
+                + "Parcel From Customer:\n" + String.Join(Environment.NewLine, ParcelFromCustomer) +
+                "Parcel To Customer:\n" + String.Join(Environment.NewLine, ParcelToCustomer) + "\n";
         }
     }
 }

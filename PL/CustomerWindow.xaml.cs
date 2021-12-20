@@ -1,0 +1,117 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Media;
+using BO;
+namespace PL
+{
+    /// <summary>
+    /// Interaction logic for CustomerWindow.xaml
+    /// </summary>
+    public partial class CustomerWindow : Window
+    {
+        BlApi.IBL bl;
+        public bool close = true;
+        private CustomerListWindow customerListWindow;
+        public CustomerWindow(BlApi.IBL blObject, CustomerListWindow customerList)
+        {
+            InitializeComponent();
+            AddCustomerGrid.Visibility = Visibility.Visible;
+            bl = blObject;
+            customerListWindow = customerList;
+        }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            if (IdTextBox.Text.Length != 0 && NameTextBox.Text.Length != 0 && latitudeTextBox.Text.Length != 0 && longitudeTextBox.Text.Length != 0 && PhoneNumberTextbox.Text.Length != 0)
+            {
+                Location newLocation = new Location { Latitude = double.Parse(latitudeTextBox.Text), Longitude = double.Parse(longitudeTextBox.Text) };
+
+                Customer newCustomer = new Customer
+                {
+                    Id = int.Parse(IdTextBox.Text),
+                    Name = NameTextBox.Text,
+                    PhoneNumber = PhoneNumberTextbox.Text,
+                    CustomerLocation = newLocation
+                };
+                try
+                {
+                    bl.SetCustomer(newCustomer);
+                    MessageBox.Show("Your customer was added successfully", "success!");
+                    CustomerToList customerList = bl.GetCustomerList().ToList().Find(i => i.Id == newCustomer.Id);
+                    customerListWindow.customerToList.Add(customerList);
+                    close = false;
+                    Close();
+                    customerListWindow.IsEnabled = true;
+                }
+                catch (AddingProblemException ex)
+                {
+                    SystemSounds.Beep.Play();
+                    MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+                    if (IdTextBox.Focus())
+                    {
+                        IdTextBox.BorderBrush = Brushes.Red; //bonus 
+                    }
+
+                }
+                //רענון
+            }
+        }
+
+
+        private void cancel_click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult boxresult = MessageBox.Show("Are you sure you want to cancel this addition?", "info!", MessageBoxButton.YesNo, MessageBoxImage.Information);
+            switch (boxresult)
+            {
+                case MessageBoxResult.Yes:
+                    close = false;
+                    Close();
+                    customerListWindow.IsEnabled = true;
+                    break;
+                case MessageBoxResult.No:
+                    break;
+                default:
+                    break;
+            }
+        }
+        Customer customer;
+        int index;
+        public CustomerWindow(BlApi.IBL blObject, CustomerListWindow customerList, int id, int indexId)
+        {
+            InitializeComponent();
+            UpdateGrid.Visibility = Visibility.Visible;
+            bl = blObject;
+            customerListWindow = customerList;
+            index = indexId;
+            customer = bl.GetCustomer(id);
+            DataContext = customer;
+        }
+            private void DeleteCustomer_Click(object sender, RoutedEventArgs e)
+            {
+
+            }
+
+            private void UpdateCustomer_Click(object sender, RoutedEventArgs e)
+            {
+            bl.UpdateCustomer(customer.Id, NameTextBox1.Text, PhoneTextBox.Text);
+            MessageBox.Show("The Customer Was Updated successfully", "success!");
+            //רענון
+        }
+
+    }
+    
+}
+
+

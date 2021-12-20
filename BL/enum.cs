@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IBL.BO
+namespace BO
 {
     /// <summary> enum for Priorities of the parcel </summary>
     public enum Priorities { Regular, Fast, Urgent }

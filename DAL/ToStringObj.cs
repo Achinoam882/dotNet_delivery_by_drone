@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
-using System.Reflection;
 
-namespace IDAL
-{
+
+
     namespace DO
     {
        public static class ToStringObj
@@ -22,4 +21,4 @@ namespace IDAL
         }
     }
  
-}
+

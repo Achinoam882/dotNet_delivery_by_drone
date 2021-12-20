@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL;
-using IDAL.DO;
+using DO;
+using DalApi;
 
 namespace DalObject
 {
-    public partial class DalObject :IDal
+    partial class DalObject :IDal
     {
       #region to Get Charge Slots List
         public IEnumerable<DroneCharge>GetChargeSlotsList(Predicate<DroneCharge> DroneChargepredicate = null)

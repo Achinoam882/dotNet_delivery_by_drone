@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL.DO;
+using DO;
+using DalApi;
 using System.ComponentModel;
 
 namespace DalObject
@@ -11,7 +12,7 @@ namespace DalObject
     /// <summary>
     /// Contains boot data and list structure
     /// </summary>
-    public static class DataSource
+     static class DataSource
     {
         #region lists of structs
         /// <summary> A static Random that sets the random to select a millisecond to repel collisions </summary>
@@ -30,12 +31,12 @@ namespace DalObject
 
         internal class Config
         {
-            public static int IdParcel = 1;
-            public static double Available;
-            public static double LightWeightCarrier;
-            public static double MediumWeightCarrier;
-            public static double HeavyWeightCarrier;
-            public static double DroneChargingRate;
+            public static int IdParcel=1;
+            public static double Available = 0.5;
+            public static double LightWeightCarrier = 0.6;
+            public static double MediumWeightCarrier = 0.7;
+            public static double HeavyWeightCarrier = 0.800;
+            public static double DroneChargingRate = 300;
 
         }
        
@@ -46,19 +47,19 @@ namespace DalObject
             BaseStationList.Add(new BaseStation()
             {
 
-                Id = R.Next(100000000, 999999999),
-                Name = "Eilat",
-                Latitude = 35.789900,
-                Longitude = 33.268437,
-                ChargeSlots = R.Next(5, 10)
+                Id = /*R.Next(100000000, 999999999),*/ 10,
+                Name = "beit shemesh",
+                Latitude = 31.78272,
+                Longitude = 35.18722,
+                ChargeSlots = /*R.Next(5, 10)*/6
             });
             BaseStationList.Add(new BaseStation()
             { 
-                    Id = R.Next(100000000, 999999999),
-                    Name = "Tel Aviv",
-                    Latitude = 35.239900,
-                    Longitude = 33.678437,
-                    ChargeSlots = R.Next(5, 10)
+                    Id = /*R.Next(100000000, 999999999)*/11,
+                    Name = "jerusalem",
+                    Latitude = 31.783333,
+                    Longitude = 35.316667,
+                    ChargeSlots = /*R.Next(5, 10)*/ 10
              });
             #endregion base station initialization
 
@@ -74,8 +75,7 @@ namespace DalObject
                         Id = R.Next(100000000, 999999999),
                         Model = ModelArr[i],
                         MaxWeight = (WeightCategories)R.Next(0,3),//0=light,1=medium,2=heavy
-                    //Status = (DroneStatuses)r.Next(0, 3),//0=free, 1=inMaintenance, 2=busy
-                    //Battery = r.Next(0,100),
+                   
 
                     });
 
@@ -94,9 +94,11 @@ namespace DalObject
                         Id = R.Next(100000000, 999999999),
                         Name = CustomerNameArr[i],
                         PhoneNumber="0"+R.Next(50,60)+"-"+ R.Next(0000000,9999999),
-                        Longitude= R.Next(31,36)+R.NextDouble(),
-                        Latitude = R.Next(31, 36) + R.NextDouble(),
-                    });
+                    Latitude  =  (float)((float)(R.NextDouble()*(31.783333 - 31.78272))+ 31.78272),
+                    Longitude = (float)((float)(R.NextDouble() * (35.316667 - 35.18722)) + 35.18722)
+                    
+
+                });
 
                 }
             #endregion customer initialization
@@ -118,7 +120,7 @@ namespace DalObject
 
 
                 //r.Next(1000,9999),
-                Requested = new DateTime(2021, 7, R.Next(1, 7))
+                Requested =  DateTime.Now
                 });
                 }
             #endregion parcel initialization

@@ -1,0 +1,29 @@
+﻿<Window x:Class="PL.Login1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+         WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize"
+        Title="Login1" Height="751" Width="455">
+    <Grid Width="454" Height="800">
+        <Grid.Background >
+            <ImageBrush ImageSource="/login.png" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <TextBox x:Name="NameTextBox"  HorizontalAlignment="Left" Margin="123,347,0,0" Text="Name"  TextWrapping="Wrap"  VerticalAlignment="Top" Width="261" Height="53" Background="#FF345075" BorderBrush="#FF345075" FontStyle="Italic" FontWeight="Normal" FontSize="19" TextAlignment="Left" FontFamily="Nirmala UI" Foreground="Gray" PreviewKeyDown="Name_KeyDown"   />
+        <TextBox x:Name="PassWordTextBox"  HorizontalAlignment="Left" Margin="123,419,0,0" Text="Password" TextWrapping="Wrap" VerticalAlignment="Top" Width="261" Height="52" Background="#FF345075" BorderBrush="#FF345075"  FontStyle="Italic"  FontWeight="Normal" FontSize="19" TextAlignment="Left" FontFamily="Nirmala UI" Foreground="Gray"   PreviewKeyDown="PassWord_KeyDown" />
+        <Button x:Name="ButtonLogin" Content="LOGIN" BorderBrush="Transparent" Background="Transparent" Margin="103,596,107,162"  FontWeight="Medium" FontSize="25"  FontFamily="Nirmala UI" Foreground="Gray" RenderTransformOrigin="0.506,0.218" Click="ButtonLogin_Click" />
+        <CheckBox x:Name="ManagerCheckBox"  Content="I'm Customer" Margin="0,685,306,61" FontSize="19" FontFamily="Nirmala UI" Foreground="Black"  Checked="signIn_checked"/>
+        <Button x:Name="ButtonSignin" BorderBrush="Transparent" FontWeight="Medium" FontSize="25"   RenderTransformOrigin="0.506,0.218" Margin="380,661,10,76" Visibility="Hidden" >
+            <Button.Background>
+                <ImageBrush  ImageSource="/3793621.png"/>
+            </Button.Background>
+
+        </Button>
+
+
+
+
+    </Grid>
+</Window>

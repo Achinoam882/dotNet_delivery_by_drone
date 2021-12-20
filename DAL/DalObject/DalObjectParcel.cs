@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL;
-using IDAL.DO;
+using DO;
+using DalApi;
 
 namespace DalObject
 {
-    public partial class DalObject :IDal
+   partial class DalObject :IDal
     {
         #region add parcel
         /// <summary>
@@ -18,12 +18,11 @@ namespace DalObject
         /// <returns></returns>
         public int SetParcel(Parcel newParcel)
         {
-            if (DataSource.ParcelList.FindIndex(x => x.Id == newParcel.Id) != -1)
-            {
-                throw new AddExistingObjectException();
-            }
+           
+
+            newParcel.Id = DataSource.Config.IdParcel++;
             DataSource.ParcelList.Add(newParcel);
-            return DataSource.Config.IdParcel++;
+            return newParcel.Id;
 
         }
         #endregion add parcel
@@ -36,7 +35,7 @@ namespace DalObject
         /// <returns>return empty ubjact if its not there</returns>
         public Parcel GetParcel(int idForAllObjects)
         {
-            if (!(DataSource.ParcelList.Exists(x => x.Id == idForAllObjects)))
+            if ((DataSource.ParcelList.FindIndex(x => x.Id == idForAllObjects)==-1))
             {
                 throw new NonExistingObjectException();
             }

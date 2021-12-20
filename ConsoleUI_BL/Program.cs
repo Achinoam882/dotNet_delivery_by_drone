@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL;
-using IBL.BO;
+using BO;
+using BlApi;
 
 
 
@@ -19,7 +19,7 @@ namespace ConsoleUI_BL
         /// The function handles various addition options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void AddOptions(IBL.IBL bl)
+        static public void AddOptions(BlApi.IBL bl)
         {
 
             Add add;
@@ -73,7 +73,7 @@ please enter the id of the new station");
                 case Add.Drone:
                     int idDrone, firstChargingStation;
                     string model;
-                    WeightCategories maxWeight;
+                    int maxWeight;
                     //DroneStatuses status;
                     //double battery;
                     Console.WriteLine(@"
@@ -83,19 +83,15 @@ please enter the id of the new drone");
                     Console.WriteLine(" please enter the model of the new drone");
                     model = Console.ReadLine();
                     Console.WriteLine(" please enter the weight of the new drone:0 for light,1 for medium,2 for heavy");
-                     WeightCategories.TryParse(Console.ReadLine(), out maxWeight);
-                    // Console.WriteLine(" please enter the status of the new drone:0 for free,1 for inMaintenance,2 for busy");
-                    //DroneStatuses.TryParse(Console.ReadLine(), out status);
-                    Console.WriteLine("please enter the Station number  to put the drone for charging");
-                    while (!int.TryParse(Console.ReadLine(), out firstChargingStation));
+                   while(! int.TryParse(Console.ReadLine(), out maxWeight));
                     Console.WriteLine("please enter the Station number  to put the drone for charging");
                     while (!int.TryParse(Console.ReadLine(), out firstChargingStation));
                     DroneToList newDrone = new DroneToList
                     {
                         Id = idDrone,
                         Model = model,
-                        MaxWeight = maxWeight,
-                        //firstchargingStation???
+                        MaxWeight =(WeightCategories)maxWeight,
+                        
                      
                     };
                     try
@@ -147,10 +143,8 @@ please enter the id of the new customer");
                     break;
 
                 case Add.ParcelDelivery:
-                    int senderId, targetId;
+                    int senderId, targetId, weightParcel, newPriority;
                     string senderName, targetName;
-                    WeightCategories weightParcel;
-                    Priorities newPriority;
                     Console.WriteLine(@"
 You have chosen to add a new parcel to delivery,
 please enter the id of the sender");
@@ -162,17 +156,17 @@ please enter the id of the sender");
                     Console.WriteLine("Next Please enter the name of the customer:");
                     targetName = Console.ReadLine();
                     Console.WriteLine(" please enter the weight of the new parcel:0 for light,1 for medium,2 for heavy");
-                    while(!WeightCategories.TryParse(Console.ReadLine(), out weightParcel));
+                    while(!int.TryParse(Console.ReadLine(), out weightParcel));
                     Console.WriteLine(" please enter the priority of the new parcel:0 for regular,1 for fast,2 for urgent");
-                    while(!Priorities.TryParse(Console.ReadLine(), out newPriority));
+                    while(!int.TryParse(Console.ReadLine(), out newPriority));
                     CustomerParcel newCustomerParcelSender = new CustomerParcel {Id= senderId,Name = senderName };
                     CustomerParcel newCustomerParcelTarget = new CustomerParcel { Id = targetId, Name = targetName };
                     Parcel newParcel = new Parcel
                     {
                         Sender = newCustomerParcelSender,
                         Receiving = newCustomerParcelTarget, 
-                        Weight = weightParcel,
-                        Priority = newPriority,                      
+                        Weight = (WeightCategories)weightParcel,
+                        Priority = (Priorities)newPriority,                      
                     };
                     try
                     {
@@ -197,7 +191,7 @@ please try again");
         /// The function handles various update options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void UpDateOptions(IBL.IBL bl)
+        static public void UpDateOptions(BlApi.IBL bl)
         {
             Update update;
             int number = 0;
@@ -215,7 +209,6 @@ choose:
             update = (Update)number;
             int customerId, baseStationId, droneId;
             string newDroneModel,baseStationName, customerName, phoneNumber,chargeSlots;
-            DateTime time;
             switch (update)
             {
                 case Update.DroneName:
@@ -279,11 +272,11 @@ choose:
                 case Update.OutChargingDrone:
                     Console.WriteLine("please enter the id of the drone");
                     while(!int.TryParse(Console.ReadLine(), out droneId));
-                    Console.WriteLine("Please enter the length of time the drone has been charging:");
-                    DateTime.TryParse(Console.ReadLine(), out time);
+                    //Console.WriteLine("Please enter the length of time the drone has been charging:");
+                    //TimeSpan.TryParse(Console.ReadLine(), out time);
                     try
                     {
-                        bl.ReleaseFromCharging(droneId, time);
+                        bl.ReleaseFromCharging(droneId);
                     }
                     catch (UpdateProblemException ex)
                     {
@@ -339,7 +332,7 @@ please choose again");
         /// The function handles display options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void DisplayOptions(IBL.IBL bl)
+        static public void DisplayOptions(BlApi.IBL bl)
         {
             int idForAllObjects;
             Display display;
@@ -428,7 +421,7 @@ please try again");
         /// The function handles list view options.
         /// </summary>
         /// <param name="dal">DalObject object that is passed as a parameter to enable the functions in the DalObject class</param>
-        static public void DisplayListsOptions(IBL.IBL bl)
+        static public void DisplayListsOptions(BlApi.IBL bl)
         {
             ViewList viewList;
             int number = 0;
@@ -463,6 +456,8 @@ choose:
                     PrintList(bl.GetBaseStationList(x => x.FreeChargeSlots > 0).ToList());
                     break;
                 default:
+                    Console.WriteLine(@"you entered a wrong number.
+please try again");
                     break;
             }
 
@@ -474,8 +469,8 @@ choose:
         #endregion main options
         static void Main(string[] args)
        {
-            
-            IBL.IBL BlObject = new IBL.BL();
+
+            IBL BlObject = BlFactory.GetBl();
             int number = 0;
             Choice choice;
             do
