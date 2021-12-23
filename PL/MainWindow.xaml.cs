@@ -32,20 +32,26 @@ namespace PL
         private void ShowDroneListButtom(object sender, RoutedEventArgs e)
         {
             new DroneListWindow(BlObject).Show();
-            this.Close();
+            //this.Close();
             //SystemSounds.Asterisk.Play();
         }
 
         private void BaseStation_Click(object sender, RoutedEventArgs e)
         {
             new BaseStationListWindow(BlObject).Show();
-            this.Close();
+            //this.Close();
         }
 
         private void Customer_Click(object sender, RoutedEventArgs e)
         {
             new CustomerListWindow(BlObject).Show();
-            this.Close();
+            //this.Close();
+        }
+
+        private void Parcel_Click(object sender, RoutedEventArgs e)
+        {
+            new ParcelListWindow(BlObject).Show();
+            //this.Close();
         }
     }
 }

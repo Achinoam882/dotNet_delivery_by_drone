@@ -28,6 +28,7 @@ namespace PL
         BlApi.IBL bl;
         public bool close = true;
         private BaseStationListWindow basestationListWindow;
+
         public BaseStationWindow(BlApi.IBL blObject, BaseStationListWindow baseStationListWindow)
         {
             InitializeComponent();
@@ -123,10 +124,18 @@ namespace PL
           
             bl.UpdateBaseStaison(baseStation.Id, NameTextBox1.Text, FreeChargeSlotTextBox.Text);
             MessageBox.Show("The BaseStation Was Updated successfully", "success!");
-            //NameTextBox1.IsEnabled = false;
-            //FreeChargeSlotTextBox.IsEnabled = false;
-            //BaseStationListView.baseStationToList.Items.refresh();
+            baseStation = bl.GetBaseStation(baseStation.Id);
+            DataContext = baseStation;
+            int index = basestationListWindow.BaseStationListView.SelectedIndex;
+            BaseStationToList baseStationToList = basestationListWindow.baseStationToList[index];
+            baseStationToList.FreeChargeSlots =int.Parse(FreeChargeSlotTextBox.Text);
+            baseStationToList.Name = NameTextBox1.Text;
+            basestationListWindow.baseStationToList[index] = baseStationToList;
 
+            NameTextBox1.IsReadOnly = true;
+            FreeChargeSlotTextBox.IsReadOnly = true;
+            //BaseStationListView.baseStationToList.Items.refresh();
+            basestationListWindow.BaseStationListView.Items.Refresh();
         }
 
         private void DeleteBaseStation_Click(object sender, RoutedEventArgs e)
@@ -136,12 +145,34 @@ namespace PL
 
         private void DroneInfo_Click(object sender, MouseButtonEventArgs e)
         {
-            DroneToList drone = (DroneToList)DroneChargingView.SelectedItem;
+            DroneCharging drone = (DroneCharging)DroneChargingView.SelectedItem;
             int droneIndex = DroneChargingView.SelectedIndex;
-           // this.IsEnabled = false;
+            this.IsEnabled = false;
             if (drone != null)
                 new DroneWindow(bl, this, drone.Id, droneIndex).Show();
+
         }
-    }
+
+        private void chargeslotstextbox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (chargeslotstextbox.Text.StartsWith('-'))
+            {
+                chargeslotstextbox.Text = "Charge Slots Can't Be A Negative Number";
+                chargeslotstextbox.BorderBrush = Brushes.Red;
+                chargeslotstextbox.Foreground = Brushes.Red;
+            }
+        }
+        private void DroneInfo_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (chargeslotstextbox.Text == "Charge Slots Can't Be A Negative Number")
+            {
+                chargeslotstextbox.Clear();
+                chargeslotstextbox.Foreground = Brushes.Black;
+                chargeslotstextbox.BorderBrush = Brushes.Transparent;
+            }
+        }
+
+       
+}
    
 }

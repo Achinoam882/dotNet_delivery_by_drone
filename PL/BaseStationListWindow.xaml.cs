@@ -23,14 +23,18 @@ namespace PL
     /// </summary>
     public partial class BaseStationListWindow : Window
     {
+        CollectionView view;
+
         BlApi.IBL bl;
         bool close = true;
         public ObservableCollection<BO.BaseStationToList> baseStationToList;
+        
         public BaseStationListWindow(BlApi.IBL blObject)
         {
             InitializeComponent();
             bl = blObject;
             baseStationToList = new ObservableCollection<BaseStationToList>();
+            
             //var<BO.BaseStationToList>(from item in bl.GetBaseStationList()
             //                           orderby item
             //                           select item);
@@ -42,12 +46,13 @@ namespace PL
             BaseStationListView.ItemsSource = baseStationToList;
             //baseStationToList.CollectionChanged += BaseStationToList_CollectionChanged;
         }
+      
 
         private void BaeStationAct_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             BaseStationToList baseStation = (BaseStationToList)BaseStationListView.SelectedItem;
             int baseStationIndex = BaseStationListView.SelectedIndex;
-            this.IsEnabled = false;
+            //this.IsEnabled = false;
             if (baseStation != null)
                 new BaseStationWindow(bl, this, baseStation.Id, baseStationIndex).Show();
             //BaseStationListView.ItemsSource=baseStationToList.refresh();
@@ -65,6 +70,29 @@ namespace PL
 
             e.Cancel = close;
         }
+
+        private void Group_click(object sender, RoutedEventArgs e)
+        {
+            if (GroupButton.Name == "GroupButton")
+
+            {
+                view = (CollectionView)CollectionViewSource.GetDefaultView(BaseStationListView.ItemsSource);
+                PropertyGroupDescription groupDescription = new PropertyGroupDescription(" FreeChargeSlots");
+                view.GroupDescriptions.Add(groupDescription);
+                GroupButton.Content = "Clear";
+                GroupButton.Name = "ClearButton";
+
+            }
+            else
+            {
+
+                view = (CollectionView)CollectionViewSource.GetDefaultView(BaseStationListView.ItemsSource);
+                view.GroupDescriptions.Clear();
+                GroupButton.Content = "Grouping By Free charges slots";
+                GroupButton.Name = "GroupButton";
+            }
+        }
+
     }
     
 }

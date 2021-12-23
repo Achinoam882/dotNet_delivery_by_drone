@@ -375,5 +375,22 @@ namespace BL
         }
 
         #endregion display parcel list
+        public void DeleteParcel(int ParcelId)
+        {
+            DO.Parcel myParcel = dalObject.GetParcel(ParcelId);
+            if (myParcel.Scheduled!=null)
+            {
+                throw new UpdateProblemException("not possible to delete a package that has already been assigned ");
+               
+            }
+            try
+            {
+                dalObject.DeleteParcel(ParcelId);
+            }
+            catch(DO.NonExistingObjectException)
+            {
+                throw new UpdateProblemException("ID  doesnt exists in the system");
+            }
+        }
     }
 }

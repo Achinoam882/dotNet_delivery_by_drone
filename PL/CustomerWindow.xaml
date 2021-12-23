@@ -70,16 +70,16 @@ VerticalAlignment="Stretch" Width="auto">
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions >
-                    <TextBox x:Name="IdTextBox"   HorizontalAlignment="Left" Margin="0,0,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="190"  />
+                    <TextBox x:Name="IdTextBox"   HorizontalAlignment="Left" Margin="0,0,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="190"  KeyDown=" TextBoxId_KeyDown"/>
                     <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="1" Text="" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="190" Grid.RowSpan="1" />
                     <TextBox x:Name="latitudeTextBox" Grid.Row="3" HorizontalAlignment="Left"  VerticalAlignment="Stretch" Margin="0,0,0,0" Width="190"/>
                     <TextBox x:Name="longitudeTextBox" Grid.Row="4" HorizontalAlignment="Left"  VerticalAlignment="Stretch" Margin="0,0,0,0" Width="190"/>
-                    <TextBox x:Name="PhoneNumberTextbox" Grid.Row="2"   HorizontalAlignment="Left" Margin="0,0,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="190"   />
+                    <TextBox x:Name="PhoneNumberTextbox" Grid.Row="2"   HorizontalAlignment="Left" Margin="0,0,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="190"  KeyDown="TextBoxPN_KeyDown" />
                     <Button x:Name="cancel" Content="Cancel" Grid.Row="5" HorizontalAlignment="Left" Margin="0,19,0,0" Width="110" Click="cancel_click"/>
                     <Button x:Name="Add" Content="Add" Grid.Row="5" HorizontalAlignment="Left" Margin="-132,20,0,0" VerticalAlignment="Top" Height="30" Width="110"  RenderTransformOrigin="0.081,0.338" Click="Add_Click" />
                 </Grid>
             </Grid>
-            <Grid x:Name="UpdateGrid" RenderTransformOrigin="0.589,0.447"  Visibility="Hidden" >
+            <Grid x:Name="UpdateGrid" RenderTransformOrigin="0.589,0.447" Visibility="Hidden"  >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="250*"/>
                     <ColumnDefinition Width="550*"/>
@@ -114,13 +114,37 @@ VerticalAlignment="Stretch" Width="auto">
 
 
                 </Grid>
-      <!--??-->
-                <TextBox x:Name="ParcelFromCustomer" VerticalScrollBarVisibility="Auto"  Grid.Column="1" HorizontalAlignment="Left" Margin="346,42,0,0" Text="{Binding Path=ParcelList}" TextWrapping="Wrap" VerticalAlignment="Top" Width="179" Height="128"  IsReadOnly="True"/>
-                <TextBox x:Name="ParcelToCustomer" VerticalScrollBarVisibility="Auto"  Grid.Column="1" HorizontalAlignment="Left" Margin="96,42,0,0" Text="{Binding Path=ParcelList}" TextWrapping="Wrap" VerticalAlignment="Top" Width="179" Height="128"  IsReadOnly="True"/>
+                <!--??-->
+                <!--<TextBox x:Name="ParcelFromCustomer" VerticalScrollBarVisibility="Auto"  Grid.Column="1" HorizontalAlignment="Left" Margin="346,42,0,0" Text="{Binding Path=ParcelList}" TextWrapping="Wrap" VerticalAlignment="Top" Width="179" Height="128"  IsReadOnly="True"/>
+                <TextBox x:Name="ParcelToCustomer" VerticalScrollBarVisibility="Auto"  Grid.Column="1" HorizontalAlignment="Left" Margin="96,42,0,0" Text="{Binding Path=ParcelList}" TextWrapping="Wrap" VerticalAlignment="Top" Width="179" Height="128"  IsReadOnly="True"/>-->
                 <Label x:Name="ParcelToCustomerLable" Content="Parcel received by customer:" Grid.Column="1" HorizontalAlignment="Left" Margin="87,16,0,0" VerticalAlignment="Top"/>
                 <Label x:Name="ParcelFromCustomerLable" Content="Parcel sents by customer:" Grid.Column="1" HorizontalAlignment="Left" Margin="333,11,0,0" VerticalAlignment="Top"/>
-                <Button x:Name="deleteBaseStationButton" Content="Delete" Grid.Column="1" HorizontalAlignment="Left" Margin="124,306,0,0" VerticalAlignment="Top" Height="32" Width="75" Click="DeleteCustomer_Click"/>
-                <Button x:Name="UpdateButton" Content="Update" Grid.Column="1" HorizontalAlignment="Left" Margin="245,306,0,0" VerticalAlignment="Top" Height="36" Width="74" Click="UpdateCustomer_Click" />
+                <Button x:Name="deleteBaseStationButton" Content="Delete" Grid.Column="1" HorizontalAlignment="Left" Margin="43,392,0,0" VerticalAlignment="Top" Height="32" Width="75" Click="DeleteCustomer_Click"/>
+                <Button x:Name="UpdateButton" Content="Update" Grid.Column="1" HorizontalAlignment="Left" Margin="150,385,0,0" VerticalAlignment="Top" Height="36" Width="74" Click="UpdateCustomer_Click" RenderTransformOrigin="-0.552,2.92" />
+                <ListView x:Name="ParcelFromCustomer" Grid.Column="1" Margin="275,42,0,186" ItemsSource="{Binding ParcelFromCustomer}" MouseDoubleClick="ParcelFromCustomer_Click" >
+                    <ListView.View >
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="100" ></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding  ParcelStatus}" Header="Parcel Status" Width="100"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Weight}" Header="Weight" Width="100" ></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding  Priority}" Header="Priority" Width="100"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding  OtherSide.Id}" Header="Id Target" Width="100"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding  OtherSide.Name}" Header="Name Target" Width="100"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+                <ListView x:Name="ParcelToCustomer" Grid.Column="1" Margin="224,42,0,217" ItemsSource="{Binding ParcelToCustomer}" MouseDoubleClick="ParcelToCustomer_Click" >
+                    <ListView.View >
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="100" ></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding  ParcelStatus}" Header="ParcelStatus" Width="100"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding Weight}" Header="Weight" Width="100" ></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding  Priority}" Header="Priority" Width="100"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding  OtherSide.Id}" Header="Sender Id" Width="100"></GridViewColumn>
+                            <GridViewColumn DisplayMemberBinding="{Binding  OtherSide.Name}" Header="Sender Name" Width="100"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
 
 
             </Grid>

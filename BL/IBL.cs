@@ -52,7 +52,7 @@ namespace BlApi
      
         void PickUpParcelByDrone(int droneId);
          void DroneDeliverParcel(int droneId);
-
+        public void DeleteParcel(int ParcelId);
 
     }
 }

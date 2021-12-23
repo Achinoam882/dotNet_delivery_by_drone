@@ -24,7 +24,7 @@ namespace PL
     public partial class CustomerListWindow : Window
     {
         BlApi.IBL bl;
-        bool close = true;
+        //bool close = true;
         public ObservableCollection<BO.CustomerToList> customerToList;
 
         public CustomerListWindow(BlApi.IBL blObject)
@@ -39,6 +39,7 @@ namespace PL
             }
             //customerToList.CollectionChanged += CustomerToList_CollectionChanged;
             CustomerListView.ItemsSource = customerToList;
+            
 
         }
 
@@ -49,7 +50,6 @@ namespace PL
             this.IsEnabled = false;
             if (customer != null)
                 new CustomerWindow(bl, this, customer.Id, customerIndex).Show();
-       //רענוןןןןן
          }
 
         private void AddCustomer_Click(object sender, RoutedEventArgs e)

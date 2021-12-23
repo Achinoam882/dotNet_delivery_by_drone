@@ -16,6 +16,7 @@ using System.Media;
 using System.ComponentModel;
 
 
+
 namespace PL
 {
     /// <summary>
@@ -129,8 +130,8 @@ namespace PL
             if (IdTextBox.Text == "Id can't be a negative number")
             {
                 IdTextBox.Clear();
-                IdTextBox.Foreground = Brushes.Gray;
-                IdTextBox.BorderBrush = Brushes.Gray;
+                IdTextBox.Foreground = Brushes.Black;
+                IdTextBox.BorderBrush = Brushes.Transparent;
             }
         }
         private void ModelCheck_LostFocus(object sender, RoutedEventArgs e)
@@ -147,8 +148,8 @@ namespace PL
             if (ModelTextBox.Text == "Model name is too long")
             {
                 ModelTextBox.Clear();
-                ModelTextBox.Foreground = Brushes.Gray;
-                ModelTextBox.BorderBrush = Brushes.Gray;
+                ModelTextBox.Foreground = Brushes.Black;
+                ModelTextBox.BorderBrush = Brushes.Transparent;
             }
         }
         #endregion add drone
@@ -210,8 +211,19 @@ namespace PL
         {
             bl.ChangeDroneModel(drone.Id, ModelTextBox2.Text);
             MessageBox.Show("The Model Was Updated successfully","success!");
-            ModelTextBox2.IsEnabled = false;
-            DroneListWindow.AcordingToStatusSelectorChanged();          
+          
+            drone = bl.GetDrone(drone.Id);
+            DataContext = drone;
+            
+            int index = DroneListWindow.DronesListView.SelectedIndex;
+            DroneToList droneToList = DroneListWindow.droneToLists[index];
+            droneToList.Model = ModelTextBox2.Text;
+            DroneListWindow.droneToLists[index] = droneToList;
+            ModelTextBox2.IsReadOnly = true;
+            DroneListWindow.DronesListView.Items.Refresh();
+            DroneListWindow.AcordingToStatusSelectorChanged();
+
+
         }
 
 
@@ -223,12 +235,18 @@ namespace PL
             try
             {
                 bl.PickUpParcelByDrone(drone.Id);
-                textboxParcelintransfer.Text = drone.DroneParcel.ToString();
+               // textboxParcelintransfer.Text = drone.DroneParcel.ToString();
+                textboxParcelintransfer.Visibility = Visibility.Visible;
+               // ParcelInTransfer.Visibility = Visibility.Visible;
                 MessageBox.Show("Pickup Parcel By Drone was successfully done", "success!");
-              DroneListWindow.AcordingToStatusSelectorChanged();
+             
               drone = bl.GetDrone(drone.Id);
               DataContext = drone;
-              DeliverDroneToParcel.IsEnabled = true;
+                int index = DroneListWindow.DronesListView.SelectedIndex;
+                DroneToList droneToList = DroneListWindow.droneToLists[index];
+                DroneListWindow.AcordingToStatusSelectorChanged();
+             
+                DeliverDroneToParcel.IsEnabled = true;
               PickupParcelByDrone.IsEnabled = false;
                AssignDroneToParcel.IsEnabled = false;
                DroneNotAssign.Visibility = Visibility.Hidden;
@@ -239,24 +257,31 @@ namespace PL
                 SystemSounds.Beep.Play();
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-        }
 
+        }
+      
         private void AssignDroneToParcel_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 bl.AssignParcelToDrone(drone.Id);
                 DroneNotAssign.Visibility = Visibility.Hidden;
-                textboxParcelintransfer.Text = drone.DroneParcel.ToString();
-                textboxParcelintransfer.Visibility = Visibility.Visible;
-                ParcelInTransfer.Visibility = Visibility.Visible;
+               // textboxParcelintransfer.Text = drone.DroneParcel.ToString();
+                //textboxParcelintransfer.Visibility = Visibility.Visible;
+                //ParcelInTransfer.Visibility = Visibility.Visible;
                MessageBox.Show("Assign Parcel By Drone was successfully done", "success!");
-                DroneListWindow.AcordingToStatusSelectorChanged();
+              
                 drone = bl.GetDrone(drone.Id);
                  DataContext = drone;
+               // int index = DroneListWindow.DronesListView.SelectedIndex;
+               // DroneToList droneToList = DroneListWindow.droneToLists[index];
+               // droneToList.Status = StatusSelector.Text;
+               // DroneListWindow.droneToLists[index] = droneToList;
+                DroneListWindow.DronesListView.Items.Refresh();
                 DeliverDroneToParcel.IsEnabled = false;
                 PickupParcelByDrone.IsEnabled = true;
                 AssignDroneToParcel.IsEnabled = false;
+                DroneListWindow.AcordingToStatusSelectorChanged();
 
 
 
@@ -277,10 +302,13 @@ namespace PL
                 //TimeSpan.TryParse(stringOfTime, out time);
                 bl.ReleaseFromCharging(drone.Id);
                 MessageBox.Show("Releasing drone from charging was successful", "success!");
-//StopChargingDroneTime.Text = " ";
-                DroneListWindow.AcordingToStatusSelectorChanged();
+                //StopChargingDroneTime.Text = " "
+                DroneListWindow.AcordingToStatusSelectorChanged();   
                 drone = bl.GetDrone(drone.Id);
                 DataContext = drone;
+               
+                 DroneListWindow.DronesListView.Items.Refresh();
+                
                 AssignDroneToParcel.IsEnabled = true;
                 if (drone.Battery == 100)
                 {
@@ -310,11 +338,13 @@ namespace PL
             bl.SendDroneToCharge(drone.Id);
 
             MessageBox.Show("Your Drone was sent to charge successfully", "success!");
-            DroneListWindow.AcordingToStatusSelectorChanged();
+           
             drone = bl.GetDrone(drone.Id);
             DataContext = drone;
-            //StopChargingDroneTime.IsEnabled = true;
-            StopChargingDrone.IsEnabled = true;
+            DroneListWindow.DronesListView.Items.Refresh();
+            DroneListWindow.AcordingToStatusSelectorChanged();
+                //StopChargingDroneTime.IsEnabled = true;
+                StopChargingDrone.IsEnabled = true;
             }
             catch (UpdateProblemException ex)
             {
@@ -328,17 +358,19 @@ namespace PL
             try
             {
                 bl.DroneDeliverParcel(drone.Id);
-                ParcelInTransfer.Visibility = Visibility.Hidden;
+               // ParcelInTransfer.Visibility = Visibility.Hidden;
                 textboxParcelintransfer.Visibility = Visibility.Hidden;
                  MessageBox.Show("Delivering parcel was successful", "success!");
-                 DroneListWindow.AcordingToStatusSelectorChanged();
+               
                  drone = bl.GetDrone(drone.Id);
                  DataContext = drone;
                 SendDroneToCharge.IsEnabled = true;
                 AssignDroneToParcel.IsEnabled = true;
                 DeliverDroneToParcel.IsEnabled = false;
                 DroneNotAssign.Visibility = Visibility.Visible;
-               
+                DroneListWindow.DronesListView.Items.Refresh();
+                DroneListWindow.AcordingToStatusSelectorChanged();
+
             }
             catch (UpdateProblemException ex)
             {
@@ -351,6 +383,7 @@ namespace PL
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
+
             DroneListWindow.IsEnabled = true;
             close = false;
             Close();
@@ -383,7 +416,33 @@ namespace PL
             
             e.Cancel = close;
         }
+        BaseStationWindow baseStation;
+        public  DroneWindow(BlApi.IBL blObject, BaseStationWindow MybaseStationWindow, int id,int droneIndex)
+        {
+            InitializeComponent();
+            UpDateGrid.Visibility = Visibility.Visible;
+            bl = blObject;
+            baseStation = MybaseStationWindow;
+            index = droneIndex;
+            drone = bl.GetDrone(id);
+            DataContext = drone;
+           StatusDroneclicks(drone.Status);
 
+        }
+
+        private void textboxParcelintransfer_MouseEnter(object sender, MouseButtonEventArgs e)
+        {
+            //ParcelInTransfer drone = (ParcelInTransfer)textboxParcelintransfer.Content;
+            //this.IsEnabled = false;
+            //   if (drone != null)
+            //       new ParcelWindow(bl, this, drone.Id).Show();
+        
+    }
+
+        //int Index = textboxParcelintransfer.SelectedIndex;
+        //    this.IsEnabled = false;
+        //    if (drone != null)
+        //        new DroneWindow(bl, this, drone.Id, droneIndex).Show();
     }
 
 }

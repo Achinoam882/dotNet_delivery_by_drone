@@ -71,6 +71,7 @@
                     <GridViewColumn DisplayMemberBinding="{Binding ParcelOnTheWay}" Header="Num parcels that on the way" Width="180"></GridViewColumn>
                 </GridView>
             </ListView.View>
+            
         </ListView>
         <Button x:Name="AddCustomer" Content="Add new customer" HorizontalAlignment="Left" Margin="590,284,0,0" VerticalAlignment="Top" Click="AddCustomer_Click" Height="25" Width="189"/>
 

@@ -33,10 +33,10 @@ namespace PL
 
         
 
-        private void Name_KeyDown(object sender, KeyEventArgs e)
-        {
-            NameTextBox.Clear();
-        }
+        //private void Name_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    NameTextBox.Clear();
+        //}
         private void PassWord_KeyDown(object sender, KeyEventArgs e)
         {
             PassWordTextBox.Clear();

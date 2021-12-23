@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
           WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="900">
     <Window.Resources>
         <Style TargetType="Button" >
             <Setter Property="FontSize" Value="13"/>
@@ -32,6 +32,7 @@
 
         <Button x:Name="BaseStationList" Content=" Base Station List" HorizontalAlignment="Left" Height="29" Width="160" Margin="614,283,0,0" VerticalAlignment="Top" Click="BaseStation_Click" />
         <Button x:Name="CustomerList" Content="Customer List" HorizontalAlignment="Left" Margin="614,233,0,0" VerticalAlignment="Top"  Height="29" Width="160" Click="Customer_Click" />
+        <Button x:Name="ParcelList" Content="Parcel List" HorizontalAlignment="Left" Margin="614,185,0,0" VerticalAlignment="Top"  Height="29" Width="160" Click="Parcel_Click"  />
 
 
 

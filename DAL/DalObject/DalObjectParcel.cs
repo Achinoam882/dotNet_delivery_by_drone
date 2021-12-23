@@ -137,5 +137,12 @@ namespace DalObject
             DataSource.ParcelList[DataSource.ParcelList.FindIndex(x => x.Id == newParcel.Id)] = newParcel;
         }
         #endregion to update a newParcel
+        public void DeleteParcel(int parcelId)
+        {
+            int index = DataSource.ParcelList.FindIndex(x => x.Id == parcelId);
+            if (index == -1)
+                throw new NonExistingObjectException();
+            DataSource.ParcelList.RemoveAt(index);
+        }
     }
 }

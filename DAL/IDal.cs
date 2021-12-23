@@ -148,7 +148,7 @@ namespace DalApi
         public void LessChargeSlots(int droneId);
         public void MoreChargeSlots(int baseStationId);
         public DroneCharge GetDroneCharge(int idForAllObjects);
-
+        public void DeleteParcel(int parcelId);
 
 
 

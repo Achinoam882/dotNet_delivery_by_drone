@@ -107,9 +107,66 @@ namespace PL
             {
             bl.UpdateCustomer(customer.Id, NameTextBox1.Text, PhoneTextBox.Text);
             MessageBox.Show("The Customer Was Updated successfully", "success!");
-            //רענון
+            customer = bl.GetCustomer(customer.Id);
+            DataContext = customer;
+            int index = customerListWindow.CustomerListView.SelectedIndex;
+            CustomerToList customerToList = customerListWindow.customerToList[index];
+            customerToList.Name = NameTextBox1.Text;
+            customerToList.PhoneNumber = PhoneTextBox.Text;
+            customerListWindow.customerToList[index] = customerToList;
+            NameTextBox1.IsReadOnly = true;
+            PhoneTextBox.IsReadOnly = true;
+            customerListWindow.CustomerListView.Items.Refresh();
+            }
+
+        private void ParcelFromCustomer_Click(object sender, MouseButtonEventArgs e)
+        {
+
         }
 
+        private void ParcelToCustomer_Click(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void TextBoxId_KeyDown(object sender, KeyEventArgs e)
+        {
+           // IdTextBox.BorderBrush = Brushes.Gray;
+            
+            if (e.Key < Key.D0 || e.Key > Key.D9)
+            {
+                if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9) 
+                {
+                    e.Handled = true;
+                }
+                else
+                {
+                    e.Handled = false;
+                }
+            }
+            if (IdTextBox.Text.Length > 8)
+            {
+                e.Handled = true;
+            }
+        }
+        private void TextBoxPN_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key < Key.D0 || e.Key > Key.D9)
+            {
+                if (e.Key < Key.NumPad0 || e.Key > Key.NumPad9)
+                {
+                    e.Handled = true;
+                }
+                else
+                {
+                    e.Handled = false;
+                }
+            }
+            if (IdTextBox.Text.Length > 9)
+            {
+                e.Handled = true;
+            }
+        }
     }
     
 }

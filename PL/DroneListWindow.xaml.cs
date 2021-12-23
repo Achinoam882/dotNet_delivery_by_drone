@@ -15,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
+
 namespace PL
 {
     /// <summary>
@@ -24,6 +26,7 @@ namespace PL
     {
         bool close = true;
         BlApi.IBL bl;
+        CollectionView view;
         public ObservableCollection<BO.DroneToList> droneToLists;
         public DroneListWindow(BlApi.IBL blObject)
         {
@@ -38,7 +41,7 @@ namespace PL
            
             DronesListView.ItemsSource = droneToLists;
             StatusSelector.ItemsSource = Enum.GetValues(typeof(DroneStatuses));
-            MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            WeightSelector.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             droneToLists.CollectionChanged += DroneToLists_CollectionChanged;
         }
         private void AddDroneClick(object sender, RoutedEventArgs e)
@@ -58,14 +61,14 @@ namespace PL
         public void AcordingToStatusSelectorChanged()
         {
            
-            if (MaxWeightSelector.SelectedItem == null && StatusSelector.SelectedItem == null)
+            if (WeightSelector.SelectedItem == null && StatusSelector.SelectedItem == null)
                 DronesListView.ItemsSource = droneToLists;
-            else if (MaxWeightSelector.SelectedItem == null)
+            else if (WeightSelector.SelectedItem == null)
                 DronesListView.ItemsSource = droneToLists.ToList().FindAll(x => x.Status == (DroneStatuses)StatusSelector.SelectedItem);
             else if (StatusSelector.SelectedItem == null)
-                DronesListView.ItemsSource = droneToLists.ToList().FindAll(x => x.MaxWeight == (WeightCategories)MaxWeightSelector.SelectedItem);
+                DronesListView.ItemsSource = droneToLists.ToList().FindAll(x => x.MaxWeight == (WeightCategories)WeightSelector.SelectedItem);
             else
-                DronesListView.ItemsSource = droneToLists.ToList().FindAll(x => x.MaxWeight == (WeightCategories)MaxWeightSelector.SelectedItem &&
+                DronesListView.ItemsSource = droneToLists.ToList().FindAll(x => x.MaxWeight == (WeightCategories)WeightSelector.SelectedItem &&
             x.Status == (DroneStatuses)StatusSelector.SelectedItem);
 
         }
@@ -85,7 +88,7 @@ namespace PL
         {
             DronesListView.ItemsSource = bl.GetDroneList();
             StatusSelector.SelectedItem = null;
-            MaxWeightSelector.SelectedItem = null;
+            WeightSelector.SelectedItem = null;
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -109,6 +112,42 @@ namespace PL
 
             e.Cancel = close;
         }
+        private void ClearOutlinedComboBox_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Group_click(object sender, RoutedEventArgs e)
+        {
+            if(GroupButton.Name == "GroupButton")
+
+            {
+                view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
+                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
+                view.GroupDescriptions.Add(groupDescription);
+                GroupButton.Content = "Clear";
+                GroupButton.Name = "ClearButton";
+
+            }
+            else
+            {
+               
+                view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
+                view.GroupDescriptions.Clear();
+                GroupButton.Content = "Grouping By Status";
+                GroupButton.Name = "GroupButton";
+            }
+           
+
+        }
+    
+
     }
-}
+
+    
+       
+    }
+
+    
+
 
