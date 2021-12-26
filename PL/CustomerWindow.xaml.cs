@@ -98,10 +98,7 @@ namespace PL
             customer = bl.GetCustomer(id);
             DataContext = customer;
         }
-            private void DeleteCustomer_Click(object sender, RoutedEventArgs e)
-            {
-
-            }
+        
 
             private void UpdateCustomer_Click(object sender, RoutedEventArgs e)
             {
@@ -119,16 +116,30 @@ namespace PL
             customerListWindow.CustomerListView.Items.Refresh();
             }
 
-        private void ParcelFromCustomer_Click(object sender, MouseButtonEventArgs e)
+        //private void ParcelFromCustomer_Click(object sender, MouseButtonEventArgs e)
+        //{
+        //    Parcel parcel = bl.GetParcel(customer.ParcelFromCustomer[index].Id);
+        //    new ParcelWindow(bl, this, parcel.Id, index);
+        //}
+
+        //private void ParcelToCustomer_Click(object sender, MouseButtonEventArgs e)
+        //{
+        //    Parcel parcel = bl.GetParcel(customer.ParcelToCustomer[index].Id);
+        //    new ParcelWindow(bl, this, parcel.Id, index);
+        //}
+        public CustomerWindow(BlApi.IBL blObject, int id, int indexId)
         {
-
+            InitializeComponent();
+            UpdateGrid.Visibility = Visibility.Visible;
+            this.NameTextBox1.IsReadOnly = true;
+            this.PhoneTextBox.IsReadOnly = true;
+            this.UpdateButton.IsEnabled = false;
+            bl = blObject;
+            //customerListWindow = customerList;
+            index = indexId;
+            customer = bl.GetCustomer(id);
+            DataContext = customer;
         }
-
-        private void ParcelToCustomer_Click(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
         private void TextBoxId_KeyDown(object sender, KeyEventArgs e)
         {
            // IdTextBox.BorderBrush = Brushes.Gray;
@@ -166,6 +177,18 @@ namespace PL
             {
                 e.Handled = true;
             }
+        }
+
+        private void ListParcelToCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            ListOfParcelsCustomer listOfParcelsCustomer = new ListOfParcelsCustomer(bl, this, index, customer.Id);
+            this.Content = listOfParcelsCustomer;
+        }
+
+        private void ListParcelFromCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            ListOfParcelsCustomer listOfParcelsCustomer= new ListOfParcelsCustomer(bl, this, index, customer.Id);
+            this.Content = listOfParcelsCustomer;
         }
     }
     

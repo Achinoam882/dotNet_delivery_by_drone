@@ -15,7 +15,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="DroneWindow" Height="450" Width="800">
+        Title="DroneWindow" Height="500" Width="800">
 
     <Window.Resources>
 
@@ -97,62 +97,99 @@ VerticalAlignment="Stretch" Width="auto">
             </Grid>
         </Grid>
 
-        <Grid x:Name="UpDateGrid" RenderTransformOrigin="0.589,0.447"  Visibility="Hidden">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250*"/>
-                <ColumnDefinition Width="550*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Name="DroneGrid" HorizontalAlignment="Stretch" Height="350" Grid.Column="0" 
-VerticalAlignment="Stretch" Width="auto">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200*"/>
-                    <ColumnDefinition Width="200*"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions >
-                <Label x:Name="IdLabel2" Content="Id:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="0"/>
-                <Label x:Name="BatteryLabel" Content="Battery:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="4" />
-                <Label x:Name="MaxWeightLable2" Content="Max Weight:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="2" />
-                <Label x:Name="ModelLabel2" Content="Model:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="1" />
-                <Label x:Name="StatusLabel" Content="Status:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="3" />
-                <Label x:Name="LatitudeLabel" Content="Latitude:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="5" />
-                <Label x:Name="LongitudeLabel" Content="Longitude:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="6" />
+        <Grid x:Name="UpDateGrid" RenderTransformOrigin="0.589,0.447"  >
+            <StackPanel Background="AliceBlue">
+                <Grid Height="30">
+                    <!--<StackPanel HorizontalAlignment="Left" Margin="20 0">
+                            <ComboBox FontSize="15" Width="50" Foreground="#FFA2A2A2" SelectedIndex="0" VerticalAlignment="Center">
+                                <ComboBoxItem Content="EN"/>
+                            </ComboBox>
+                        </StackPanel>-->
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20 0">
+                        <Button Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  >
+                            <materialDesign:PackIcon Kind="Power" Foreground="#FFA2A2A2" Width="25" Height="25" />
+                        </Button>
+                    </StackPanel>
+                </Grid>
+                <Grid Height="40" >
 
-                <TextBox x:Name="IdTextBox2" Grid.Column="1" Text="{Binding Path=Id}" IsReadOnly="True" BorderBrush="{x:Null}" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="110"/>
-                <TextBox x:Name="BatteryTextBox"  Grid.Column="1"  Text="{Binding Path=Battery}" IsReadOnly="True" BorderBrush="{x:Null}" HorizontalAlignment="Center" Grid.Row="4"  TextWrapping="Wrap" Width="125" Grid.RowSpan="1" Height="50" VerticalAlignment="Bottom" />
-                <TextBox x:Name="MaxWeightSelector2"  Grid.Column="1"  Text="{Binding Path=MaxWeight}" IsReadOnly="True" BorderBrush="{x:Null}" Grid.Row="2"   HorizontalAlignment="Left"  VerticalAlignment="Stretch" Margin="0,0,0,0" Width="110"/>
-                <TextBox x:Name="ModelTextBox2"  Grid.Column="1"  Text="{Binding Path=Model}" LostFocus="ModelCheck_LostFocus"  HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="1"  TextWrapping="Wrap" VerticalAlignment="Stretch" Width="110" Grid.RowSpan="1" PreviewMouseDown="ModelCheck_PreviewMouseDown" />
-                <TextBox x:Name="StatusSelector"  Grid.Column="1"  Text="{Binding Path=Status}" Grid.Row="3"  IsReadOnly="True"  BorderBrush="{x:Null}" HorizontalAlignment="Left"  VerticalAlignment="Stretch"  Width="110" Margin="0,0,0,0"/>
-                <TextBox x:Name="LatitudeTextBox"  Grid.Column="1"  HorizontalAlignment="Left" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,0,0,0" Grid.Row="5" Text="{Binding Path=DroneLocation.Latitude}" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="110" Grid.RowSpan="1" />
-                <TextBox x:Name="LongitudeTextBox"  Grid.Column="1"  HorizontalAlignment="Left" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,0,0,0" Grid.Row="6" Text="{Binding Path=DroneLocation.Longitude}" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="110" Grid.RowSpan="1" />
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <RadioButton  Style="{StaticResource MaterialDesignTabRadioButton}"
+    Margin="4" Uid="0" Width="25" Content="HOME" Height="26" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" />
+                        <RadioButton x:Name="Exit" Uid="1" Width="25" Height="30"  Content="BACK" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF2196F3"   Click="Exit_Click" />
+                        <RadioButton x:Name="UpdateDroneName" Uid="2" Width="85" Height="30"  Content="UPDATE" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF2196F3"    Click="UpDateModel_Click" />
+                        <RadioButton x:Name="SendDroneToCharge" Uid="3" Width="135" Height="30"  Content="CHARGE DRONE" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF2196F3"   Click="SendDroneToCharge_Click"/>
+                        <RadioButton x:Name="StopChargingDrone" Uid="4" Width="135" Height="30"  Content="REALISE DRONE" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF2196F3"   Click="StopChargingDrone_Click"/>
+                        <RadioButton x:Name="AssignDroneToParcel" Uid="5" Width="80" Height="30"  Content="ASSIGN " Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF2196F3"   Click="AssignDroneToParcel_Click"/>
+                        <RadioButton x:Name="PickupParcelByDrone" Uid="6" Width="90" Height="30"  Content="PICKUP" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF2196F3"   Click="PickupParcelByDrone_Click"/>
+                        <RadioButton x:Name="DeliverDroneToParcel" Uid="7" Width="92" Height="27"  Content="DELIVER" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF2196F3"   Click="DeliverDroneToParcel_Click"/>
+
+                        <!--<Button   x:Name="UpdateDroneName" Content="Update Drone Model" Grid.Column="1" HorizontalAlignment="Left" Margin="26,326,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="UpDateModel_Click"/>-->
+                        <!--<Button   x:Name="Exit" Content="BACK" Grid.Column="1" HorizontalAlignment="Left" Margin="26,373,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="Exit_Click"/>-->
+                        <!--<Button   x:Name="SendDroneToCharge" Content="Send Drone To Charge" Grid.Column="1" HorizontalAlignment="Center" Margin="0,373,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="SendDroneToCharge_Click"/>-->
+                        <!--<Button   x:Name="StopChargingDrone" Content="Stop Charging Drone" Grid.Column="1" HorizontalAlignment="Center" Margin="0,326,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="StopChargingDrone_Click"/>-->
+                        <!--<Button   x:Name="AssignDroneToParcel" Content="Assign Drone To Parcel" Grid.Column="1" HorizontalAlignment="Left" Margin="378,373,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="AssignDroneToParcel_Click"/>-->
+                        <!--<Button   x:Name="PickupParcelByDrone" Content="Pickup Parcel By Drone" Grid.Column="1" HorizontalAlignment="Left" Margin="379,326,0,0" VerticalAlignment="Top" Height="28" Width="142" Click="PickupParcelByDrone_Click"/>-->
+                        <!--<Button   x:Name="DeliverDroneToParcel" Content="Deliver Parcel By Drone" Grid.Column="1" HorizontalAlignment="Left" Margin="378,276,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="DeliverDroneToParcel_Click" RenderTransformOrigin="0.938,0.862" />-->
+                    </StackPanel>
+                </Grid>
+
+                <Grid Name="DroneGrid" HorizontalAlignment="Stretch" Height="414" Width="803" RenderTransformOrigin="0.338,0.475">
+                    <Grid.Background >
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFD28D87" Offset="1"/>
+                            <GradientStop Color="#FFCF888B" Offset="1"/>
+                            <GradientStop Color="LightBlue" Offset="1"/>
+                            <GradientStop Color="#7F886992" Offset="0.215"/>
+                        </LinearGradientBrush>
+
+                    </Grid.Background>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200*"/>
+                        <ColumnDefinition Width="1000*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions >
+                    <Label x:Name="IdLabel2" Content="Id:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="0"/>
+                    <Label x:Name="BatteryLabel" Content="Battery:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="4" />
+                    <Label x:Name="MaxWeightLable2" Content="Max Weight:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="2" />
+                    <Label x:Name="ModelLabel2" Content="Model:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="1" />
+                    <Label x:Name="StatusLabel" Content="Status:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="3" />
+                    <Label x:Name="LatitudeLabel" Content="Latitude:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="5" />
+                    <Label x:Name="LongitudeLabel" Content="Longitude:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="6" />
+
+                    <TextBox x:Name="IdTextBox2" Background="Transparent" Grid.Column="1" Text="{Binding Path=Id}" IsReadOnly="True" BorderBrush="{x:Null}" HorizontalAlignment="Left" Margin="0,0,0,0" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="110"/>
+                    <TextBox x:Name="BatteryTextBox" Background="Transparent" Grid.Column="1"  Text="{Binding Path=Battery}" IsReadOnly="True" BorderBrush="{x:Null}" HorizontalAlignment="Left" Grid.Row="4"  TextWrapping="Wrap" Width="110" Height="52" VerticalAlignment="Center" />
+                    <TextBox x:Name="MaxWeightSelector2" Background="Transparent" Grid.Column="1"  Text="{Binding Path=MaxWeight}" IsReadOnly="True" BorderBrush="{x:Null}" Grid.Row="2"   HorizontalAlignment="Left"  VerticalAlignment="Stretch" Margin="0,0,0,0" Width="110"/>
+                    <TextBox x:Name="ModelTextBox2"  Background="Transparent" Grid.Column="1"  Text="{Binding Path=Model}" LostFocus="ModelCheck_LostFocus"  HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="1"  TextWrapping="Wrap" VerticalAlignment="Stretch" Width="110" Grid.RowSpan="1" PreviewMouseDown="ModelCheck_PreviewMouseDown" />
+                    <TextBox x:Name="StatusSelector" Background="Transparent" Grid.Column="1"  Text="{Binding Path=Status}" Grid.Row="3"  IsReadOnly="True"  BorderBrush="{x:Null}" HorizontalAlignment="Left"  VerticalAlignment="Stretch"  Width="110" Margin="0,0,0,0"/>
+                    <TextBox x:Name="LatitudeTextBox"  Background="Transparent" Grid.Column="1"  HorizontalAlignment="Left" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,0,0,0" Grid.Row="5" Text="{Binding Path=DroneLocation.Latitude}" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="110" Grid.RowSpan="1" />
+                    <TextBox x:Name="LongitudeTextBox"  Background="Transparent" Grid.Column="1"  HorizontalAlignment="Left" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,0,0,0" Grid.Row="6" Text="{Binding Path=DroneLocation.Longitude}" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="110" Grid.RowSpan="1" />
 
 
-            </Grid>
-            <Button   x:Name="UpdateDroneName" Content="Update Drone Model" Grid.Column="1" HorizontalAlignment="Left" Margin="26,326,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="UpDateModel_Click"/>
-            <Button   x:Name="Exit" Content="Exit" Grid.Column="1" HorizontalAlignment="Left" Margin="26,373,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="Exit_Click"/>
-            <Button   x:Name="SendDroneToCharge" Content="Send Drone To Charge" Grid.Column="1" HorizontalAlignment="Center" Margin="0,373,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="SendDroneToCharge_Click"/>
-            <Button   x:Name="StopChargingDrone" Content="Stop Charging Drone" Grid.Column="1" HorizontalAlignment="Center" Margin="0,326,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="StopChargingDrone_Click"/>
-            <Button   x:Name="AssignDroneToParcel" Content="Assign Drone To Parcel" Grid.Column="1" HorizontalAlignment="Left" Margin="378,373,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="AssignDroneToParcel_Click"/>
-            <Button   x:Name="PickupParcelByDrone" Content="Pickup Parcel By Drone" Grid.Column="1" HorizontalAlignment="Left" Margin="379,326,0,0" VerticalAlignment="Top" Height="28" Width="142" Click="PickupParcelByDrone_Click"/>
-            <Button   x:Name="DeliverDroneToParcel" Content="Deliver Parcel By Drone" Grid.Column="1" HorizontalAlignment="Left" Margin="378,276,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="DeliverDroneToParcel_Click" RenderTransformOrigin="0.938,0.862" />
-            <!--<TextBox  x:Name="StopChargingDroneTime"   Grid.Column="1" HorizontalAlignment="Center" Margin="0,270,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="142" Height="40"  LostFocus="StopChargingDroneTime_LostFocus" PreviewMouseDown="StopChargingDroneTime_previewMouseDown"/>
-            <Label x:Name="StopChargingDroneTimeLabel" FontWeight="Normal"  Content="Enter the amount of time: " Grid.Column="1"   Margin="204,243,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="22" RenderTransformOrigin="0.5,0.5" Width="150" FontSize="13"/>-->
-            <!--<TextBox  x:Name="textboxParcelintransfer" VerticalScrollBarVisibility="Auto"  Grid.Column="1" HorizontalAlignment="Left" Margin="370,86,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Height="167" Visibility="Hidden" IsReadOnly="True" MouseDoubleClick="textboxParcelintransfer_MouseEnter"/>-->
-            <Label x:Name="DroneNotAssign" FontWeight="Normal" Content="Drone is not assign to a parcel " Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" RenderTransformOrigin="0.5,0.5" Width="170"  FontSize="13" Margin="17,270,0,0" />
-            <!--<Label x:Name="ParcelInTransfer" FontWeight="Normal" Content="Parcel In Transfer" Grid.Column="1"   Margin="379,45,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Height="41" RenderTransformOrigin="0.5,0.5" Width="160"  FontSize="15" Visibility="Hidden" />-->
-            <GroupBox x:Name="textboxParcelintransfer"  Margin="275,20,103,282"  Visibility="Hidden"
+                </Grid>
+                <!--<Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="364*"/>
+                    <ColumnDefinition Width="62*"/>
+                    <ColumnDefinition Width="85*"/>
+                    <ColumnDefinition Width="297*"/>
+                </Grid.ColumnDefinitions>-->
+
+
+            </StackPanel>
+            <GroupBox x:Name="textboxParcelintransfer" Content="{Binding Mode=OneWay,Path=DroneParcel}" Margin="485,71,10,136"  
   Header="Parcel In Transfer" MouseDoubleClick="textboxParcelintransfer_MouseEnter"
   Style="{DynamicResource MaterialDesignGroupBox}"
   materialDesign:ColorZoneAssist.Mode="Custom"
   materialDesign:ColorZoneAssist.Background="#FF216882"
-  materialDesign:ColorZoneAssist.Foreground="White" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
+  materialDesign:ColorZoneAssist.Foreground="White" RenderTransformOrigin="0.5,0.5">
                 <GroupBox.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform ScaleX="1"/>
@@ -161,9 +198,18 @@ VerticalAlignment="Stretch" Width="auto">
                         <TranslateTransform/>
                     </TransformGroup>
                 </GroupBox.RenderTransform>
-                <TextBlock
-    Text="{Binding Path=DroneParcel}" />
+
             </GroupBox>
+            <StackPanel  Margin="562,353,50,42">
+                <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" RenderTransformOrigin="-2.83,1.772" />
+                <Label x:Name="DroneNotAssign" FontWeight="Bold" Content="Drone is not assign to a parcel" Height="55" RenderTransformOrigin="0.5,0.5" Width="188"  FontSize="7" />
+            </StackPanel>
+
+            <!--<TextBox  x:Name="textboxParcelintransfer" VerticalScrollBarVisibility="Auto"  Grid.Column="1" HorizontalAlignment="Left" Margin="370,86,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Height="167" Visibility="Hidden" IsReadOnly="True" MouseDoubleClick="textboxParcelintransfer_MouseEnter"/>-->
+
+
+
+
 
 
 

@@ -125,18 +125,9 @@ namespace PL
                 view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
                 PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
                 view.GroupDescriptions.Add(groupDescription);
-                GroupButton.Content = "Clear";
-                GroupButton.Name = "ClearButton";
 
             }
-            else
-            {
-               
-                view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
-                view.GroupDescriptions.Clear();
-                GroupButton.Content = "Grouping By Status";
-                GroupButton.Name = "GroupButton";
-            }
+
            
 
         }

@@ -5,8 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        ResizeMode="CanMinimize"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
           WindowStartupLocation="CenterScreen"
-        Title="MainWindow" Height="600" Width="900">
+        Title="MainWindow" Height="500" Width="800">
     <Window.Resources>
         <Style TargetType="Button" >
             <Setter Property="FontSize" Value="13"/>
@@ -22,9 +31,80 @@
             </Style.Resources>
         </Style>
     </Window.Resources>
-    <Grid>
 
-        <Grid.Background>
+    <Grid  x:Name="Menu" Background="#FF93A3D7">
+
+        <StackPanel x:Name="StackPanelMenu" Width="250" HorizontalAlignment="Left" Margin="2, 0, 0 ,0" RenderTransformOrigin="0.5,0.5">
+            <StackPanel.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </StackPanel.RenderTransform>
+            <!--<StackPanel x:Name="listViewItem" Height="60" RenderTransformOrigin="0.5,0.5">-->
+            <StackPanel Orientation="Horizontal" Height="100">
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Width="50" Height="50" Margin="5">
+                    <materialDesign:PackIcon  Kind="CloseThick"  Width="40" Height="40"/>
+                </Button>
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Width="50" Height="50" Margin="5">
+                    <materialDesign:PackIcon Kind="InformationOutline" Width="40" Height="40"/>
+                </Button>
+                <Button Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" Background="{x:Null}" BorderBrush="{x:Null}" Padding="0" Width="50" Height="50" Margin="5">
+                    <materialDesign:PackIcon  Kind="Star"   Width="40" Height="40"   />
+                </Button>
+
+            </StackPanel>
+            <!--<StackPanel x:Name="listViewItem" Height="60" RenderTransformOrigin="0.5,0.5">-->
+            <StackPanel x:Name="Drones" Orientation="Horizontal" Margin="10 0">
+                <materialDesign:PackIcon Kind="Drone"  Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                <Button x:Name="DroneListButtom" FontWeight="Bold" Foreground="Black"  Content="Drone List" Margin="10" VerticalAlignment="Center"  Style="{StaticResource MaterialDesignFlatLightButton}" ToolTip="MaterialDesignFlatLightButton"
+  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Click="ShowDroneListButtom"/>
+            </StackPanel>
+            <StackPanel x:Name="Parcels"  Orientation="Horizontal" Margin="10 0">
+                <materialDesign:PackIcon Kind="PackageVariant"  Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                <Button x:Name="ParcelList" FontWeight="Bold" Foreground="Black"   Content="Parcel List" Margin="10" VerticalAlignment="Center" Click="Parcel_Click"   Style="{StaticResource MaterialDesignFlatLightButton}" ToolTip="MaterialDesignFlatLightButton"
+  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+            </StackPanel>
+            <StackPanel x:Name="Customers"  Orientation="Horizontal" Margin="10 0">
+                <materialDesign:PackIcon  Kind="AccountGroup"   Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                <Button x:Name="CustomerList"  Content="Customers List" FontWeight="Bold" Foreground="Black"  Margin="10" VerticalAlignment="Center" Click="Customer_Click"  Style="{StaticResource MaterialDesignFlatLightButton}" ToolTip="MaterialDesignFlatLightButton"
+  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" />
+            </StackPanel>
+            <StackPanel x:Name="BaseStation"  Orientation="Horizontal" Margin="5 0">
+                <materialDesign:PackIcon Kind="PoliceStation"   Width="30" Height="30" VerticalAlignment="Center" Margin="5"/>
+                <Button x:Name="BaseStationList"  Content="Base Station List" FontWeight="Bold" Foreground="Black"  Margin="10" Click="BaseStation_Click"  Style="{StaticResource MaterialDesignFlatLightButton}" ToolTip="MaterialDesignFlatLightButton"
+  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Height="40" Width="157" />
+            </StackPanel>
+            <StackPanel x:Name="Logout"  Orientation="Horizontal" Margin="5 0">
+                <materialDesign:PackIcon Kind="AccountSync"  Width="30" Height="30" VerticalAlignment="Center" Margin="10"/>
+                <Button x:Name="LogoutButtem"  Content="Log Out                    " FontWeight="Bold" Foreground="Black"  Style="{StaticResource MaterialDesignFlatLightButton}" ToolTip="MaterialDesignFlatLightButton"
+  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}"  Margin="10" Height="40" Width="157" />
+            </StackPanel>
+        </StackPanel>
+        <Grid x:Name="GridMain" Background="#FFFBFBFB" RenderTransformOrigin="0.5,0.5" Margin="210,-10,0,0">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="250"/>
+            </Grid.ColumnDefinitions>
+
+
+
+
+
+
+            <!--</StackPanel>-->
+
+            <!--<Grid.Background>
             <ImageBrush ImageSource="/3005346.jpg"/>
         </Grid.Background>
         <Button x:Name="DroneListButtom" Content=" Drone List" HorizontalAlignment="Left" Margin="614,339,0,0" 
@@ -32,10 +112,10 @@
 
         <Button x:Name="BaseStationList" Content=" Base Station List" HorizontalAlignment="Left" Height="29" Width="160" Margin="614,283,0,0" VerticalAlignment="Top" Click="BaseStation_Click" />
         <Button x:Name="CustomerList" Content="Customer List" HorizontalAlignment="Left" Margin="614,233,0,0" VerticalAlignment="Top"  Height="29" Width="160" Click="Customer_Click" />
-        <Button x:Name="ParcelList" Content="Parcel List" HorizontalAlignment="Left" Margin="614,185,0,0" VerticalAlignment="Top"  Height="29" Width="160" Click="Parcel_Click"  />
+        <Button x:Name="ParcelList" Content="Parcel List" HorizontalAlignment="Left" Margin="614,185,0,0" VerticalAlignment="Top"  Height="29" Width="160" Click="Parcel_Click"  />-->
 
 
-
+        </Grid>
 
     </Grid>
 </Window>

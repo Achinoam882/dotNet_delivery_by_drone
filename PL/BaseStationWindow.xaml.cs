@@ -138,10 +138,7 @@ namespace PL
             basestationListWindow.BaseStationListView.Items.Refresh();
         }
 
-        private void DeleteBaseStation_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        
 
         private void DroneInfo_Click(object sender, MouseButtonEventArgs e)
         {
@@ -149,7 +146,7 @@ namespace PL
             int droneIndex = DroneChargingView.SelectedIndex;
             this.IsEnabled = false;
             if (drone != null)
-                new DroneWindow(bl, this, drone.Id, droneIndex).Show();
+                new DroneWindow(bl, drone.Id, droneIndex).Show();
 
         }
 

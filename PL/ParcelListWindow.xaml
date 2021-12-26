@@ -69,6 +69,10 @@
         </Style>
     </Window.Resources>
     <Grid x:Name="MainGrid">
+        <DatePicker
+  Width="140"
+  materialDesign:HintAssist.Hint="Pick Date" 
+   Margin="10,134,650,0" VerticalAlignment="Top"    SelectedDate="" Text="{Binding Path=Requested}"/>
         <ComboBox x:Name="weightselector" Style="{StaticResource MaterialDesignOutlinedComboBox}" Margin="570,10,10,376"
     materialDesign:HintAssist.Hint="Parcel Weight" 
     ItemsSource="{Binding ShortStringList}"

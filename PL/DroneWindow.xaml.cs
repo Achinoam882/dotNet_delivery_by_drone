@@ -244,6 +244,7 @@ namespace PL
               DataContext = drone;
                 int index = DroneListWindow.DronesListView.SelectedIndex;
                 DroneToList droneToList = DroneListWindow.droneToLists[index];
+                DroneListWindow.droneToLists[index] = droneToList; 
                 DroneListWindow.AcordingToStatusSelectorChanged();
              
                 DeliverDroneToParcel.IsEnabled = true;
@@ -273,15 +274,13 @@ namespace PL
               
                 drone = bl.GetDrone(drone.Id);
                  DataContext = drone;
-               // int index = DroneListWindow.DronesListView.SelectedIndex;
-               // DroneToList droneToList = DroneListWindow.droneToLists[index];
-               // droneToList.Status = StatusSelector.Text;
-               // DroneListWindow.droneToLists[index] = droneToList;
+            
                 DroneListWindow.DronesListView.Items.Refresh();
                 DeliverDroneToParcel.IsEnabled = false;
                 PickupParcelByDrone.IsEnabled = true;
                 AssignDroneToParcel.IsEnabled = false;
                 DroneListWindow.AcordingToStatusSelectorChanged();
+             
 
 
 
@@ -417,27 +416,57 @@ namespace PL
             e.Cancel = close;
         }
         BaseStationWindow baseStation;
-        public  DroneWindow(BlApi.IBL blObject, BaseStationWindow MybaseStationWindow, int id,int droneIndex)
+        //public  DroneWindow(BlApi.IBL blObject, BaseStationWindow MybaseStationWindow, int id,int droneIndex)
+        //{
+        //    InitializeComponent();
+        //    UpDateGrid.Visibility = Visibility.Visible;
+        //    this.UpdateDroneName.IsEnabled = false;
+        //    this.ModelTextBox2.IsReadOnly = true;
+        //    bl = blObject;
+        //    baseStation = MybaseStationWindow;
+        //    index = droneIndex;
+        //    drone = bl.GetDrone(id);
+        //    DataContext = drone;
+        //   StatusDroneclicks(drone.Status);
+
+        //}
+        public DroneWindow(BlApi.IBL blObject,  int id, int droneIndex)
         {
             InitializeComponent();
             UpDateGrid.Visibility = Visibility.Visible;
-            bl = blObject;
-            baseStation = MybaseStationWindow;
+            this.UpdateDroneName.IsEnabled = false;
+            this.ModelTextBox2.IsReadOnly = true;
+             bl = blObject;
             index = droneIndex;
             drone = bl.GetDrone(id);
             DataContext = drone;
-           StatusDroneclicks(drone.Status);
+            StatusDroneclicks(drone.Status);
+
 
         }
-
         private void textboxParcelintransfer_MouseEnter(object sender, MouseButtonEventArgs e)
         {
+            try
+            {
+                Parcel p= bl.GetParcel(drone.DroneParcel.Id);
+                new ParcelWindow(bl, this, p.Id).Show();
+
+                //if (p.Scheduled == null|| p.Delivered != null || p.PickUp != null)
+                //{ PickUp.IsEnabled = false; }
+
+            }
+            catch (GetDetailsProblemException ex)
+            {
+                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
             //ParcelInTransfer drone = (ParcelInTransfer)textboxParcelintransfer.Content;
             //this.IsEnabled = false;
             //   if (drone != null)
             //       new ParcelWindow(bl, this, drone.Id).Show();
-        
-    }
+
+
+        }
 
         //int Index = textboxParcelintransfer.SelectedIndex;
         //    this.IsEnabled = false;
