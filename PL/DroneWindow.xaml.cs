@@ -267,10 +267,13 @@ namespace PL
             {
                 bl.AssignParcelToDrone(drone.Id);
                 DroneNotAssign.Visibility = Visibility.Hidden;
-               // textboxParcelintransfer.Text = drone.DroneParcel.ToString();
+                DroneNotAssignn.Visibility = Visibility.Hidden;
+                textboxParcelintransfer.Visibility = Visibility.Visible;
+
+                // textboxParcelintransfer.Text = drone.DroneParcel.ToString();
                 //textboxParcelintransfer.Visibility = Visibility.Visible;
                 //ParcelInTransfer.Visibility = Visibility.Visible;
-               MessageBox.Show("Assign Parcel By Drone was successfully done", "success!");
+                MessageBox.Show("Assign Parcel By Drone was successfully done", "success!");
               
                 drone = bl.GetDrone(drone.Id);
                  DataContext = drone;
@@ -388,6 +391,15 @@ namespace PL
             Close();
         }
 
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+
+            Application.Current.Shutdown();
+        }
+        private void BackWindow_Click(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
         #endregion  drone actions
 
         //private void StopChargingDroneTime_LostFocus(object sender, RoutedEventArgs e)
@@ -415,7 +427,7 @@ namespace PL
             
             e.Cancel = close;
         }
-        BaseStationWindow baseStation;
+       // BaseStationWindow baseStation;
         //public  DroneWindow(BlApi.IBL blObject, BaseStationWindow MybaseStationWindow, int id,int droneIndex)
         //{
         //    InitializeComponent();
@@ -460,18 +472,19 @@ namespace PL
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
-            //ParcelInTransfer drone = (ParcelInTransfer)textboxParcelintransfer.Content;
-            //this.IsEnabled = false;
-            //   if (drone != null)
-            //       new ParcelWindow(bl, this, drone.Id).Show();
+
 
 
         }
 
-        //int Index = textboxParcelintransfer.SelectedIndex;
-        //    this.IsEnabled = false;
-        //    if (drone != null)
-        //        new DroneWindow(bl, this, drone.Id, droneIndex).Show();
+        private void Home_Click(object sender, RoutedEventArgs e)
+        {
+            close = false;
+            DroneListWindow.Close();
+
+            Close();
+
+        }
     }
 
 }

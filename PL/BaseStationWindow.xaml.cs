@@ -168,8 +168,12 @@ namespace PL
                 chargeslotstextbox.BorderBrush = Brushes.Transparent;
             }
         }
+        private void BackWindow_Click(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
 
-       
-}
+
+    }
    
 }

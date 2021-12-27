@@ -107,8 +107,6 @@
  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" >
                         <materialDesign:PackIcon Kind="PersonAdd" Height="30" Width="30" VerticalAlignment="Center" RenderTransformOrigin="1.18,0.535" />
                     </Button>
-
-                    <!--<RadioButton x:Name="AddCustomer" Uid="1" Width="150" Height="30"  Content="Add new customer" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF2196F3"   Click="AddCustomer_Click" />-->
                 </StackPanel>
             </Grid>
         </StackPanel>

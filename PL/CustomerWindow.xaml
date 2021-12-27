@@ -46,8 +46,71 @@
     </Window.Resources>
     <Grid>
         <Grid x:Name="MainGrid">
-            <Grid x:Name="AddCustomerGrid" Visibility="Hidden"    >
-                <Grid.ColumnDefinitions>
+            <Grid x:Name="AddCustomerGrid" Visibility="Hidden" >
+                <Grid.Background >
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFD28D87" Offset="1"/>
+                        <GradientStop Color="#FFCF888B" Offset="1"/>
+                        <GradientStop Color="LightBlue" Offset="1"/>
+                        <GradientStop Color="#7F886992" Offset="0.215"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <TextBox  x:Name="IdTextBox" KeyDown=" TextBoxId_KeyDown" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="43" Margin="188,60,440,0"  materialDesign:HintAssist.Foreground="#FF216882"
+  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882">
+                    <materialDesign:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                            <materialDesign:PackIcon Kind="SmartCardOutline"  Height="29" Width="23"/>
+                            <TextBlock Text="  ID" Width="36" VerticalAlignment="Bottom" Height="15"  />
+                        </StackPanel>
+                    </materialDesign:HintAssist.Hint>
+                </TextBox>
+                <TextBox  x:Name="NameTextBox"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="43" Margin="188,120,440,0"  materialDesign:HintAssist.Foreground="#FF216882"
+  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882">
+                    <materialDesign:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                            <materialDesign:PackIcon Kind="RenameBox"  Height="29" Width="23"/>
+                            <TextBlock Text="  NAME" Width="45" VerticalAlignment="Bottom" Height="15"  />
+                        </StackPanel>
+                    </materialDesign:HintAssist.Hint>
+                </TextBox>
+                <TextBox  x:Name="PhoneNumberTextbox" KeyDown="TextBoxPN_KeyDown"   Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="43" Margin="188,190,440,0"  materialDesign:HintAssist.Foreground="#FF216882"
+  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882">
+                    <materialDesign:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                            <materialDesign:PackIcon Kind="Phone"  Height="29" Width="23"/>
+                            <TextBlock Text="  PHONE NUMBER" Width="110" VerticalAlignment="Bottom" Height="15"  />
+                        </StackPanel>
+                    </materialDesign:HintAssist.Hint>
+                </TextBox>
+                <TextBox  x:Name="latitudeTextBox"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="43" Margin="188,260,440,0"  materialDesign:HintAssist.Foreground="#FF216882"
+  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882">
+                    <materialDesign:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                            <materialDesign:PackIcon Kind="Latitude"  Height="26" Width="20"/>
+                            <TextBlock Text="  LATITUDE" Width="95" VerticalAlignment="Bottom" Height="15"  />
+                        </StackPanel>
+                    </materialDesign:HintAssist.Hint>
+                </TextBox>
+                <TextBox  x:Name="longitudeTextBox"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="43" Margin="188,330,440,0"  materialDesign:HintAssist.Foreground="#FF216882"
+  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882">
+                    <materialDesign:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                            <materialDesign:PackIcon Kind="Longitude"  Height="27" Width="22"/>
+                            <TextBlock Text="  LONGITUDE" Width="95" VerticalAlignment="Bottom" Height="15"  />
+                        </StackPanel>
+                    </materialDesign:HintAssist.Hint>
+                </TextBox>
+                <Button  x:Name="Add"  Click="Add_Click" Content="OK" HorizontalAlignment="Left" Margin="475,161,0,0" VerticalAlignment="Top" Height="72" Width="168"  Style="{StaticResource MaterialDesignFlatButton}"/>
+
+                <Button  x:Name="cancel"  Click="cancel_click" Content="CANCEL" HorizontalAlignment="Left" Margin="475,233,0,0" VerticalAlignment="Top" Height="72" Width="168"  Style="{StaticResource MaterialDesignFlatButton}" RenderTransformOrigin="0.019,0.812"/>
+
+                <Button  x:Name="BackWindow" Style="{StaticResource MaterialDesignIconButton}"/>
+                <materialDesign:PackIcon Kind="ArrowBack" Height="48" Width="88" Margin="0,10,0,0" MouseDoubleClick="BackWindow_Click"  />
+
+
+
+
+                <!--<Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200*"/>
                     <ColumnDefinition Width="200*"/>
                     <ColumnDefinition Width="200*"/>
@@ -64,9 +127,9 @@
                         <RowDefinition Height="*"/>
 
                     </Grid.RowDefinitions >
-                    <!--<TextBox x:Name="IdTextBox" materialDesign:HintAssist.Hint="Name"  Text="" KeyDown=" TextBoxId_KeyDown">
+                    --><!--<TextBox x:Name="IdTextBox" materialDesign:HintAssist.Hint="Name"  Text="" KeyDown=" TextBoxId_KeyDown">
                     </TextBox>-->
-                    <Label x:Name="IdLabel" Content="Id:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="0"/>
+                    <!--<Label x:Name="IdLabel" Content="Id:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="0"/>
                     <Label x:Name="NameLabel" Content="Name:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="1" />
                     <Label x:Name="PhoneNumberLable" Content="Phone Number:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="2" />
                     <Label x:Name="LatitudeLable" Content="Latitude:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="3" />
@@ -89,7 +152,7 @@ VerticalAlignment="Stretch" Width="auto">
                     <TextBox x:Name="PhoneNumberTextbox" Grid.Row="2"   HorizontalAlignment="Left" Margin="0,0,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="190"  KeyDown="TextBoxPN_KeyDown" />
                     <Button x:Name="cancel" Content="Cancel" Grid.Row="5" HorizontalAlignment="Left" Margin="0,19,0,0" Width="110" Click="cancel_click"/>
                     <Button x:Name="Add" Content="Add" Grid.Row="5" HorizontalAlignment="Left" Margin="-132,20,0,0" VerticalAlignment="Top" Height="30" Width="110"  RenderTransformOrigin="0.081,0.338" Click="Add_Click" />
-                </Grid>
+                </Grid>-->
             </Grid>
             <Grid x:Name="UpdateGrid" Visibility="Hidden"  >
                 <StackPanel Background="AliceBlue">

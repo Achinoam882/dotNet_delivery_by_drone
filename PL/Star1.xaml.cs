@@ -15,21 +15,15 @@ using System.Windows.Shapes;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for MainWindow1.xaml
+    /// Interaction logic for Star1.xaml
     /// </summary>
-    public partial class MainWindow1 : Window
+    public partial class Star1 : Window
     {
-        public MainWindow1()
+        public Star1()
         {
             InitializeComponent();
         }
-
-        private void ManagerButton_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
-        private void CustomerButtom_Click(object sender, RoutedEventArgs e)
+        private void BasicRatingBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<int> e)
         {
 
         }

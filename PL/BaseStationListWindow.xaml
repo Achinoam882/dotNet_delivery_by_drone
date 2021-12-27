@@ -16,7 +16,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
       
-        Title="BaseStationListWindow" Height="450" Width="800">
+        Title="BaseStationListWindow" Height="500" Width="800">
 
     <Window.Resources>
 
@@ -68,7 +68,58 @@
         </Style>
     </Window.Resources>
     <Grid x:Name="MainGrid">
-        <ListView x:Name= "BaseStationListView" Grid.Row="1" MouseDoubleClick="BaeStationAct_DoubleClick">
+        <StackPanel>
+            <StackPanel.Background >
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFD28D87" Offset="1"/>
+                    <GradientStop Color="#FFCF888B" Offset="1"/>
+                    <GradientStop Color="LightBlue" Offset="1"/>
+                    <GradientStop Color="#7F886992" Offset="0.215"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
+
+            <Grid Height="20">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20 0">
+                <Button Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  >
+                    <materialDesign:PackIcon Kind="Power" Foreground="#FFA2A2A2" Width="20" Height="20" />
+                </Button>
+            </StackPanel>
+        </Grid>
+        <Grid Height="67" Width="810" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Height="98">
+                <!--<RadioButton  Style="{StaticResource MaterialDesignTabRadioButton}"
+    Margin="4" Uid="0" Width="150" Content="HOME" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" />-->
+                <Button x:Name="Home"  Margin="20,0,0,20"
+                             Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="AliceBlue" BorderBrush="Transparent" 
+ IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
+                    <materialDesign:PackIcon Kind="Home" Height="30" Width="30" HorizontalAlignment="Center" />
+                </Button>
+                <Button x:Name="AddCustomer"   Margin="20,0,0,20" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" Click="AddBaseStation_Click" ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="AliceBlue" BorderBrush="Transparent" 
+ IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" >
+                    <materialDesign:PackIcon Kind="PlusThick" Height="30" Width="30" VerticalAlignment="Center" RenderTransformOrigin="1.18,0.535" />
+                </Button>
+                <Button x:Name="GroupButton"   Margin="20,0,0,20" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" Click="Group_click" ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="AliceBlue" BorderBrush="Transparent" 
+ IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" >
+                    <materialDesign:PackIcon Kind="CardTextOutline" Height="30" Width="30" VerticalAlignment="Center" RenderTransformOrigin="1.18,0.535" />
+                </Button>
+            </StackPanel>
+        </Grid>
+        </StackPanel>
+
+
+
+
+
+
+
+
+
+
+        <ListView x:Name= "BaseStationListView"  MouseDoubleClick="BaeStationAct_DoubleClick" Margin="0,73,0,0">
             <ListView.View >
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="200" ></GridViewColumn>
@@ -87,18 +138,6 @@
                 </GroupStyle>
             </ListView.GroupStyle>
         </ListView>
-
-        <Button  Margin="632,217,92,121" Click="AddBaseStation_Click"
-  Style="{StaticResource MaterialDesignFloatingActionSecondaryDarkButton}"
-  ToolTip="MaterialDesignFloatingActionSecondaryDarkButton"
-  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
-            <materialDesign:PackIcon
-    Kind="PlusThick"
-    Height="30"
-    Width="30" />
-        </Button>
-        <Button x:Name="GroupButton" Content="Grouping By Free charges slots" Margin="538,0,0,65" VerticalAlignment="Bottom" Height="29" Width="160"  HorizontalAlignment="Left" Click="Group_click"  />
-
-
     </Grid>
+    
 </Window>

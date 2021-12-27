@@ -119,7 +119,7 @@ namespace PL
 
         }
         DroneWindow MyDroneWindow;
-        CustomerParcel customerParcel;
+        //CustomerParcel customerParcel;
        
         public ParcelWindow(BlApi.IBL blObject, DroneWindow droneWindow,  int id)
         {
@@ -256,6 +256,16 @@ namespace PL
                 new DroneWindow(bl,drone.Id, index).Show();
 
             }
+        }
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+
+            Application.Current.Shutdown();
+        }
+
+        private void BackWindow_Click(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
         }
     }
 }

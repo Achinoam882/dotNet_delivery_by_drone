@@ -31,6 +31,10 @@ namespace PL
             bl = blObject;
             customerListWindow = customerList;
         }
+        private void BackWindow_Click(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
@@ -66,6 +70,11 @@ namespace PL
 
                 }
                 //רענון
+            }
+            else
+            {
+                SystemSounds.Beep.Play();
+                MessageBox.Show("Please make sure all fields are filled", "ERROR!", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

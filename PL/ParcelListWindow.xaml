@@ -15,7 +15,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="ParcelListWindow" Height="450" Width="800">
+        Title="ParcelListWindow" Height="500" Width="800">
 
 
 
@@ -69,7 +69,75 @@
         </Style>
     </Window.Resources>
     <Grid x:Name="MainGrid">
-        <DatePicker
+        <StackPanel>
+            <StackPanel.Background >
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFD28D87" Offset="1"/>
+                    <GradientStop Color="#FFCF888B" Offset="1"/>
+                    <GradientStop Color="LightBlue" Offset="1"/>
+                    <GradientStop Color="#7F886992" Offset="0.215"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
+            <Grid Height="20">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20 0">
+                    <Button Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  >
+                        <materialDesign:PackIcon Kind="Power" Foreground="#FFA2A2A2" Width="20" Height="20" />
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <Grid Height="67" Width="800" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Height="98">
+                    <Button x:Name="Home"  Margin="20,0,0,20"
+                             Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"  ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="AliceBlue" BorderBrush="Transparent" 
+ IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
+                        <materialDesign:PackIcon Kind="Home" Height="30" Width="30" HorizontalAlignment="Center" />
+                    </Button>
+                    <Button x:Name="AddParcel"   Margin="20,0,0,20" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" Click="AddParcel_Click" ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="AliceBlue" BorderBrush="Transparent" 
+ IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" >
+                        <materialDesign:PackIcon Kind="PackageVariantPlus" Height="30" Width="30" VerticalAlignment="Center" RenderTransformOrigin="1.18,0.535" />
+                    </Button>
+                    <Button x:Name="clearButtom"   Margin="20,0,0,20" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" Click="clearButtom_Click" ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="AliceBlue" BorderBrush="Transparent" 
+ IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" >
+                        <materialDesign:PackIcon Kind="Refresh" Height="30" Width="30" VerticalAlignment="Center" RenderTransformOrigin="1.18,0.535" />
+                    </Button>
+                    <Button x:Name="GroupButton"   Margin="20,0,0,20" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" Click="Group_click" ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="AliceBlue" BorderBrush="Transparent" 
+ IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" >
+                        <materialDesign:PackIcon Kind="CardTextOutline"  Height="30" Width="30" VerticalAlignment="Center" RenderTransformOrigin="1.18,0.535" />
+                    </Button>
+                    <Button x:Name="GroupButton2"   Margin="20,0,0,20" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" Click="Group_click2" ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="AliceBlue" BorderBrush="Transparent" 
+ IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" >
+                        <materialDesign:PackIcon Kind="CardTextOutline"  Height="30" Width="30" VerticalAlignment="Center" RenderTransformOrigin="1.18,0.535" />
+                    </Button>
+                    <ComboBox x:Name="weightselector" Margin="20,0,0,20"  SelectionChanged="MaxWeightSelector_SelectionChanged"
+    Style="{StaticResource MaterialDesignFilledComboBox}"
+    IsEnabled="{Binding Path=IsChecked, ElementName=FilledComboBoxEnabledCheckBox}"
+    materialDesign:HintAssist.Hint="Parcel Weight"
+    Width="110" Height="50">
+                    </ComboBox>
+                    <ComboBox x:Name="statusselector" Margin="20,0,0,20" SelectionChanged="StatusSelector_SelectionChanged"
+    Style="{StaticResource MaterialDesignFilledComboBox}"
+    IsEnabled="{Binding Path=IsChecked, ElementName=FilledComboBoxEnabledCheckBox}"
+    materialDesign:HintAssist.Hint="Parcel Status"
+    Width="110" Height="50">
+                    </ComboBox>
+                    <ComboBox x:Name="Priorityselector" Margin="20,0,0,20"  SelectionChanged="PrioritySelector_SelectionChanged"
+    Style="{StaticResource MaterialDesignFilledComboBox}"
+    IsEnabled="{Binding Path=IsChecked, ElementName=FilledComboBoxEnabledCheckBox}"
+    materialDesign:HintAssist.Hint="Priority Of Parcel"
+    Width="110" Height="50">
+                    </ComboBox>
+                    <Calendar Height="56" Width="92" SelectionMode="MultipleRange">
+
+                    </Calendar>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <!--<DatePicker
   Width="140"
   materialDesign:HintAssist.Hint="Pick Date" 
    Margin="10,134,650,0" VerticalAlignment="Top"    SelectedDate="" Text="{Binding Path=Requested}"/>
@@ -84,18 +152,18 @@
 
         <ComboBox x:Name="Priorityselector" Style="{StaticResource MaterialDesignOutlinedComboBox}"
     materialDesign:HintAssist.Hint=" Priority Of Parcel"
-    ItemsSource="{Binding ShortStringList}" Margin="570,63,10,322"  SelectionChanged="PrioritySelector_SelectionChanged" />
+    ItemsSource="{Binding ShortStringList}" Margin="570,63,10,322"  SelectionChanged="PrioritySelector_SelectionChanged" />-->
 
 
-        <ListView x:Name= "ParcelListView" MouseDoubleClick="ParcelAct_DoubleClick" Margin="0,217,10,10">
+        <ListView x:Name= "ParcelListView" MouseDoubleClick="ParcelAct_DoubleClick" Margin="0,85,0,0">
             <ListView.View >
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="100" ></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Sender}" Header="Sender Name " Width="120"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Receiving}" Header="Receiver Name" Width="120"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Weight}" Header=" Weight" Width="100"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Priority}" Header=" Priority" Width="100"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Status}" Header=" Status" Width="100"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="140" ></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Sender}" Header="Sender Name " Width="140"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Receiving}" Header="Receiver Name" Width="140"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Weight}" Header=" Weight" Width="120"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Priority}" Header=" Priority" Width="130"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Status}" Header=" Status" Width="130"></GridViewColumn>
                 </GridView>
             </ListView.View>
             <ListView.GroupStyle >
@@ -108,10 +176,10 @@
                 </GroupStyle>
             </ListView.GroupStyle>
         </ListView>
-        <Button x:Name="AddParcel" Content="Add parcel"  Margin="353,67,256,322" Click="AddParcel_Click" />
+        <!--<Button x:Name="AddParcel" Content="Add parcel"  Margin="353,67,256,322" Click="AddParcel_Click" />
         <Button x:Name="clearButtom" Content="Clear" HorizontalAlignment="Left" Margin="448,134,0,0" VerticalAlignment="Top" Click="clearButtom_Click" Visibility="Hidden" />
         <Button x:Name="GroupButton" Content="Grouping By Sender" Margin="368,0,0,274" VerticalAlignment="Bottom" Height="29" Width="160"  HorizontalAlignment="Left" Click="Group_click"  />
-        <Button x:Name="GroupButton2" Content="Grouping By Receiver" Margin="193,0,0,274" VerticalAlignment="Bottom" Height="29" Width="167"  HorizontalAlignment="Left" Click="Group_click2"  />
+        <Button x:Name="GroupButton2" Content="Grouping By Receiver" Margin="193,0,0,274" VerticalAlignment="Bottom" Height="29" Width="167"  HorizontalAlignment="Left" Click="Group_click2"  />-->
     </Grid>
 </Window>
 

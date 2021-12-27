@@ -105,7 +105,7 @@ namespace PL
         {
             ParcelToList parcel = (ParcelToList)ParcelListView.SelectedItem;
             int parcelIndex = ParcelListView.SelectedIndex;
-            this.IsEnabled = false;
+            //this.IsEnabled = false;
             if (parcel != null)
                 new ParcelWindow(bl, this, parcel.Id, parcelIndex).Show();
         }
@@ -114,7 +114,7 @@ namespace PL
         private void AddParcel_Click(object sender, RoutedEventArgs e)
         {
             new ParcelWindow(bl, this).Show();
-            this.IsEnabled = false;
+           // this.IsEnabled = false;
         }
 
         private void clearButtom_Click(object sender, RoutedEventArgs e)

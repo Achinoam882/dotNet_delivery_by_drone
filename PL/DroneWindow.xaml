@@ -59,7 +59,60 @@
 
 
         <Grid Name="AddDroneGrid" Visibility="Hidden" >
-            <Grid.ColumnDefinitions>
+
+            <Grid.Background >
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFD28D87" Offset="1"/>
+                    <GradientStop Color="#FFCF888B" Offset="1"/>
+                    <GradientStop Color="LightBlue" Offset="1"/>
+                    <GradientStop Color="#7F886992" Offset="0.215"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <TextBox  x:Name="IdTextBox" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  LostFocus="IdCheck_LostFocus"  PreviewMouseDown=" IdCheck_PreviewMouseDown" VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="43" Margin="188,60,440,0"  materialDesign:HintAssist.Foreground="#FF216882"
+  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882">
+                <materialDesign:HintAssist.Hint>
+                    <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                        <materialDesign:PackIcon Kind="SmartCardOutline"  Height="29" Width="23"/>
+                        <TextBlock Text="  TARGET'S ID" Width="90" VerticalAlignment="Bottom" Height="15"  />
+                    </StackPanel>
+                </materialDesign:HintAssist.Hint>
+            </TextBox>
+            <TextBox  x:Name="ModelTextBox"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" LostFocus=" ModelCheck_LostFocus"  PreviewMouseDown= "ModelCheck_PreviewMouseDown" VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="43" Margin="182,154,446,0"  materialDesign:HintAssist.Foreground="#FF216882"
+  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882">
+                <materialDesign:HintAssist.Hint>
+                    <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                        <materialDesign:PackIcon Kind="RenameBox"  Height="29" Width="23"/>
+                        <TextBlock Text="  TARGET'S NAME" Width="120" VerticalAlignment="Bottom" Height="15"  />
+                    </StackPanel>
+                </materialDesign:HintAssist.Hint>
+            </TextBox>
+
+            <ComboBox x:Name="MaxWeightSelector1"  materialDesign:HintAssist.Hint=" PARCEL'S WEIGHT" Width="160"   HorizontalAlignment="Left" Margin="188,368,0,76" />
+            <ComboBox x:Name="FirstCahrgingStationSelector1"  materialDesign:HintAssist.Hint=" CHARGING STATION"  HorizontalAlignment="Left" Margin="182,258,0,184"  Width="160"  />
+
+            <Button  x:Name="Add"  Click="Add_Click" Content="OK" HorizontalAlignment="Left" Margin="475,161,0,0" VerticalAlignment="Top" Height="72" Width="168"  Style="{StaticResource MaterialDesignFlatButton}"/>
+
+            <Button  x:Name="Cancel"  Click="Cancel_Click" Content="CANCEL" HorizontalAlignment="Left" Margin="475,233,0,0" VerticalAlignment="Top" Height="72" Width="168"  Style="{StaticResource MaterialDesignFlatButton}" RenderTransformOrigin="0.019,0.812"/>
+            <Button  x:Name="BackWindow" Style="{StaticResource MaterialDesignIconButton}"/>
+            <materialDesign:PackIcon Kind="ArrowBack" Height="48" Width="88" Margin="0,10,0,0" MouseDoubleClick="BackWindow_Click"  />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!--<Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200*"/>
                 <ColumnDefinition Width="200*"/>
                 <ColumnDefinition Width="200*"/>
@@ -94,10 +147,10 @@ VerticalAlignment="Stretch" Width="auto">
                 <ComboBox x:Name="MaxWeightSelector1" Grid.Row="2" HorizontalAlignment="Left"  VerticalAlignment="Stretch" Margin="0,0,0,0" Width="190"/>
                 <ComboBox x:Name="FirstCahrgingStationSelector1" Grid.Row="3" HorizontalAlignment="Left"  VerticalAlignment="Stretch" Margin="0,0,0,0" Width="190"/>
                 <Button x:Name="Cancel" Content="Cancel" Grid.Row="4" HorizontalAlignment="Left" Margin="10,19,0,0" VerticalAlignment="Top" Height="31" Width="110" Click="Cancel_Click"/>
-            </Grid>
+            </Grid>-->
         </Grid>
 
-        <Grid x:Name="UpDateGrid" RenderTransformOrigin="0.589,0.447"  >
+        <Grid x:Name="UpDateGrid" RenderTransformOrigin="0.589,0.447" Visibility="Hidden" >
             <StackPanel Background="AliceBlue">
                 <Grid Height="30">
                     <!--<StackPanel HorizontalAlignment="Left" Margin="20 0">
@@ -105,8 +158,8 @@ VerticalAlignment="Stretch" Width="auto">
                                 <ComboBoxItem Content="EN"/>
                             </ComboBox>
                         </StackPanel>-->
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20 0">
-                        <Button Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  >
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20 0" >
+                        <Button x:Name="Closeee" Background="{x:Null}" BorderBrush="{x:Null}"   VerticalAlignment="Center" Click="Close_Click" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  >
                             <materialDesign:PackIcon Kind="Power" Foreground="#FFA2A2A2" Width="25" Height="25" />
                         </Button>
                     </StackPanel>
@@ -115,7 +168,7 @@ VerticalAlignment="Stretch" Width="auto">
 
                     <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                         <RadioButton  Style="{StaticResource MaterialDesignTabRadioButton}"
-    Margin="4" Uid="0" Width="25" Content="HOME" Height="26" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" />
+    Margin="4" Uid="0" Width="25" Content="HOME" Height="26" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" Click="Home_Click" />
                         <RadioButton x:Name="Exit" Uid="1" Width="25" Height="30"  Content="BACK" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF2196F3"   Click="Exit_Click" />
                         <RadioButton x:Name="UpdateDroneName" Uid="2" Width="85" Height="30"  Content="UPDATE" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF2196F3"    Click="UpDateModel_Click" />
                         <RadioButton x:Name="SendDroneToCharge" Uid="3" Width="135" Height="30"  Content="CHARGE DRONE" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF2196F3"   Click="SendDroneToCharge_Click"/>
@@ -124,13 +177,6 @@ VerticalAlignment="Stretch" Width="auto">
                         <RadioButton x:Name="PickupParcelByDrone" Uid="6" Width="90" Height="30"  Content="PICKUP" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF2196F3"   Click="PickupParcelByDrone_Click"/>
                         <RadioButton x:Name="DeliverDroneToParcel" Uid="7" Width="92" Height="27"  Content="DELIVER" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF2196F3"   Click="DeliverDroneToParcel_Click"/>
 
-                        <!--<Button   x:Name="UpdateDroneName" Content="Update Drone Model" Grid.Column="1" HorizontalAlignment="Left" Margin="26,326,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="UpDateModel_Click"/>-->
-                        <!--<Button   x:Name="Exit" Content="BACK" Grid.Column="1" HorizontalAlignment="Left" Margin="26,373,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="Exit_Click"/>-->
-                        <!--<Button   x:Name="SendDroneToCharge" Content="Send Drone To Charge" Grid.Column="1" HorizontalAlignment="Center" Margin="0,373,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="SendDroneToCharge_Click"/>-->
-                        <!--<Button   x:Name="StopChargingDrone" Content="Stop Charging Drone" Grid.Column="1" HorizontalAlignment="Center" Margin="0,326,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="StopChargingDrone_Click"/>-->
-                        <!--<Button   x:Name="AssignDroneToParcel" Content="Assign Drone To Parcel" Grid.Column="1" HorizontalAlignment="Left" Margin="378,373,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="AssignDroneToParcel_Click"/>-->
-                        <!--<Button   x:Name="PickupParcelByDrone" Content="Pickup Parcel By Drone" Grid.Column="1" HorizontalAlignment="Left" Margin="379,326,0,0" VerticalAlignment="Top" Height="28" Width="142" Click="PickupParcelByDrone_Click"/>-->
-                        <!--<Button   x:Name="DeliverDroneToParcel" Content="Deliver Parcel By Drone" Grid.Column="1" HorizontalAlignment="Left" Margin="378,276,0,0" VerticalAlignment="Top" Height="28" Width="143" Click="DeliverDroneToParcel_Click" RenderTransformOrigin="0.938,0.862" />-->
                     </StackPanel>
                 </Grid>
 
@@ -175,16 +221,8 @@ VerticalAlignment="Stretch" Width="auto">
 
 
                 </Grid>
-                <!--<Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="364*"/>
-                    <ColumnDefinition Width="62*"/>
-                    <ColumnDefinition Width="85*"/>
-                    <ColumnDefinition Width="297*"/>
-                </Grid.ColumnDefinitions>-->
-
-
             </StackPanel>
-            <GroupBox x:Name="textboxParcelintransfer" Content="{Binding Mode=OneWay,Path=DroneParcel}" Margin="485,71,10,136"  
+            <GroupBox x:Name="textboxParcelintransfer" Visibility="Hidden" Content="{Binding Mode=OneWay,Path=DroneParcel}" Margin="485,71,10,136"  
   Header="Parcel In Transfer" MouseDoubleClick="textboxParcelintransfer_MouseEnter"
   Style="{DynamicResource MaterialDesignGroupBox}"
   materialDesign:ColorZoneAssist.Mode="Custom"
@@ -200,10 +238,13 @@ VerticalAlignment="Stretch" Width="auto">
                 </GroupBox.RenderTransform>
 
             </GroupBox>
-            <StackPanel  Margin="562,353,50,42">
-                <ProgressBar Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" RenderTransformOrigin="-2.83,1.772" />
-                <Label x:Name="DroneNotAssign" FontWeight="Bold" Content="Drone is not assign to a parcel" Height="55" RenderTransformOrigin="0.5,0.5" Width="188"  FontSize="7" />
-            </StackPanel>
+
+            <Label x:Name="DroneNotAssign" Content="DroneNotAssign" FontWeight="Bold" RenderTransformOrigin="0.5,0.5"  FontSize="15" Margin="519,386,142,66"/>
+            <ProgressBar x:Name="DroneNotAssignn"  Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True"  RenderTransformOrigin="-2.83,1.772" Margin="494,392,286,72" />
+
+
+
+
 
             <!--<TextBox  x:Name="textboxParcelintransfer" VerticalScrollBarVisibility="Auto"  Grid.Column="1" HorizontalAlignment="Left" Margin="370,86,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="160" Height="167" Visibility="Hidden" IsReadOnly="True" MouseDoubleClick="textboxParcelintransfer_MouseEnter"/>-->
 

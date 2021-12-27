@@ -53,5 +53,10 @@ namespace PL
             new ParcelListWindow(BlObject).Show();
             //this.Close();
         }
+
+        private void Star_Click(object sender, RoutedEventArgs e)
+        {
+            new Star1().Show();
+        }
     }
 }

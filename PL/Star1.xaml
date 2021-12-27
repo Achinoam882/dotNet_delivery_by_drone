@@ -1,0 +1,30 @@
+﻿<Window x:Class="PL.Star1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+         WindowStartupLocation="CenterScreen"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        
+        Title="Star1" Height="200" Width="350">
+    <Grid  x:Name="RateUs" Background="#FF93A3D7" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="111*"/>
+            <RowDefinition Height="73*"/>
+        </Grid.RowDefinitions>
+
+        <materialDesign:RatingBar  x:Name="BasicRatingBar" Value="3" ValueChanged="BasicRatingBar_ValueChanged" Margin="34,31,10,24"  />
+        <Label Content="RATE US!!" Foreground="Black" FontSize="20" Margin="10,56,10,0" Grid.RowSpan="2"/>
+
+
+    </Grid>
+</Window>

@@ -47,7 +47,7 @@ namespace PL
         private void AddDroneClick(object sender, RoutedEventArgs e)
         {
             new DroneWindow(bl, this).Show();
-            this.IsEnabled = false;
+           // this.IsEnabled = false;
           
 
         }
@@ -102,7 +102,7 @@ namespace PL
         {
             DroneToList drone = (DroneToList)DronesListView.SelectedItem;
             int droneIndex = DronesListView.SelectedIndex;
-            this.IsEnabled = false;
+            //this.IsEnabled = false;
             if (drone != null)
                   new DroneWindow(bl, this, drone.Id, droneIndex).Show();
         }

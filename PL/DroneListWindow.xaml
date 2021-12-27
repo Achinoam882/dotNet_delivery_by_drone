@@ -97,7 +97,7 @@
                     </Button>
                     <Button x:Name="AddDrone"   Margin="20,0,0,20" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" Click="AddDroneClick" ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="AliceBlue" BorderBrush="Transparent" 
  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" >
-                        <materialDesign:PackIcon Kind="PersonAdd" Height="30" Width="30" VerticalAlignment="Center" RenderTransformOrigin="1.18,0.535" />
+                        <materialDesign:PackIcon Kind="PlusThick" Height="30" Width="30" VerticalAlignment="Center" RenderTransformOrigin="1.18,0.535" />
                     </Button>
                     <Button x:Name="Reset"   Margin="20,0,0,20" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" Click="ResetClick"  ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="AliceBlue" BorderBrush="Transparent" 
  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" >
