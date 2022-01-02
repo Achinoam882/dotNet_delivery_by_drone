@@ -8,48 +8,47 @@
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      
+        
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
-        Background="{DynamicResource MaterialDesignPaper}"
+        Background="Transparent"
         FontFamily="{DynamicResource MaterialDesignFont}"
-         
-        Title="Login1" Height="751" Width="455">
-    <Grid Width="454" Height="800">
-        <Grid.Background >
+        Title="Login1" Height="751" Width="455" WindowStyle="None" >
+
+    <Border  Width="455" Height="751" >
+        <Border.Background>
             <ImageBrush ImageSource="/login.png" Stretch="UniformToFill"/>
-        </Grid.Background>
-        <TextBox x:Name="NameTextBox"  HorizontalAlignment="Left" Margin="123,347,0,0"     VerticalAlignment="Top" Width="261" Height="53" Background="#FF345075" BorderBrush="#FF345075" FontStyle="Italic" FontWeight="Normal"  TextAlignment="Left"  Foreground="Gray" FontSize="19" 
+        </Border.Background>
+        <Grid  x:Name="login"   Width="455" Height="751" >
+            <!--<Grid.Background >
+                <ImageBrush ImageSource="/login.png" Stretch="UniformToFill"/>
+            </Grid.Background>-->
+            <TextBox x:Name="NameTextBox"  HorizontalAlignment="Left" Margin="130,325,0,0"     VerticalAlignment="Top" Width="250" Height="50" Background="#FF345075" BorderBrush="#FF345075" FontStyle="Italic" FontWeight="Normal"  TextAlignment="Left"  Foreground="Gray" FontSize="19" 
   materialDesign:HintAssist.Hint="Name">
-            <TextBox.Text>
-                <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
-                    <!--<Binding.ValidationRules>
-                        <domain:NotEmptyValidationRule ValidatesOnTargetUpdated="True" xmlns:domain="clr-namespace:MaterialDesignDemo.Domain" />
-                    </Binding.ValidationRules>-->
-                </Binding>
-            </TextBox.Text>
-        </TextBox>
-        <PasswordBox x:Name="PassWordTextBox"  HorizontalAlignment="Left" Margin="123,419,0,0"  VerticalAlignment="Top" Width="261" Height="52" Background="#FF345075" BorderBrush="#FF345075"  FontStyle="Italic"  FontWeight="Normal" FontSize="19"  Foreground="Gray" 
+                <TextBox.Text>
+                    <Binding Path="Name" UpdateSourceTrigger="PropertyChanged">
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
+            <PasswordBox x:Name="PassWordTextBox"  HorizontalAlignment="Left" Margin="125,390,0,0"  VerticalAlignment="Top" Width="255" Height="55" Background="#FF345075" BorderBrush="#FF345075"  FontStyle="Italic"  FontWeight="Normal" FontSize="19"  Foreground="Gray" 
   materialDesign:HintAssist.Hint="Password"
   materialDesign:TextFieldAssist.HasClearButton="True"
   materialDesign:HintAssist.HelperText="At least 8 characters" />
 
-        <!--<Button   BorderBrush="Transparent" Background="Transparent" Margin="103,596,107,162"  FontWeight="Medium" FontSize="25"  FontFamily="Nirmala UI" Foreground="Gray" RenderTransformOrigin="0.506,0.218"  />-->
-        <Button x:Name="ButtonLogin" Click="ButtonLogin_Click" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Content="LOGIN" Foreground="Gray" FontSize="19"
-  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Margin="178,596,178,172" />
-        <CheckBox x:Name="ManagerCheckBox"  Content="I'm Customer" Margin="0,685,306,61" FontSize="19" FontFamily="Nirmala UI" Foreground="Black"  Checked="signIn_checked"/>
-        <Button x:Name="ButtonSignin" BorderBrush="Transparent" FontWeight="Medium" FontSize="25"   RenderTransformOrigin="0.506,0.218" Margin="380,661,10,76" Visibility="Hidden" >
-            <Button.Background>
-                <ImageBrush  ImageSource="/3793621.png"/>
-            </Button.Background>
+            <Button x:Name="ButtonLogin" Click="ButtonLogin_Click" Style="{StaticResource MaterialDesignFlatButton}" ToolTip="MaterialDesignFlatButton" Content="LOGIN" Foreground="Gray" FontSize="19"
+  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Margin="171,560,185,159" />
+            <CheckBox x:Name="IamCustomer"  Content="I AM A CUSTOMER" Style="{StaticResource MaterialDesignLightCheckBox}" Margin="19,10,290,706" />
+            <Button x:Name="ButtonSignin" BorderBrush="Transparent" Style="{StaticResource MaterialDesignFloatingActionLightButton}"
+  ToolTip="MaterialDesignFloatingActionLightButton" Background="AliceBlue"  Margin="365,9,34,686" IsEnabled="{Binding ElementName=IamCustomer, Path=IsChecked}" RenderTransformOrigin="1.08,1.786">
+                <materialDesign:PackIcon Kind="UserAdd" Width="38" Height="48" RenderTransformOrigin="0.329,0.126"/>
+            </Button>
+            <Button Background="{x:Null}" Width="20" Height="20" Click="Close_Click" BorderBrush="{x:Null}" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" RenderTransformOrigin="2.125,2.75" Margin="400,715,0,10">
+                <materialDesign:PackIcon Kind="Power"  Foreground="#FFA2A2A2" Width="20" Height="20" RenderTransformOrigin="-0.525,0.95" />
+            </Button>
 
-        </Button>
-
-
-
-
-    </Grid>
+        </Grid>
+    </Border>
 </Window>

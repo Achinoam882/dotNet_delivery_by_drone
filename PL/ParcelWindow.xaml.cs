@@ -143,59 +143,59 @@ namespace PL
             index = Index;
         }
 
-        private void Delivery_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
+        //private void Delivery_Click(object sender, RoutedEventArgs e)
+        //{
+        //    try
+        //    {
 
-                bl.DroneDeliverParcel(parcel.DroneAtParcel.Id);
+        //        bl.DroneDeliverParcel(parcel.DroneAtParcel.Id);
 
-                MessageBox.Show("Delivery By Drone was successfully done", "success!");
-                parcel = bl.GetParcel(parcel.Id);
-                DataContext = parcel;
-                parcelListWindow.ParcelListView.Items.Refresh();
-                parcelListWindow.AcordingToStatusSelectorChanged();
-                Delivery.IsEnabled = false;
-            }
-            catch (UpdateProblemException ex)
-            {
-                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        MessageBox.Show("Delivery By Drone was successfully done", "success!");
+        //        parcel = bl.GetParcel(parcel.Id);
+        //        DataContext = parcel;
+        //        parcelListWindow.ParcelListView.Items.Refresh();
+        //        parcelListWindow.AcordingToStatusSelectorChanged();
+        //        Delivery.IsEnabled = false;
+        //    }
+        //    catch (UpdateProblemException ex)
+        //    {
+        //        MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
 
-            }
-        }
+        //    }
+        //}
 
-        private void PickUp_Click(object sender, RoutedEventArgs e)
-     {
-            try
-            {
+     //   private void PickUp_Click(object sender, RoutedEventArgs e)
+     //{
+     //       try
+     //       {
                
-                if (parcel.Scheduled == null)
-                { PickUp.IsEnabled = false; }
+     //           if (parcel.Scheduled == null)
+     //           { PickUp.IsEnabled = false; }
 
 
-                bl.PickUpParcelByDrone(parcel.DroneAtParcel.Id);
+     //           bl.PickUpParcelByDrone(parcel.DroneAtParcel.Id);
 
-                MessageBox.Show("Pickup Parcel By Drone was successfully done", "success!");
-                parcel = bl.GetParcel(parcel.Id);
-                DataContext = parcel;
+     //           MessageBox.Show("Pickup Parcel By Drone was successfully done", "success!");
+     //           parcel = bl.GetParcel(parcel.Id);
+     //           DataContext = parcel;
 
-                int index = parcelListWindow.ParcelListView.SelectedIndex;
-                ParcelToList parcelToList = parcelListWindow.parcelToList[index];
-                parcelToList.Status = ParcelStatus.PickUp;
-                parcelListWindow.parcelToList[index] = parcelToList;
-                parcelListWindow.ParcelListView.Items.Refresh();
-                Delivery.IsEnabled = true;
-                parcelListWindow.AcordingToStatusSelectorChanged();
-                PickUp.IsEnabled = false;
+     //           int index = parcelListWindow.ParcelListView.SelectedIndex;
+     //           ParcelToList parcelToList = parcelListWindow.parcelToList[index];
+     //           parcelToList.Status = ParcelStatus.PickUp;
+     //           parcelListWindow.parcelToList[index] = parcelToList;
+     //           parcelListWindow.ParcelListView.Items.Refresh();
+     //           Delivery.IsEnabled = true;
+     //           parcelListWindow.AcordingToStatusSelectorChanged();
+     //           PickUp.IsEnabled = false;
 
 
-            }
-            catch (UpdateProblemException ex)
-            {
-                MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
+     //       }
+     //       catch (UpdateProblemException ex)
+     //       {
+     //           MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
 
-            }
-        }
+     //       }
+     //   }
 
         private void deleteParcel_Click(object sender, RoutedEventArgs e)
         {
@@ -267,20 +267,7 @@ namespace PL
         {
             this.Close();
         }
+      
     }
 }
 
-//try
-//{
-//    Parcel p = bl.GetParcel(drone.DroneParcel.Id);
-//    new ParcelWindow(bl, this, p.Id).Show();
-
-//    //if (p.Scheduled == null|| p.Delivered != null || p.PickUp != null)
-//    //{ PickUp.IsEnabled = false; }
-
-//}
-//catch (GetDetailsProblemException ex)
-//{
-//    MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-
-//}

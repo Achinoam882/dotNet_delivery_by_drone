@@ -57,6 +57,35 @@ namespace PL
         private void Star_Click(object sender, RoutedEventArgs e)
         {
             new Star1().Show();
+          
+        }
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+
+            Application.Current.Shutdown();
+        }
+
+        private void LogoutButtem_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult boxresult = MessageBox.Show("Are you sure you want to log out?", "info!", MessageBoxButton.YesNo, MessageBoxImage.Information);
+            switch (boxresult)
+            {
+
+                case MessageBoxResult.Yes:                  
+                    new Login1().Show();
+                    this.Close();
+                    break;
+                case MessageBoxResult.No:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void  info_Click(object sender, RoutedEventArgs e)
+        {
+            new info().Show();
+
         }
     }
 }

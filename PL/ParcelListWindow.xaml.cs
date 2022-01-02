@@ -116,6 +116,11 @@ namespace PL
             new ParcelWindow(bl, this).Show();
            // this.IsEnabled = false;
         }
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+
+            Application.Current.Shutdown();
+        }
 
         private void clearButtom_Click(object sender, RoutedEventArgs e)
         {
@@ -134,40 +139,32 @@ namespace PL
                 view = (CollectionView)CollectionViewSource.GetDefaultView(ParcelListView.ItemsSource);
                 PropertyGroupDescription groupDescription = new PropertyGroupDescription("Sender");
                 view.GroupDescriptions.Add(groupDescription);
-                GroupButton.Content = "Clear";
-                GroupButton.Name = "ClearButton";
+
 
             }
-            else
-            {
 
-                view = (CollectionView)CollectionViewSource.GetDefaultView(ParcelListView.ItemsSource);
-                view.GroupDescriptions.Clear();
-                GroupButton.Content = "Grouping By Sender";
-                GroupButton.Name = "GroupButton";
-            }
         }
-        private void Group_click2(object sender, RoutedEventArgs e)
-        {
+        //private void Group_click2(object sender, RoutedEventArgs e)
+        //{
 
-            if (GroupButton2.Name == "GroupButton2")
+        //    if (GroupButton2.Name == "GroupButton2")
 
-            {
-                view = (CollectionView)CollectionViewSource.GetDefaultView(ParcelListView.ItemsSource);
-                PropertyGroupDescription groupDescription = new PropertyGroupDescription("Receiving");
-                view.GroupDescriptions.Add(groupDescription);
-                GroupButton2.Content = "Clear";
-                GroupButton2.Name = "ClearButton2";
+        //    {
+        //        view = (CollectionView)CollectionViewSource.GetDefaultView(ParcelListView.ItemsSource);
+        //        PropertyGroupDescription groupDescription = new PropertyGroupDescription("Receiving");
+        //        view.GroupDescriptions.Add(groupDescription);
+        //        GroupButton2.Content = "Clear";
+        //        GroupButton2.Name = "ClearButton2";
 
-            }
-            else
-            {
+        //    }
+        //    else
+        //    {
 
-                view = (CollectionView)CollectionViewSource.GetDefaultView(ParcelListView.ItemsSource);
-                view.GroupDescriptions.Clear();
-                GroupButton2.Content = "Grouping By Receiver";
-                GroupButton2.Name = "GroupButton2";
-            }
-        }
+        //        view = (CollectionView)CollectionViewSource.GetDefaultView(ParcelListView.ItemsSource);
+        //        view.GroupDescriptions.Clear();
+        //        GroupButton2.Content = "Grouping By Receiver";
+        //        GroupButton2.Name = "GroupButton2";
+        //    }
+        //}
     }
 }

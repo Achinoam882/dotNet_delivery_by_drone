@@ -80,8 +80,8 @@
             </StackPanel.Background>
             <Grid Height="20">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20 0">
-                    <Button Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  >
-                        <materialDesign:PackIcon Kind="Power" Foreground="#FFA2A2A2" Width="20" Height="20" />
+                    <Button Background="{x:Null}"  Click="Close_Click" BorderBrush="{x:Null}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  >
+                        <materialDesign:PackIcon Kind="Power"  Foreground="#FFA2A2A2" Width="20" Height="20" />
                     </Button>
                 </StackPanel>
             </Grid>
@@ -108,10 +108,10 @@
  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" >
                         <materialDesign:PackIcon Kind="CardTextOutline"  Height="30" Width="30" VerticalAlignment="Center" RenderTransformOrigin="1.18,0.535" />
                     </Button>
-                    <Button x:Name="GroupButton2"   Margin="20,0,0,20" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" Click="Group_click2" ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="AliceBlue" BorderBrush="Transparent" 
+                    <!--<Button x:Name="GroupButton2"   Margin="20,0,0,20" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" Click="Group_click2" ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="AliceBlue" BorderBrush="Transparent" 
  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" >
                         <materialDesign:PackIcon Kind="CardTextOutline"  Height="30" Width="30" VerticalAlignment="Center" RenderTransformOrigin="1.18,0.535" />
-                    </Button>
+                    </Button>-->
                     <ComboBox x:Name="weightselector" Margin="20,0,0,20"  SelectionChanged="MaxWeightSelector_SelectionChanged"
     Style="{StaticResource MaterialDesignFilledComboBox}"
     IsEnabled="{Binding Path=IsChecked, ElementName=FilledComboBoxEnabledCheckBox}"

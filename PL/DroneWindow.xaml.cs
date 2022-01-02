@@ -386,8 +386,8 @@ namespace PL
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
 
-            DroneListWindow.IsEnabled = true;
-            close = false;
+            //DroneListWindow.IsEnabled = true;
+          //  close = false;
             Close();
         }
 
@@ -398,7 +398,7 @@ namespace PL
         }
         private void BackWindow_Click(object sender, MouseButtonEventArgs e)
         {
-            this.Close();
+            Close();
         }
         #endregion  drone actions
 

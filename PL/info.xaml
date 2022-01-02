@@ -1,0 +1,34 @@
+﻿<Window x:Class="PL.info"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Title="info" Height="300" Width="250">
+    <Grid Height="300" >
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                <GradientStop Color="#FFD28D87" Offset="0.54"/>
+                <GradientStop Color="DarkSlateBlue" Offset="1.2"/>
+                <GradientStop Color="#7F886992" Offset="0.25"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Grid>
+                <StackPanel>
+                    <TextBlock Text="MALKA AND ACHINOAM&#x0a;WE R THE KEADERS"
+                                        Foreground="Black"
+                                         FontSize="28"
+                                         Margin="20,10,10,0"/>
+                    <TextBlock Text="LETS GET STARTED"
+                                        Foreground="Black"
+                                         FontSize="20"
+                                         Margin="20,10,10,0"/>
+                </StackPanel>
+            </Grid>
+
+
+    </Grid>
+</Window>

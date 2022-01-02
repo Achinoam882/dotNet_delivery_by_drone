@@ -92,6 +92,11 @@ namespace PL
                 GroupButton.Name = "GroupButton";
             }
         }
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+
+            Application.Current.Shutdown();
+        }
 
     }
     

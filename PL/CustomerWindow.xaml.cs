@@ -35,6 +35,11 @@ namespace PL
         {
             this.Close();
         }
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+
+            Application.Current.Shutdown();
+        }
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {

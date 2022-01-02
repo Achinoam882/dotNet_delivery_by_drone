@@ -10,21 +10,34 @@
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
          WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         
         Title="Star1" Height="200" Width="350">
-    <Grid  x:Name="RateUs" Background="#FF93A3D7" >
+    <Grid  x:Name="RateUs"  >
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                <GradientStop Color="#FFD28D87" Offset="0.54"/>
+                <GradientStop Color="DarkSlateBlue" Offset="1.2"/>
+                <GradientStop Color="#7F886992" Offset="0.25"/>
+            </LinearGradientBrush>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="111*"/>
             <RowDefinition Height="73*"/>
         </Grid.RowDefinitions>
 
-        <materialDesign:RatingBar  x:Name="BasicRatingBar" Value="3" ValueChanged="BasicRatingBar_ValueChanged" Margin="34,31,10,24"  />
-        <Label Content="RATE US!!" Foreground="Black" FontSize="20" Margin="10,56,10,0" Grid.RowSpan="2"/>
-
-
+        <materialDesign:RatingBar  x:Name="BasicRatingBar"  Value="3" ValueChanged="BasicRatingBar_ValueChanged" Margin="104,9,95,30" Grid.Row="1"  />
+        <Label Content="Enjoing PRIMEAIR?&#x0a;         Rate Us!!" HorizontalAlignment="Left" FontFamily="HP Simplified" Foreground="DarkBlue"  FontSize="20" Margin="85,5,0,41" />
+        <Button Style="{StaticResource MaterialDesignFlatLightButton}" Click="ButtonBase_OnClick" ToolTip="MaterialDesignFlatLightButton"
+  Content="Maybe next time" Foreground="Gray" FontSize="10" Width="130"
+  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Margin="30,42,65,5" Grid.Row="1" />
+        <materialDesign:PackIcon Kind="HandHeartOutline" Height="50"  Width="50" Margin="140,65,0,0"/>
+        <Button Background="Transparent" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" BorderBrush="Transparent" Margin="310,5,10,91" Height="25" Width="25" Click="ButtonBase_OnClick">
+            <materialDesign:PackIcon Kind="Close" Height="20" Width="20"  />
+            </Button>
     </Grid>
 </Window>

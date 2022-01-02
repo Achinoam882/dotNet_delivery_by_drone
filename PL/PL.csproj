@@ -7,21 +7,54 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="0da229adca63b3a8a4bfbc83de22b297.jpg" />
     <None Remove="20211227_230553.jpg" />
     <None Remove="3005346.jpg" />
     <None Remove="3789747.png" />
     <None Remove="3793621.png" />
     <None Remove="4439964.png" />
+    <None Remove="44c22b2c97f2b15049cf89eec3f5a9a4.jpg" />
+    <None Remove="851da528bcad683d24358928a8253c45.jpg" />
+    <None Remove="92768fcf01f4d56cdc4bede6e8ea4932.jpg" />
+    <None Remove="b74599e268c67a8871d8256587499c59.jpg" />
+    <None Remove="baf31f0f85f2abc1eefad3f1994362e6.jpg" />
+    <None Remove="d07d25708d657d6fdade6777f6f1ebb7.jpg" />
+    <None Remove="image\44c22b2c97f2b15049cf89eec3f5a9a4.jpg" />
+    <None Remove="image\851da528bcad683d24358928a8253c45.jpg" />
+    <None Remove="image\888.glb" />
+    <None Remove="image\d07d25708d657d6fdade6777f6f1ebb7.jpg" />
+    <None Remove="image\Untitled.png" />
     <None Remove="login.png" />
+    <None Remove="Untitled.png" />
+    <None Remove="Untitled888.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Page Remove="MainWindow.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="MainWindow.xaml">
-      <CopyToOutputDirectory>Do if newer</CopyToOutputDirectory>
+    <Content Include="AssemblyInfo.cs">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\44c22b2c97f2b15049cf89eec3f5a9a4.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\851da528bcad683d24358928a8253c45.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\888.glb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\d07d25708d657d6fdade6777f6f1ebb7.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\Untitled.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
@@ -34,12 +67,33 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="0da229adca63b3a8a4bfbc83de22b297.jpg" />
     <Resource Include="20211227_230553.jpg" />
     <Resource Include="3005346.jpg" />
     <Resource Include="3789747.png" />
     <Resource Include="3793621.png" />
-    <Resource Include="4439964.png" />
+    <Content Include="4439964.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="44c22b2c97f2b15049cf89eec3f5a9a4.jpg" />
+    <Resource Include="851da528bcad683d24358928a8253c45.jpg" />
+    <Resource Include="92768fcf01f4d56cdc4bede6e8ea4932.jpg" />
+    <Resource Include="b74599e268c67a8871d8256587499c59.jpg" />
+    <Resource Include="baf31f0f85f2abc1eefad3f1994362e6.jpg" />
+    <Resource Include="d07d25708d657d6fdade6777f6f1ebb7.jpg" />
     <Resource Include="login.png" />
+    <Resource Include="Untitled.png" />
+    <Resource Include="Untitled888.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="App.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Update="MainWindow.xaml">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
 </Project>

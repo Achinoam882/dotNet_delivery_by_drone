@@ -42,12 +42,16 @@ namespace PL
             
 
         }
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
 
+            Application.Current.Shutdown();
+        }
         private void CustomerAct_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             CustomerToList customer = (CustomerToList)CustomerListView.SelectedItem;
             int customerIndex = CustomerListView.SelectedIndex;
-            this.IsEnabled = false;
+           // this.IsEnabled = false;
             if (customer != null)
                 new CustomerWindow(bl, this, customer.Id, customerIndex).Show();
          }
@@ -55,7 +59,7 @@ namespace PL
         private void AddCustomer_Click(object sender, RoutedEventArgs e)
         {
             new CustomerWindow(bl, this).Show();
-            this.IsEnabled = false;
+            //this.IsEnabled = false;
         }
     }
 }

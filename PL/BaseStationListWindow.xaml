@@ -80,7 +80,7 @@
 
             <Grid Height="20">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20 0">
-                <Button Background="{x:Null}" BorderBrush="{x:Null}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  >
+                    <Button Background="{x:Null}"  Click="Close_Click" BorderBrush="{x:Null}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  >
                     <materialDesign:PackIcon Kind="Power" Foreground="#FFA2A2A2" Width="20" Height="20" />
                 </Button>
             </StackPanel>

@@ -24,7 +24,7 @@ namespace PL
     /// </summary>
     public partial class DroneListWindow : Window
     {
-        bool close = true;
+       // bool close = true;
         BlApi.IBL bl;
         CollectionView view;
         public ObservableCollection<BO.DroneToList> droneToLists;
@@ -93,7 +93,7 @@ namespace PL
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            close = false;
+            //close = false;
             this.Close();
             
         }
@@ -106,12 +106,12 @@ namespace PL
             if (drone != null)
                   new DroneWindow(bl, this, drone.Id, droneIndex).Show();
         }
-        protected override void OnClosing(CancelEventArgs e)//bonus
-        {
-            base.OnClosing(e);
+        //protected override void OnClosing(CancelEventArgs e)//bonus
+        //{
+        //    base.OnClosing(e);
 
-            e.Cancel = close;
-        }
+        //    e.Cancel = close;
+        //}
         private void ClearOutlinedComboBox_Click(object sender, RoutedEventArgs e)
         {
 
@@ -127,11 +127,13 @@ namespace PL
                 view.GroupDescriptions.Add(groupDescription);
 
             }
-
-           
-
         }
-    
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+
+            Application.Current.Shutdown();
+        }
+
 
     }
 

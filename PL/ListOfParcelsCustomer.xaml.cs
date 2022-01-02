@@ -41,6 +41,7 @@ namespace PL
         {
             Parcel parcel = bl.GetParcel(customer.ParcelFromCustomer[index].Id);
             new ParcelWindow(bl, this, parcel.Id, index);
+            
         }
 
         private void ParcelToCustomer_Click(object sender, MouseButtonEventArgs e)

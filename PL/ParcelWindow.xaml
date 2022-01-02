@@ -209,7 +209,7 @@ VerticalAlignment="Stretch" Width="auto">
                 <Grid Height="30">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20 0" >
                         <Button x:Name="Closeee" Background="{x:Null}" BorderBrush="{x:Null}"   VerticalAlignment="Center" Click="Close_Click" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  >
-                            <materialDesign:PackIcon Kind="Power" Foreground="#FFA2A2A2" Width="25" Height="25" />
+                            <materialDesign:PackIcon Kind="Power"  Foreground="#FFA2A2A2" Width="25" Height="25" />
                         </Button>
                     </StackPanel>
                 </Grid>
@@ -220,16 +220,11 @@ VerticalAlignment="Stretch" Width="auto">
     Margin="4" Uid="0" Width="25" Content="HOME" Height="26" Background="{x:Null}" BorderBrush="{x:Null}"  Foreground="#FF216882"/>
                         <RadioButton x:Name="Exit" Uid="1" Width="25" Height="30"  Content="BACK" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" Foreground="#FF216882" BorderBrush="{x:Null}"  />
                         <RadioButton x:Name="deleteParcel"  Uid="2" Width="85" Height="30"  Content="DELETE" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF216882"   Click="deleteParcel_Click"/>
-                        <RadioButton x:Name="PickUp" Uid="3" Width="135" Height="30"  Content="PICK UP PARCEL" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF216882"   Click="PickUp_Click"/>
-                        <RadioButton x:Name="Delivery" Uid="4" IsEnabled="False" Width="150" Height="30"  Content="DELIVER PARCEL" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF216882"  Click="Delivery_Click"/>
+                        <!--<RadioButton x:Name="PickUp" Uid="3" Width="135" Height="30"  Content="PICK UP PARCEL" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF216882"   Click="PickUp_Click"/>-->
+                        <!--<RadioButton x:Name="Delivery" Uid="4" IsEnabled="False" Width="150" Height="30"  Content="DELIVER PARCEL" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF216882"  Click="Delivery_Click"/>-->
                     </StackPanel>
                 </Grid>
             </StackPanel>
-
-            <!--<Grid.ColumnDefinitions>
-                <ColumnDefinition Width="250*"/>
-                <ColumnDefinition Width="550*"/>
-            </Grid.ColumnDefinitions>-->
 
             <Grid Name="ParcelGrid"  Width="auto" Margin="0,73,436,0">
                 <Grid.Background >
@@ -271,15 +266,15 @@ VerticalAlignment="Stretch" Width="auto">
                 <Label x:Name="RequestedLabel" Content="Requested:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="9" />
 
                 <TextBlock x:Name="IdTextBox1" Grid.Column="1" Text="{Binding Path=Id}"  HorizontalAlignment="Center" TextWrapping="Wrap" Width="125"/>
-                <TextBox x:Name="WeightTextBox1"  Grid.Column="1"  Text="{Binding Path=Weight}" IsReadOnly="True" BorderBrush="{x:Null}" HorizontalAlignment="Center" Grid.Row="3"  TextWrapping="Wrap" Width="125" Height="35" VerticalAlignment="Center" />
+                <TextBlock x:Name="WeightTextBox1"  Grid.Column="1"  Text="{Binding Path=Weight}"  HorizontalAlignment="Center" Grid.Row="3"  TextWrapping="Wrap" Width="125" Height="35" VerticalAlignment="Center" />
                 <TextBox x:Name="SenderTextBox" Text="{Binding Mode=OneWay,Path=Sender}" Grid.Column="1"     IsReadOnly="True" BorderBrush="{x:Null}" HorizontalAlignment="Center" Grid.Row="1"  TextWrapping="Wrap" Width="182" Height="35" VerticalAlignment="Center" MouseDoubleClick="SenderDetails_Click"/>
                 <TextBox x:Name="RecieverTextBox" Text="{Binding Mode=OneWay,Path=Receiving}" Grid.Column="1"   VerticalScrollBarVisibility="Auto"  IsReadOnly="True" BorderBrush="{x:Null}" HorizontalAlignment="Center" Grid.Row="2"  TextWrapping="Wrap" Width="125" Height="35" VerticalAlignment="Center" MouseDoubleClick="ReceiverDetails_Click" />
                 <TextBox x:Name="DroneParcelTextBox" Text="{Binding Mode=OneWay,Path=DroneAtParcel}" Grid.Column="1"    VerticalScrollBarVisibility="Auto" IsReadOnly="True" BorderBrush="{x:Null}" HorizontalAlignment="Center" Grid.Row="5"  TextWrapping="Wrap" Width="125" Height="35" VerticalAlignment="Center" MouseDoubleClick="DroneParcel_Click"  />
-                <TextBox x:Name="PriorityTextBox1"  Grid.Column="1"  Text="{Binding Path=Priority}" BorderBrush="{x:Null}" Grid.Row="4"   HorizontalAlignment="Left"  VerticalAlignment="Stretch" Margin="0,0,0,0" Width="110"/>
-                <TextBox x:Name="ScheduledTextBox1"  Grid.Column="1"  HorizontalAlignment="Left" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,0,0,0" Grid.Row="6" Text="{Binding Path=Scheduled}" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="110" Grid.RowSpan="1" />
-                <TextBox x:Name="DeliveredTextBox1"  Grid.Column="1"  HorizontalAlignment="Left" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,0,0,0" Grid.Row="8" Text="{Binding Path=Delivered}" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="110" Grid.RowSpan="1" />
-                <TextBox x:Name="PickUpTextBox1"  Grid.Column="1"  HorizontalAlignment="Left" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,0,0,0" Grid.Row="7" Text="{Binding Path=PickUp}" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="110" Grid.RowSpan="1" />
-                <TextBox x:Name="RequestedTextBox1"  Grid.Column="1"  HorizontalAlignment="Left" IsReadOnly="True" BorderBrush="{x:Null}" Margin="0,0,0,0" Grid.Row="9" Text="{Binding Path=Requested}" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="110" Grid.RowSpan="1" />
+                <TextBlock x:Name="PriorityTextBox1"  Grid.Column="1"  Text="{Binding Path=Priority}" Grid.Row="4"   HorizontalAlignment="Left"  VerticalAlignment="Stretch" Margin="0,0,0,0" Width="110"/>
+                <TextBlock x:Name="ScheduledTextBox1"  Grid.Column="1"  HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="6" Text="{Binding Path=Scheduled}" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="110" Grid.RowSpan="1" />
+                <TextBlock x:Name="DeliveredTextBox1"  Grid.Column="1"  HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="8" Text="{Binding Path=Delivered}" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="110" Grid.RowSpan="1" />
+                <TextBlock x:Name="PickUpTextBox1"  Grid.Column="1"  HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="7" Text="{Binding Path=PickUp}" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="110" Grid.RowSpan="1" />
+                <TextBlock x:Name="RequestedTextBox1"  Grid.Column="1"  HorizontalAlignment="Left"  Margin="0,0,0,0" Grid.Row="9" Text="{Binding Path=Requested}" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="110" Grid.RowSpan="1" />
 
 
 

@@ -10,32 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for Star1.xaml
+    /// Interaction logic for DroneListPage.xaml
     /// </summary>
-    public partial class Star1 : Window
+    public partial class DroneListPage : Page
     {
-        public Star1()
+        public DroneListPage()
         {
             InitializeComponent();
         }
-        private void BasicRatingBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<int> e)
-        {
-            
-
-        }
-
-     
-
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-      
     }
 }

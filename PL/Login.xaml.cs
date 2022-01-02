@@ -28,7 +28,7 @@ namespace PL
 
         private void signIn_checked(object sender, RoutedEventArgs e)
         {
-            ButtonSignin.Visibility = Visibility.Visible;
+//ButtonSignin.Visibility = Visibility.Visible;
         }
 
         
@@ -47,6 +47,11 @@ namespace PL
         {
             new MainWindow().Show();
             this.Close();
+        }
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+
+            Close();
         }
     }
 }
