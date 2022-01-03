@@ -125,7 +125,7 @@ namespace BL
          BL()
         {
             //Creates an object that will serve as an access point to methods in DAL.
-            dalObject = DalFactory.GetDal("DalObject");
+            dalObject = DalFactory.GetDal();
 
             double[] arrDrone = dalObject.RequestPowerbyDrone();
             Available = arrDrone[0];

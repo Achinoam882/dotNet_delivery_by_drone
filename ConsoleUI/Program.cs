@@ -314,7 +314,7 @@ choose:
         static void Main(string[] args)
         {
             //IDal dalObject = new DalObject.DalObject();
-            IDal dalObject = DalFactory.GetDal("DalObject");
+            IDal dalObject = DalFactory.GetDal();
 
 
             int number=0;

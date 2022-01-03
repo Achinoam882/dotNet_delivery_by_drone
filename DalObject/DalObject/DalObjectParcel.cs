@@ -5,8 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using DO;
 using DalApi;
+using DAL;
+using DalObject;
 
-namespace DalObject
+
+
+namespace Dal
 {
    partial class DalObject :IDal
     {

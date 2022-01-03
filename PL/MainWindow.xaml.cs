@@ -62,8 +62,23 @@ namespace PL
         private void Close_Click(object sender, RoutedEventArgs e)
         {
 
+            IEnumerable<BO.DroneToList> DroneToList = from item in BlObject.GetDroneList()
+                                                      where item.Status == BO.DroneStatuses.InMaintenance
+                                                      select item;
+            if (DroneToList.Any())
+            {
+                foreach (var item in DroneToList)//when we close the app we need to put all of the drones that are inmintinan to free
+                                                 //becuse we dont have such area to store the in charge drones 
+                {
+                    BlObject.ReleaseFromCharging(item.Id);
+                    
+                }
+            }
             Application.Current.Shutdown();
         }
+
+  
+        
 
         private void LogoutButtem_Click(object sender, RoutedEventArgs e)
         {

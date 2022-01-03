@@ -7,18 +7,38 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Targil0", "Targil0\Targil0.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{10537B68-D0E8-4173-9394-8C0D379F93EF}"
 	ProjectSection(SolutionItems) = preProject
+		dal-config.xml = dal-config.xml
+		DalXmlConfig.xml = DalXmlConfig.xml
 		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI", "ConsoleUI\ConsoleUI.csproj", "{6A91B201-D317-40F4-886C-1110A0E603C3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "DAL\DAL.csproj", "{E02D30B7-FD8A-4236-BEBD-6AF1750FC50D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalFacade", "DAL\DalFacade.csproj", "{E02D30B7-FD8A-4236-BEBD-6AF1750FC50D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BL", "BL\BL.csproj", "{456017DE-7358-44D2-A97D-E3FCB7E2007C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleUI_BL", "ConsoleUI_BL\ConsoleUI_BL.csproj", "{814E776D-04AB-48AD-BE65-C430CC17637E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PL", "PL\PL.csproj", "{57BB5301-D736-4F82-80FC-C45B60A09C36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PL", "PL\PL.csproj", "{57BB5301-D736-4F82-80FC-C45B60A09C36}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalXml", "DalXml\DalXml.csproj", "{79E279BD-DF69-4083-AD0C-DFB77F61A89F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DalObject", "DalObject\DalObject.csproj", "{BA3171E4-3C29-4BE1-997D-B14ECE504386}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{1A86E3C2-56DD-4F64-A9BA-937BA8ECCE6F}"
+	ProjectSection(SolutionItems) = preProject
+		xml\dal-config.xml = xml\dal-config.xml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{37D09E23-E33A-408F-B536-DBEF62357295}"
+	ProjectSection(SolutionItems) = preProject
+		BaseStationXml.xml = BaseStationXml.xml
+		CustomerXml.xml = CustomerXml.xml
+		DroneChargeXml.xml = DroneChargeXml.xml
+		DroneXml.xml = DroneXml.xml
+		ParcelXml.xml = ParcelXml.xml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +70,14 @@ Global
 		{57BB5301-D736-4F82-80FC-C45B60A09C36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57BB5301-D736-4F82-80FC-C45B60A09C36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57BB5301-D736-4F82-80FC-C45B60A09C36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79E279BD-DF69-4083-AD0C-DFB77F61A89F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79E279BD-DF69-4083-AD0C-DFB77F61A89F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79E279BD-DF69-4083-AD0C-DFB77F61A89F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79E279BD-DF69-4083-AD0C-DFB77F61A89F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA3171E4-3C29-4BE1-997D-B14ECE504386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA3171E4-3C29-4BE1-997D-B14ECE504386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA3171E4-3C29-4BE1-997D-B14ECE504386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA3171E4-3C29-4BE1-997D-B14ECE504386}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

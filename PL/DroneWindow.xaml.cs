@@ -161,49 +161,50 @@ namespace PL
         {
             InitializeComponent();
            UpDateGrid.Visibility = Visibility.Visible;
+           DroneGrid.Visibility = Visibility.Visible;
             bl = blObject;
             DroneListWindow = droneListWindow;
             index = Indexdrone;
             drone = bl.GetDrone(Id);
              DataContext = drone;
-            StatusDroneclicks(drone.Status);
+            //StatusDroneclicks(drone.Status);
         }
-        public void StatusDroneclicks(DroneStatuses status)
+        //public void StatusDroneclicks(DroneStatuses status)
 
-        {
-            switch ((DroneStatuses)status)
-            {
-                case DroneStatuses.Free:
+        //{
+        //    switch ((DroneStatuses)status)
+        //    {
+        //        case DroneStatuses.Free:
 
                    
-                   // StopChargingDroneTime.IsEnabled = false;
-                    StopChargingDrone.IsEnabled=false;
-                    DeliverDroneToParcel.IsEnabled = false;
-                    PickupParcelByDrone.IsEnabled = false;
+        //           // StopChargingDroneTime.IsEnabled = false;
+        //            StopChargingDrone.IsEnabled=false;
+        //            DeliverDroneToParcel.IsEnabled = false;
+        //            PickupParcelByDrone.IsEnabled = false;
 
-                    break;
-                case DroneStatuses.InMaintenance:
+        //            break;
+        //        case DroneStatuses.InMaintenance:
                    
-                    SendDroneToCharge.IsEnabled = false;
-                    AssignDroneToParcel.IsEnabled = false;
-                    DeliverDroneToParcel.IsEnabled = false;
-                    PickupParcelByDrone.IsEnabled = false;
+        //            SendDroneToCharge.IsEnabled = false;
+        //            AssignDroneToParcel.IsEnabled = false;
+        //            DeliverDroneToParcel.IsEnabled = false;
+        //            PickupParcelByDrone.IsEnabled = false;
 
-                    break;
-                case DroneStatuses.Busy:
-                    if (!drone.DroneParcel.ParcelStatus)
-                        PickupParcelByDrone.IsEnabled = true;
-                    else
-                        DeliverDroneToParcel.IsEnabled = true;
-                    StopChargingDrone.IsEnabled = false;
-                    //StopChargingDroneTime.IsEnabled = false;
-                    SendDroneToCharge.IsEnabled = false;
-                    AssignDroneToParcel.IsEnabled = false;
-                    break;
-                default:
-                    break;
-            }
-        }
+        //            break;
+        //        case DroneStatuses.Busy:
+        //            if (!drone.DroneParcel.ParcelStatus)
+        //                PickupParcelByDrone.IsEnabled = true;
+        //            else
+        //                DeliverDroneToParcel.IsEnabled = true;
+        //            StopChargingDrone.IsEnabled = false;
+        //            //StopChargingDroneTime.IsEnabled = false;
+        //            SendDroneToCharge.IsEnabled = false;
+        //            AssignDroneToParcel.IsEnabled = false;
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
 
 
 
@@ -247,9 +248,9 @@ namespace PL
                 DroneListWindow.droneToLists[index] = droneToList; 
                 DroneListWindow.AcordingToStatusSelectorChanged();
              
-                DeliverDroneToParcel.IsEnabled = true;
-              PickupParcelByDrone.IsEnabled = false;
-               AssignDroneToParcel.IsEnabled = false;
+              //  DeliverDroneToParcel.IsEnabled = true;
+              //PickupParcelByDrone.IsEnabled = false;
+              // AssignDroneToParcel.IsEnabled = false;
                DroneNotAssign.Visibility = Visibility.Hidden;
 
             }
@@ -279,9 +280,9 @@ namespace PL
                  DataContext = drone;
             
                 DroneListWindow.DronesListView.Items.Refresh();
-                DeliverDroneToParcel.IsEnabled = false;
-                PickupParcelByDrone.IsEnabled = true;
-                AssignDroneToParcel.IsEnabled = false;
+               // DeliverDroneToParcel.IsEnabled = false;
+               // PickupParcelByDrone.IsEnabled = true;
+               // AssignDroneToParcel.IsEnabled = false;
                 DroneListWindow.AcordingToStatusSelectorChanged();
              
 
@@ -366,9 +367,9 @@ namespace PL
                
                  drone = bl.GetDrone(drone.Id);
                  DataContext = drone;
-                SendDroneToCharge.IsEnabled = true;
-                AssignDroneToParcel.IsEnabled = true;
-                DeliverDroneToParcel.IsEnabled = false;
+                //SendDroneToCharge.IsEnabled = true;
+                //AssignDroneToParcel.IsEnabled = true;
+                //DeliverDroneToParcel.IsEnabled = false;
                 DroneNotAssign.Visibility = Visibility.Visible;
                 DroneListWindow.DronesListView.Items.Refresh();
                 DroneListWindow.AcordingToStatusSelectorChanged();
@@ -445,14 +446,16 @@ namespace PL
         public DroneWindow(BlApi.IBL blObject,  int id, int droneIndex)
         {
             InitializeComponent();
-            UpDateGrid.Visibility = Visibility.Visible;
+            UpDateGrid.Visibility = Visibility.Hidden;
+            DroneGrid.Visibility = Visibility.Visible;
+
             this.UpdateDroneName.IsEnabled = false;
             this.ModelTextBox2.IsReadOnly = true;
              bl = blObject;
             index = droneIndex;
             drone = bl.GetDrone(id);
             DataContext = drone;
-            StatusDroneclicks(drone.Status);
+            //StatusDroneclicks(drone.Status);
 
 
         }

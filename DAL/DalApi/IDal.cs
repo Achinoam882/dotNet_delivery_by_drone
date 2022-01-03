@@ -144,7 +144,7 @@ namespace DalApi
         public  double[] RequestPowerbyDrone();
         public void UpDateDrone(Drone newDrone);
         public void UpDateCustomer(Customer newCustomer);
-        public void UpDateParcel(Parcel newParcel);
+        //public void UpDateParcel(Parcel newParcel);
         public void LessChargeSlots(int droneId);
         public void MoreChargeSlots(int baseStationId);
         public DroneCharge GetDroneCharge(int idForAllObjects);

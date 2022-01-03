@@ -5,14 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using DO;
 using DalApi;
+using Dal;
 using System.ComponentModel;
+using DalObject;
 
-namespace DalObject
+namespace Dal
 {
     /// <summary>
     /// Contains boot data and list structure
     /// </summary>
-     static class DataSource
+      static class DataSource
     {
         #region lists of structs
         /// <summary> A static Random that sets the random to select a millisecond to repel collisions </summary>
@@ -27,7 +29,10 @@ namespace DalObject
         internal static List<Parcel> ParcelList = new List<Parcel>();
         /// <summary> list of drone Charge  </summary>
         internal static List<DroneCharge> DroneChargeList = new List<DroneCharge>();
+        public static List<User> Users;
         #endregion lists of structs
+
+      
 
         internal class Config
         {
@@ -42,6 +47,14 @@ namespace DalObject
        
         public static void Initialize()
         {
+            #region User initialization
+            //Users = new List<User>
+            //{
+            //    new User{AllowingAccess=true,DelUser=false,UserName="MalkaSait",Salt=12122,HashedPassword= Tools.hashPassword(12122+"Malka1053")},
+            //    new User{AllowingAccess=true,DelUser=false,UserName="Achinoam",Salt=1234213,HashedPassword= Tools.hashPassword(1234213+"Achinoam123")},
+            //    new User{AllowingAccess=true,DelUser=false,UserName="a",Salt=12342,HashedPassword= Tools.hashPassword(12342+"a")}
+            //};
+            #endregion User initialization
             #region base station initialization
             //initialization of 2 base station in two random cities
             BaseStationList.Add(new BaseStation()
@@ -61,12 +74,13 @@ namespace DalObject
                     Longitude = 35.316667,
                     ChargeSlots = /*R.Next(5, 10)*/ 10
              });
+
             #endregion base station initialization
 
 
             #region drone initialization
             //initialization of 5 Drones with different and random values.
-          
+
             string[] ModelArr = new string[5] { "GS18", "TS60", "P50", "AS81", "BC55" };
                 for(int i=0;i<5; i++)
                 {
@@ -80,6 +94,7 @@ namespace DalObject
                     });
 
                 }
+
             #endregion drone initialization
 
 
@@ -101,6 +116,7 @@ namespace DalObject
                 });
 
                 }
+
             #endregion customer initialization
 
 
@@ -123,6 +139,7 @@ namespace DalObject
                 Requested =  DateTime.Now
                 });
                 }
+
             #endregion parcel initialization
 
 

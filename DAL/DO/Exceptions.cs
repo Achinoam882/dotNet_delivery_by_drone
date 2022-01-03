@@ -56,6 +56,23 @@ using System.Runtime.Serialization;
 
 
     }
+    public class XMLFileLoadCreateException : Exception
+    {
+        public XMLFileLoadCreateException() : base() { }
+        public XMLFileLoadCreateException(string message) : base(message) { }
+        public XMLFileLoadCreateException(string message, Exception inner) : base(message, inner) { }
+        public XMLFileLoadCreateException(string message, string file, Exception inner) : base(message, inner) { }
+
+        protected XMLFileLoadCreateException(SerializationInfo info, StreamingContext context)
+        : base(info, context) { }
+        public override string ToString()
+        {
+            return "Error not able to upload this file";
+        }
+
+
+    }
+    
 }
     
 

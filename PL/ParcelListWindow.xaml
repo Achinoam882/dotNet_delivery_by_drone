@@ -13,9 +13,10 @@
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
         TextOptions.TextRenderingMode="Auto"
+          WindowStyle="None"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="ParcelListWindow" Height="500" Width="800">
+        Title="ParcelListWindow" Height="670" Width="970">
 
 
 

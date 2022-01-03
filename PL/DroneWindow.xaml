@@ -180,7 +180,7 @@ VerticalAlignment="Stretch" Width="auto">
                     </StackPanel>
                 </Grid>
 
-                <Grid Name="DroneGrid" HorizontalAlignment="Stretch" Height="414" Width="803" RenderTransformOrigin="0.338,0.475">
+                <Grid Name="DroneGrid" HorizontalAlignment="Stretch" Height="414" Width="803" RenderTransformOrigin="0.338,0.475" Visibility="Hidden">
                     <Grid.Background >
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                             <GradientStop Color="#FFD28D87" Offset="1"/>

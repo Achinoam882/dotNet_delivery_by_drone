@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DO;
+using DalObject;
 using DalApi;
-namespace DalObject
+
+namespace Dal
 {
    partial class DalObject :IDal
     {

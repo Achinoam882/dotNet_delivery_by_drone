@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using DO;
 using DalApi;
-namespace DalObject
+using DalObject;
+namespace Dal
 {
 
     /// <summary>
@@ -18,14 +19,14 @@ namespace DalObject
         #region singelton
 
 
-        internal static readonly IDal instance = new DalObject();
+        static readonly IDal instance = new DalObject();
         
         static DalObject() { }
-        DalObject()
+       private DalObject()
         {
             DataSource.Initialize();
         }
-        public static IDal Instance { get {return instance;} }
+        static IDal Instance { get {return instance;} }
 
         #endregion
 
