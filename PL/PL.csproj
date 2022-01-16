@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <None Remove="0da229adca63b3a8a4bfbc83de22b297.jpg" />
+    <None Remove="1.png" />
     <None Remove="20211227_230553.jpg" />
     <None Remove="3005346.jpg" />
     <None Remove="3789747.png" />
@@ -24,15 +25,24 @@
     <None Remove="44c22b2c97f2b15049cf89eec3f5a9a4.jpg" />
     <None Remove="851da528bcad683d24358928a8253c45.jpg" />
     <None Remove="92768fcf01f4d56cdc4bede6e8ea4932.jpg" />
+    <None Remove="achi %283%29.png" />
     <None Remove="b74599e268c67a8871d8256587499c59.jpg" />
     <None Remove="baf31f0f85f2abc1eefad3f1994362e6.jpg" />
     <None Remove="d07d25708d657d6fdade6777f6f1ebb7.jpg" />
     <None Remove="image\44c22b2c97f2b15049cf89eec3f5a9a4.jpg" />
     <None Remove="image\851da528bcad683d24358928a8253c45.jpg" />
     <None Remove="image\888.glb" />
+    <None Remove="image\achi %283%29.png" />
     <None Remove="image\d07d25708d657d6fdade6777f6f1ebb7.jpg" />
+    <None Remove="image\image\1.png" />
+    <None Remove="image\image\signup.jpg" />
+    <None Remove="image\signup1.jpg" />
+    <None Remove="image\signuppp.jpg" />
     <None Remove="image\Untitled.png" />
     <None Remove="login.png" />
+    <None Remove="signup.jpg" />
+    <None Remove="signup1.jpg" />
+    <None Remove="signuppp.jpg" />
     <None Remove="Untitled.png" />
     <None Remove="Untitled888.png" />
   </ItemGroup>
@@ -50,7 +60,22 @@
     <Content Include="image\888.glb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="image\achi (3).png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="image\d07d25708d657d6fdade6777f6f1ebb7.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\image\1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\image\signup.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\signup1.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="image\signuppp.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="image\Untitled.png">
@@ -68,6 +93,7 @@
 
   <ItemGroup>
     <Resource Include="0da229adca63b3a8a4bfbc83de22b297.jpg" />
+    <Resource Include="1.png" />
     <Resource Include="20211227_230553.jpg" />
     <Resource Include="3005346.jpg" />
     <Resource Include="3789747.png" />
@@ -78,10 +104,16 @@
     <Resource Include="44c22b2c97f2b15049cf89eec3f5a9a4.jpg" />
     <Resource Include="851da528bcad683d24358928a8253c45.jpg" />
     <Resource Include="92768fcf01f4d56cdc4bede6e8ea4932.jpg" />
+    <Resource Include="achi (3).png" />
     <Resource Include="b74599e268c67a8871d8256587499c59.jpg" />
     <Resource Include="baf31f0f85f2abc1eefad3f1994362e6.jpg" />
     <Resource Include="d07d25708d657d6fdade6777f6f1ebb7.jpg" />
-    <Resource Include="login.png" />
+    <Content Include="login.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="signup.jpg" />
+    <Resource Include="signup1.jpg" />
+    <Resource Include="signuppp.jpg" />
     <Resource Include="Untitled.png" />
     <Resource Include="Untitled888.png" />
   </ItemGroup>

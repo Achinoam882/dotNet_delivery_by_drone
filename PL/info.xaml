@@ -3,21 +3,26 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        Title="info" Height="300" Width="250">
-    <Grid Height="300" >
-        <Grid.Background>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
-                <GradientStop Color="#FFD28D87" Offset="0.54"/>
-                <GradientStop Color="DarkSlateBlue" Offset="1.2"/>
-                <GradientStop Color="#7F886992" Offset="0.25"/>
-            </LinearGradientBrush>
-        </Grid.Background>
-        <Grid>
-                <StackPanel>
+        Title="info" Height="350" Width="300" >
+    <Border  BorderBrush="Black" BorderThickness="2,2,2,2">
+
+        <Grid Height="350" >
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                    <GradientStop Color="#FFD28D87" Offset="0.54"/>
+                    <GradientStop Color="DarkSlateBlue" Offset="1.2"/>
+                    <GradientStop Color="#7F886992" Offset="0.25"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid>
+                <!--<StackPanel>
                     <TextBlock Text="MALKA AND ACHINOAM&#x0a;WE R THE KEADERS"
                                         Foreground="Black"
                                          FontSize="28"
@@ -26,9 +31,21 @@
                                         Foreground="Black"
                                          FontSize="20"
                                          Margin="20,10,10,0"/>
-                </StackPanel>
+                </StackPanel>-->
+                <GroupBox Header="PRIME AIR" Style="{DynamicResource MaterialDesignGroupBox}" Margin="16,30,35,15" materialDesign:ShadowAssist.ShadowDepth="Depth3" BorderThickness="0">
+
+                    <TextBlock Margin="0,6,0,43"  FontSize="12" TextWrapping="Wrap" Text="Prime Air is a drone delivery service developed by two famouse  programers, proffesor malka sait and proffesor achi achi achi , operations began in select cities in 2021 designed to safely get packages to customers using autonomous aerial vehicles, also called drones. Prime Air has great potential to enhance the services to millions of customers by providing rapid parcel delivery that will also increase the overall safety and efficiency of the transportation system" Width="215" />
+                </GroupBox>
+                <Image  Source="/achi (3).png" Margin="193,253,7,11"/>
+
+                <Button Background="Transparent" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" BorderBrush="Transparent" Margin="10,-230,-250,91" Height="25" Width="25" Click="ButtonBase_OnClick">
+                    <materialDesign:PackIcon Kind="Close" Height="20" Width="20"  />
+                </Button>
+
             </Grid>
 
 
-    </Grid>
+
+        </Grid>
+    </Border>
 </Window>

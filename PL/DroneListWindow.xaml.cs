@@ -46,7 +46,7 @@ namespace PL
         }
         private void AddDroneClick(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(bl, this).Show();
+            new DroneWindow(bl, this).ShowDialog();
            // this.IsEnabled = false;
           
 

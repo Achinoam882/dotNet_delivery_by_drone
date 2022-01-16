@@ -9,16 +9,9 @@ using System.Threading.Tasks;
     {
           public struct Drone
           {
-              public int Id { get; set; }
-              public string Model { get; set; }
+              public int Id { get; set; } //Drone Id
+              public string Model { get; set; } //Drone name(model)
               public WeightCategories MaxWeight { get; set; }//light,medium,heavy
-           // public  DroneStatuses  StNatus { get; set; } //free,inMaintenance,busy
-           // public double Battery { get; set; }
-             //public override string ToString()
-             // {
-             //   return string.Format ("Id is:{0,-14}\t Model of the drone is:{1,-14}\t MaxWeight is:{2,-14}\t" +
-             //       "/*/* Drone status is:{3,-14}\t*/ Battery level is:{4,-14}\t*/",Id, Model, MaxWeight/*, Status, Battery*/);
-             // }
                public override string ToString()
                {
                  return this.ToStringProperty();

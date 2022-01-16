@@ -28,7 +28,9 @@ namespace PL
         BlApi.IBL bl;
         public bool close = true;
         private BaseStationListWindow basestationListWindow;
-
+        /// <summary>
+        ///constractor of add base station  window.
+        /// </summary>
         public BaseStationWindow(BlApi.IBL blObject, BaseStationListWindow baseStationListWindow)
         {
             InitializeComponent();
@@ -38,7 +40,9 @@ namespace PL
 
            
         }
-
+        /// <summary>
+        ///cancel the addition and return to the station list  window.
+        /// </summary>
         private void cancel_click(object sender, RoutedEventArgs e)
         {
            MessageBoxResult boxresult = MessageBox.Show("Are you sure you want to cancel this addition?", "info!", MessageBoxButton.YesNo, MessageBoxImage.Information);
@@ -59,7 +63,9 @@ namespace PL
                     break;
             }
         }
-
+        /// <summary>
+        ///Add the new base station and update the station list window.
+        /// </summary>
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             if (IdTextBox.Text.Length != 0 && NameTextBox.Text.Length != 0 && latitudeTextBox.Text.Length != 0 && longitudeTextBox.Text.Length != 0 && chargeslotstextbox.Text.Length != 0)
@@ -105,7 +111,9 @@ namespace PL
         }
         public BaseStation baseStation;
         int index;
-
+        /// <summary>
+        ///constractor of update base station window.
+        /// </summary>
         public BaseStationWindow(BlApi.IBL blObject,BaseStationListWindow baseStationList,int id,int indexId)
         {
             InitializeComponent();
@@ -118,7 +126,9 @@ namespace PL
            // DroneChargeTextBox.Text= bl.GetBaseStation(id).DroneChargingList.;
 
         }
-
+        /// <summary>
+        ///Update the name and charge slots of station
+        /// </summary>
         private void UpdateBaseStation_Click(object sender, RoutedEventArgs e)
         {
           
@@ -138,15 +148,16 @@ namespace PL
             basestationListWindow.BaseStationListView.Items.Refresh();
         }
 
-        
 
+        /// <summary>
+        ///Open a window with the details of the drone 
+        /// </summary>
         private void DroneInfo_Click(object sender, MouseButtonEventArgs e)
         {
-            DroneCharging drone = (DroneCharging)DroneChargingView.SelectedItem;
+     DroneCharging drone = (DroneCharging)DroneChargingView.SelectedItem;
             int droneIndex = DroneChargingView.SelectedIndex;
-            this.IsEnabled = false;
             if (drone != null)
-                new DroneWindow(bl, drone.Id, droneIndex).Show();
+                new DroneWindow(bl,  drone.Id, droneIndex).Show();
 
         }
 
@@ -168,16 +179,37 @@ namespace PL
                 chargeslotstextbox.BorderBrush = Brushes.Transparent;
             }
         }
+        /// <summary>
+        ///back to the previous window.
+        /// </summary
         private void BackWindow_Click(object sender, MouseButtonEventArgs e)
         {
             this.Close();
         }
+        /// <summary>
+        ///close all windows
+        /// </summary
         private void Close_Click(object sender, RoutedEventArgs e)
         {
 
             Application.Current.Shutdown();
         }
+        /// <summary>
+        ///return to home window
+        /// </summary>
+        private void HOME_CLICK(object sender, RoutedEventArgs e)
+        {
+            basestationListWindow.Close();
 
+            Close();
+        }
+        /// <summary>
+        ///back to the previous window.
+        /// </summary
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
    
 }

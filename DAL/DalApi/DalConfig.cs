@@ -7,6 +7,10 @@ using System.Xml.Linq;
 
 namespace DalApi
 {
+    /// <summary>
+    /// Class for processing confing.xml file and getting from there
+    /// information which is relevant for initialization of DalApi
+    /// </summary>
     class DalConfig
     {
         internal static string DalName;
@@ -19,6 +23,9 @@ namespace DalApi
                            select pkg).ToDictionary(p => "" + p.Name, p => p.Value);
         }
     }
+    /// <summary>
+    /// Represents errors during DalApi initialization
+    /// </summary>
     public class DalConfigException : Exception
     {
         public DalConfigException(string msg) : base(msg) { }

@@ -14,7 +14,8 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
           WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize"
+       ResizeMode="NoResize"
+         WindowStyle="None"
         
         Title="BaseStationWindow" Height="500" Width="800">
     <Window.Resources>
@@ -43,161 +44,16 @@
         </Style>
         <Style TargetType="TextBox">
             <Setter Property="Background" Value="Transparent" />
+            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
         </Style>
     </Window.Resources>
-    <Grid x:Name="MainGrid">
+    <Border  BorderBrush="Black" BorderThickness="2,2,2,2">
 
 
-        <Grid x:Name="AddBaseStationGrid" Visibility="Hidden" >
-            <Grid.Background >
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFD28D87" Offset="1"/>
-                    <GradientStop Color="#FFCF888B" Offset="1"/>
-                    <GradientStop Color="LightBlue" Offset="1"/>
-                    <GradientStop Color="#7F886992" Offset="0.215"/>
-                </LinearGradientBrush>
-            </Grid.Background>
-            <TextBox  x:Name="IdTextBox"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="43" Margin="188,60,440,0"  materialDesign:HintAssist.Foreground="#FF216882"
-  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882">
-                <materialDesign:HintAssist.Hint>
-                    <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
-                        <materialDesign:PackIcon Kind="SmartCardOutline"  Height="29" Width="23"/>
-                        <TextBlock Text="  ID" Width="36" VerticalAlignment="Bottom" Height="15"  />
-                    </StackPanel>
-                </materialDesign:HintAssist.Hint>
-            </TextBox>
-            <TextBox  x:Name="NameTextBox"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="43" Margin="188,120,440,0"  materialDesign:HintAssist.Foreground="#FF216882"
-  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882">
-                <materialDesign:HintAssist.Hint>
-                    <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
-                        <materialDesign:PackIcon Kind="RenameBox"  Height="29" Width="23"/>
-                        <TextBlock Text="  NAME" Width="45" VerticalAlignment="Bottom" Height="15"  />
-                    </StackPanel>
-                </materialDesign:HintAssist.Hint>
-            </TextBox>
-            <TextBox  x:Name="chargeslotstextbox" LostFocus="chargeslotstextbox_LostFocus"  PreviewMouseDown="DroneInfo_PreviewMouseDown" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="43" Margin="188,190,440,0"  materialDesign:HintAssist.Foreground="#FF216882"
-  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882">
-                <materialDesign:HintAssist.Hint>
-                    <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
-                        <materialDesign:PackIcon Kind="ElectricCharger"  Height="29" Width="23"/>
-                        <TextBlock Text="  CHARGE SLOTS" Width="100" VerticalAlignment="Bottom" Height="15"  />
-                    </StackPanel>
-                </materialDesign:HintAssist.Hint>
-            </TextBox>
-            <TextBox  x:Name="latitudeTextBox"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="43" Margin="188,260,440,0"  materialDesign:HintAssist.Foreground="#FF216882"
-  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882">
-                <materialDesign:HintAssist.Hint>
-                    <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
-                        <materialDesign:PackIcon Kind="Latitude"  Height="26" Width="20"/>
-                        <TextBlock Text="  LATITUDE" Width="95" VerticalAlignment="Bottom" Height="15"  />
-                    </StackPanel>
-                </materialDesign:HintAssist.Hint>
-            </TextBox>
-            <TextBox  x:Name="longitudeTextBox"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="43" Margin="188,330,440,0"  materialDesign:HintAssist.Foreground="#FF216882"
-  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882">
-                <materialDesign:HintAssist.Hint>
-                    <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
-                        <materialDesign:PackIcon Kind="Longitude"  Height="27" Width="22"/>
-                        <TextBlock Text="  LONGITUDE" Width="95" VerticalAlignment="Bottom" Height="15"  />
-                    </StackPanel>
-                </materialDesign:HintAssist.Hint>
-            </TextBox>
-            <Button  x:Name="Add"  Click="Add_Click" Content="OK" HorizontalAlignment="Left" Margin="475,161,0,0" VerticalAlignment="Top" Height="72" Width="168"  Style="{StaticResource MaterialDesignFlatButton}"/>
-
-            <Button  x:Name="cancel"  Click="cancel_click" Content="CANCEL" HorizontalAlignment="Left" Margin="475,233,0,0" VerticalAlignment="Top" Height="72" Width="168"  Style="{StaticResource MaterialDesignFlatButton}" RenderTransformOrigin="0.019,0.812"/>
-            <Button  x:Name="BackWindow" Style="{StaticResource MaterialDesignIconButton}"/>
-            <materialDesign:PackIcon Kind="ArrowBack" Height="48" Width="88" Margin="0,10,0,0" MouseDoubleClick="BackWindow_Click"  />
+        <Grid x:Name="MainGrid" Height="500" Width="800">
 
 
-
-
-
-
-            <!--<Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200*"/>
-                <ColumnDefinition Width="200*"/>
-                <ColumnDefinition Width="200*"/>
-                <ColumnDefinition Width="200*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Name="SecGrid" HorizontalAlignment="Stretch" Height="300" Grid.Column="1" 
-VerticalAlignment="Stretch" Width="auto">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-
-                </Grid.RowDefinitions >
-                <Label x:Name="IdLabel" Content="Id:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="0"/>
-                <Label x:Name="NameLabel" Content="Name:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="1" />
-                <Label x:Name="LongitudeLable" Content="Longitude:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="2" />
-                <Label x:Name="LatitudeLable" Content="Latitude:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="3" />
-                <Label x:Name="ChargeSlotsLabel" Content="Charge Slots:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="4"/>
-
-
-            </Grid>
-            <Grid Name="ThirdGrid" HorizontalAlignment="Stretch" Height="300" Grid.Column="2" 
-VerticalAlignment="Stretch" Width="auto">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions >
-                <TextBox x:Name="IdTextBox"   HorizontalAlignment="Left" Margin="0,0,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="190"  />
-                <TextBox x:Name="NameTextBox" HorizontalAlignment="Left" Margin="0,0,0,0" Grid.Row="1" Text="" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="190" Grid.RowSpan="1" />
-                <TextBox x:Name="latitudeTextBox" Grid.Row="2" HorizontalAlignment="Left"  VerticalAlignment="Stretch" Margin="0,0,0,0" Width="190"/>
-                <TextBox x:Name="longitudeTextBox" Grid.Row="3" HorizontalAlignment="Left"  VerticalAlignment="Stretch" Margin="0,0,0,0" Width="190"/>
-                <TextBox x:Name="chargeslotstextbox" Grid.Row="4"   HorizontalAlignment="Left" Margin="0,0,0,0" Text="" TextWrapping="Wrap" VerticalAlignment="Stretch" Width="190" LostFocus="chargeslotstextbox_LostFocus"  PreviewMouseDown="DroneInfo_PreviewMouseDown" />
-                <Button x:Name="cancel" Content="Cancel" Grid.Row="5" HorizontalAlignment="Left" Margin="0,19,0,0" Width="110" Click="cancel_click"/>
-                <Button x:Name="Add" Content="Add" Grid.Row="5" HorizontalAlignment="Left" Margin="-132,20,0,0" VerticalAlignment="Top" Height="30" Width="110"  RenderTransformOrigin="0.081,0.338" Click="Add_Click" />
-            </Grid>-->
-
-        </Grid>
-
-        <Grid x:Name="UpdateGrid" RenderTransformOrigin="0.589,0.447" Visibility="Hidden">
-            <Grid.Background >
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FFD28D87" Offset="1"/>
-                    <GradientStop Color="#FFCF888B" Offset="1"/>
-                    <GradientStop Color="LightBlue" Offset="1"/>
-                    <GradientStop Color="#7F886992" Offset="0.215"/>
-                </LinearGradientBrush>
-            </Grid.Background>
-
-            <StackPanel Background="AliceBlue">
-
-                <Grid Height="30">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20 0">
-                        <Button Background="{x:Null}" BorderBrush="{x:Null}"  Click="Close_Click" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  >
-                            <materialDesign:PackIcon Kind="Power" Foreground="#FFA2A2A2" Width="25" Height="25" />
-                        </Button>
-                    </StackPanel>
-                </Grid>
-                <Grid Height="40" >
-
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                        <RadioButton  Style="{StaticResource MaterialDesignTabRadioButton}"
-    Margin="4" Uid="0" Width="150" Content="HOME" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF216882" />
-                        <RadioButton x:Name="UpdateButton" Uid="1" Width="150" Height="30"  Content="UPDATE" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF216882"   Click="UpdateBaseStation_Click" />
-                        <!--<RadioButton x:Name="ListParcelToCustomer" Uid="2" Width="160" Height="30"  Content="SHIPPED PARCELS" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF2196F3"   Click="ListParcelToCustomer_Click" />
-                        <RadioButton x:Name="ListParcelFromCustomer" Uid="3" Width="160" Height="30"  Content="RECEVIED PARCELS" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF2196F3"   Click="ListParcelFromCustomer_Click"/>-->
-                    </StackPanel>
-                </Grid>
-                <Grid x:Name="GridMain" Height="369" Width="800" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200*"/>
-                        <ColumnDefinition Width="200*"/>
-
-                    </Grid.ColumnDefinitions>
-
-                </Grid>
-            </StackPanel>
-            <Grid Name="BaseStationGrid" Grid.Column="0" Width="auto" Margin="0,77,0,0" >
+            <Grid x:Name="AddBaseStationGrid" Visibility="Hidden"  >
                 <Grid.Background >
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFD28D87" Offset="1"/>
@@ -205,32 +61,61 @@ VerticalAlignment="Stretch" Width="auto">
                         <GradientStop Color="LightBlue" Offset="1"/>
                         <GradientStop Color="#7F886992" Offset="0.215"/>
                     </LinearGradientBrush>
-
                 </Grid.Background>
+                <TextBox  x:Name="IdTextBox" VerticalContentAlignment="Bottom" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="43" Margin="188,60,440,0"  materialDesign:HintAssist.Foreground="#FF216882"
+  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882">
+                    <materialDesign:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                            <materialDesign:PackIcon Kind="SmartCardOutline"  Height="29" Width="23"/>
+                            <TextBlock Text="  ID" Width="36" VerticalAlignment="Bottom" Height="15"  />
+                        </StackPanel>
+                    </materialDesign:HintAssist.Hint>
+                </TextBox>
+                <TextBox  x:Name="NameTextBox"  VerticalContentAlignment="Bottom" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="43" Margin="188,120,440,0"  materialDesign:HintAssist.Foreground="#FF216882"
+  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882">
+                    <materialDesign:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                            <materialDesign:PackIcon Kind="RenameBox"  Height="29" Width="23"/>
+                            <TextBlock Text="  NAME" Width="45" VerticalAlignment="Bottom" Height="15"  />
+                        </StackPanel>
+                    </materialDesign:HintAssist.Hint>
+                </TextBox>
+                <TextBox  x:Name="chargeslotstextbox" VerticalContentAlignment="Bottom" LostFocus="chargeslotstextbox_LostFocus"  PreviewMouseDown="DroneInfo_PreviewMouseDown" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="43" Margin="188,190,440,0"  materialDesign:HintAssist.Foreground="#FF216882"
+  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882">
+                    <materialDesign:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                            <materialDesign:PackIcon Kind="ElectricCharger"  Height="29" Width="23"/>
+                            <TextBlock Text="  CHARGE SLOTS" Width="100" VerticalAlignment="Bottom" Height="15"  />
+                        </StackPanel>
+                    </materialDesign:HintAssist.Hint>
+                </TextBox>
+                <TextBox  x:Name="latitudeTextBox" VerticalContentAlignment="Bottom" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="43" Margin="188,260,440,0"  materialDesign:HintAssist.Foreground="#FF216882"
+  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882">
+                    <materialDesign:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                            <materialDesign:PackIcon Kind="Latitude"  Height="26" Width="20"/>
+                            <TextBlock Text="  LATITUDE" Width="95" VerticalAlignment="Bottom" Height="15"  />
+                        </StackPanel>
+                    </materialDesign:HintAssist.Hint>
+                </TextBox>
+                <TextBox  x:Name="longitudeTextBox"  Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Top" VerticalContentAlignment="Bottom" materialDesign:TextFieldAssist.HasClearButton="True" Height="43" Margin="188,330,440,0"  materialDesign:HintAssist.Foreground="#FF216882"
+  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882">
+                    <materialDesign:HintAssist.Hint>
+                        <StackPanel Orientation="Horizontal" Margin="-2 0 0 0">
+                            <materialDesign:PackIcon Kind="Longitude"  Height="27" Width="22"/>
+                            <TextBlock Text="  LONGITUDE" Width="95" VerticalAlignment="Bottom" Height="15"  />
+                        </StackPanel>
+                    </materialDesign:HintAssist.Hint>
+                </TextBox>
+                <Button  x:Name="Add"  Click="Add_Click" Content="OK" HorizontalAlignment="Left" Margin="475,161,0,0" VerticalAlignment="Top" Height="72" Width="168"  Style="{StaticResource MaterialDesignFlatButton}"/>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="200*"/>
-                    <ColumnDefinition Width="200*"/>
+                <Button  x:Name="cancel"  Click="cancel_click" Content="CANCEL" HorizontalAlignment="Left" Margin="475,233,0,0" VerticalAlignment="Top" Height="72" Width="168"  Style="{StaticResource MaterialDesignFlatButton}" RenderTransformOrigin="0.019,0.812"/>
+                <Button  x:Name="BackWindow" Style="{StaticResource MaterialDesignIconButton}" Margin="25,18,723,430" RenderTransformOrigin="0.5,0.5" MouseDoubleClick="BackWindow_Click" >
 
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions >
-                <Label x:Name="IdLabel2" Content="Id:" Grid.Column="0" Grid.Row="0" Margin="0,10,5,0"/>
-                <Label x:Name="NameLabel1" Content="Name:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="1" />
-                <Label x:Name="LongitudeLabel1" Content="Longitude:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="2" />
-                <Label x:Name="LatitudeLabel1" Content="Latitude:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="3" />
-                <Label x:Name="ChargeslotLabel1" Content="Charge slots:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="4" />
+                    <materialDesign:PackIcon Kind="ArrowBack" Height="51" Width="50" Foreground="Black"  />
 
-                <TextBox x:Name="IdTextBox1" Text="{Binding Path=Id}" IsReadOnly="True" BorderBrush="{x:Null}"  VerticalAlignment="Stretch"  TextWrapping="Wrap" Width="110" Margin="142,0,0,0"/>
-                <TextBox x:Name="NameTextBox1"  Text="{Binding Path=Name}"  BorderBrush="{x:Null}" HorizontalAlignment="Left" Grid.Row="1"  TextWrapping="Wrap" Width="110" Height="83"  Margin="142,0,0,0" />
-                <TextBox x:Name="FreeChargeSlotTextBox"  Text="{Binding Path=FreeChargeSlots}" BorderBrush="{x:Null}" Grid.Row="4"    Margin="142,0,0,0" Width="110" />
-                <TextBox x:Name="LatitudeTextBox"  HorizontalAlignment="Left" IsReadOnly="True" BorderBrush="{x:Null}" Margin="142,81,0,81" Grid.Row="2" Text="{Binding Path=BaseStationLocation.Latitude}" TextWrapping="Wrap" Width="110" Grid.RowSpan="3" />
-                <TextBox x:Name="LongitudeTextBox"  HorizontalAlignment="Left" IsReadOnly="True" BorderBrush="{x:Null}" Margin="142,1,0,0" Grid.Row="2" Text="{Binding Path=BaseStationLocation.Longitude}" TextWrapping="Wrap" Width="110" />
+                </Button>
+
 
 
 
@@ -238,20 +123,243 @@ VerticalAlignment="Stretch" Width="auto">
 
             </Grid>
 
-            <!--<Button x:Name="UpdateButton" Content="Update" Grid.Column="1" HorizontalAlignment="Left" Margin="245,306,0,0" VerticalAlignment="Top" Height="36" Width="74" Click="UpdateBaseStation_Click" />-->
-            <Label x:Name="DroneChargeLable" Content="Drone charging in this station:" HorizontalAlignment="Left" Margin="582,97,0,0" VerticalAlignment="Top" Height="27" Width="188"/>
-            <ListView x:Name="DroneChargingView" Margin="557,129,10,134" ItemsSource="{Binding DroneChargingList}" MouseDoubleClick="DroneInfo_Click" >
-                <ListView.View >
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="100" ></GridViewColumn>
-                        <GridViewColumn DisplayMemberBinding="{Binding  Battery}" Header="Battery" Width="100"></GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <Grid x:Name="UpdateGrid" RenderTransformOrigin="0.589,0.447" Visibility="Hidden" >
+                <Grid.Background >
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFD28D87" Offset="1"/>
+                        <GradientStop Color="#FFCF888B" Offset="1"/>
+                        <GradientStop Color="LightBlue" Offset="1"/>
+                        <GradientStop Color="#7F886992" Offset="0.215"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+
+                <StackPanel Background="AliceBlue">
+
+                    <Grid Height="30" Background="#FFA2A2C5">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20 0">
+                            <Button Background="{x:Null}" BorderBrush="{x:Null}"  Click="Close_Click" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  >
+                                <materialDesign:PackIcon Kind="Power" Foreground="#FFA2A2A2" Width="25" Height="25" />
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Height="40" Background="#FFA2A2C5" >
+
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <RadioButton  Style="{StaticResource MaterialDesignTabRadioButton}"
+    Margin="4" Uid="0" Width="150" Content="HOME" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF216882" Click="HOME_CLICK" />
+                            <RadioButton x:Name="Exit" Uid="1" Width="25" Height="30"  Content="BACK" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF216882"  Click="Back_Click" />
+
+                            <RadioButton x:Name="UpdateButton" Uid="2" Width="150" Height="30"  Content="UPDATE" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF216882"   Click="UpdateBaseStation_Click" />
+                            <!--<RadioButton x:Name="ListParcelToCustomer" Uid="2" Width="160" Height="30"  Content="SHIPPED PARCELS" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF2196F3"   Click="ListParcelToCustomer_Click" />
+                        <RadioButton x:Name="ListParcelFromCustomer" Uid="3" Width="160" Height="30"  Content="RECEVIED PARCELS" Background="{x:Null}" Style="{StaticResource MaterialDesignTabRadioButton}" BorderBrush="{x:Null}" Foreground="#FF2196F3"   Click="ListParcelFromCustomer_Click"/>-->
+                        </StackPanel>
+                    </Grid>
+                    <!--<Grid x:Name="GridMain" Height="430" Width="798" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200*"/>
+                            <ColumnDefinition Width="200*"/>
+
+                        </Grid.ColumnDefinitions>
+
+                    </Grid>-->
+                </StackPanel>
+                <Grid Name="BaseStationGrid" Grid.Column="0" Height="430"  Width="auto" Margin="0,68,-2,-11" >
+                    <Grid.ColumnDefinitions >
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <materialDesign:Card   Grid.Column="0"   Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Padding="8" 
+                    UniformCornerRadius="6" Margin="48,20,53,36">
+                        <materialDesign:Card.Background>
+
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                                <GradientStop Color="#FFD28D87" Offset="0.3"/>
+                                <GradientStop Color="DarkSlateBlue" Offset="0"/>
+                                <GradientStop Color="#7F886992" Offset="0.95"/>
+                            </LinearGradientBrush>
+                        </materialDesign:Card.Background>
+                        <Grid Background="Transparent">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+
+                                <!--<RowDefinition Height="*"/>-->
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="111*"/>
+                                <ColumnDefinition Width="86*"/>
+                                <ColumnDefinition Width="25*"/>
+                            </Grid.ColumnDefinitions>
 
 
+                            <TextBlock HorizontalAlignment="Left" Grid.Row="0"  TextWrapping="Wrap" VerticalAlignment="Top" Width="208"  Height="36" FontSize="16" FontWeight="Bold" FontFamily="Consolas" Foreground="Black" TextAlignment="Center" Grid.ColumnSpan="2" Margin="-23,1,0,0"><Run FlowDirection="RightToLeft" Language="he-il" Text=":Base Station Details"/></TextBlock>
+
+                            <Label x:Name="IdLabel2" Content="Id:"  Grid.Column="0" Grid.Row="1" Margin="0,10,5,0"/>
+                            <!--<Label x:Name="NameLabel1" Content="Name:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="1" />-->
+                            <Label x:Name="LongitudeLabel1" Content="Longitude:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="2" />
+                            <Label x:Name="LatitudeLabel1" Content="Latitude:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="3" />
+                            <!--<Label x:Name="ChargeslotLabel1" Content="Charge slots:" Grid.Column="0" HorizontalAlignment="Stretch"  VerticalAlignment="Stretch" Grid.Row="4" />-->
+
+                            <TextBlock x:Name="IdTextBox1"  Text="{Binding Path=Id}"  VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="1" TextWrapping="Wrap" Width="110" Margin="0,0,0,0"/>
+                            <!--<TextBox x:Name="NameTextBox1"  VerticalContentAlignment="Top" Text="{Binding Path=Name}"  BorderBrush="{x:Null}" HorizontalAlignment="Left" Grid.Row="1"  TextWrapping="Wrap" Width="110" Height="83"  Margin="142,0,0,0" />-->
+                            <!--<TextBox x:Name="FreeChargeSlotTextBox"  Text="{Binding Path=FreeChargeSlots}" BorderBrush="{x:Null}" Grid.Row="4"    Margin="142,0,0,0" Width="110" />-->
+                            <TextBlock x:Name="LatitudeTextBox"  HorizontalAlignment="Left" Grid.Column="1"  Margin="0,0,0,0" Grid.Row="3" Text="{Binding Path=BaseStationLocation.Latitude,StringFormat=N5}" TextWrapping="Wrap" Width="110"  />
+                            <TextBlock x:Name="LongitudeTextBox"  HorizontalAlignment="Left"  Margin="0,0,0,0" Grid.Column="1" Grid.Row="2" Text="{Binding Path=BaseStationLocation.Longitude,StringFormat=N5}" TextWrapping="Wrap" Width="110" />
+
+
+                        </Grid>
+                    </materialDesign:Card>
+
+
+                </Grid>
+                <materialDesign:Card  Background="Transparent"   Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Padding="8" 
+                    UniformCornerRadius="6"  Margin="553,233,12,117" >
+                    <Grid Background="Transparent" Grid.Column="1" Margin="35,125,-1,-121" RenderTransformOrigin="0.5,0.5">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35*"/>
+                            <RowDefinition Height="167*"/>
+                        </Grid.RowDefinitions>
+                        <!--<TextBlock Text="Model:" FontSize="15" Foreground="Black" Margin="6,5,14,76" Grid.Row="1" />-->
+                        <TextBox  x:Name="NameTextBox1" VerticalContentAlignment="Bottom" Text="{Binding Path=Name}" Foreground="Black" Background="Transparent" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="57" Margin="7,40,4,0"  materialDesign:HintAssist.Foreground="#FF216882" 
+  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882" Grid.RowSpan="2">
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal" Height="42" Width="127">
+                                    <materialDesign:PackIcon Kind="RenameBox" Foreground="Black"  Height="37" Width="41"/>
+                                    <TextBlock Text="Name:" Width="83" Foreground="Black"  VerticalAlignment="Bottom" Height="35"  />
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </TextBox>
+                    </Grid>
+                </materialDesign:Card>
+                <materialDesign:Card  Background="Transparent"   Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}" Padding="8" 
+                    UniformCornerRadius="6"  Margin="-7,286,577,-13" >
+                    <Grid Background="Transparent" Grid.Column="1" Margin="365,72,-341,-66" RenderTransformOrigin="0.5,0.5">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="35*"/>
+                            <RowDefinition Height="167*"/>
+                        </Grid.RowDefinitions>
+                        <!--<TextBlock Text="Phone Number:" FontSize="15" Foreground="Black" Margin="11,6,9,76" Grid.Row="1" />-->
+                        <TextBox  x:Name="FreeChargeSlotTextBox" VerticalContentAlignment="Bottom" Text="{Binding Path=FreeChargeSlots}" Foreground="Black" Background="Transparent" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  VerticalAlignment="Top" materialDesign:TextFieldAssist.HasClearButton="True" Height="57" Margin="7,40,4,0"  materialDesign:HintAssist.Foreground="#FF216882" 
+  materialDesign:TextFieldAssist.UnderlineBrush="#FF216882" Grid.RowSpan="2">
+                            <materialDesign:HintAssist.Hint>
+                                <StackPanel Orientation="Horizontal" Height="42" Width="127">
+                                    <materialDesign:PackIcon Kind="ElectricCharger" Foreground="Black"  Height="30" Width="31"/>
+                                    <TextBlock Text="Charge Slots:" Width="90" Foreground="Black"  VerticalAlignment="Bottom" Height="40"  />
+                                </StackPanel>
+                            </materialDesign:HintAssist.Hint>
+                        </TextBox>
+                    </Grid>
+                </materialDesign:Card>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <materialDesign:Card   x:Name="DroneStation"   Foreground="Black" 
+                                      UniformCornerRadius="10" Margin="408,96,97,172" RenderTransformOrigin="0.5,0.5" >
+                    <materialDesign:Card.Background>
+
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                            <GradientStop Color="#FFD28D87" Offset="0.3"/>
+                            <GradientStop Color="DarkSlateBlue" Offset="0"/>
+                            <GradientStop Color="#7F886992" Offset="0.95"/>
+                        </LinearGradientBrush>
+
+
+                    </materialDesign:Card.Background>
+                    <Grid Background="Transparent" Margin="-5,0,5,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="67*"/>
+                            <RowDefinition Height="165*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock x:Name="DroneChargeLable"  FontSize="19" Text="Drone charging in this station:" Foreground="Black" FontWeight="Bold" HorizontalAlignment="Left" Margin="16,0,0,0" VerticalAlignment="Center" Height="45" Width="289"/>
+                        <ListView x:Name="DroneChargingView"  VerticalContentAlignment="Center"  Margin="10,17,0,10"  ItemsSource="{Binding DroneChargingList}" MouseDoubleClick="DroneInfo_Click" Grid.RowSpan="2" >
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View >
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="150"   ></GridViewColumn>
+                                    <GridViewColumn DisplayMemberBinding="{Binding  Battery}" Header="Battery" Width="150"></GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </materialDesign:Card>
+
+                <!--<materialDesign:Card   x:Name="FromCustomer"   Foreground="Black" Visibility="Hidden"
+                                      UniformCornerRadius="10" Margin="183,83,3,213" RenderTransformOrigin="0.5,0.5" >
+                    <materialDesign:Card.Background>
+
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                            <GradientStop Color="#FFD28D87" Offset="0.3"/>
+                            <GradientStop Color="DarkSlateBlue" Offset="0"/>
+                            <GradientStop Color="#7F886992" Offset="0.95"/>
+                        </LinearGradientBrush>
+
+
+                    </materialDesign:Card.Background>
+                    <Grid Background="Transparent" Margin="-5,0,5,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="37*"/>
+                            <RowDefinition Height="122*"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="0" Text="Sent Parcels" Margin="225,10,260,4" Foreground="#FF216882" FontWeight="Bold" FontSize="14" TextAlignment="Center" RenderTransformOrigin="0.5,0.5"/>
+                        <ListView x:Name="ParcelFromCustomer"  Foreground="Black"  ItemsSource="{Binding ParcelFromCustomer}"   Margin="15,10,15,15" FontSize="9"  RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2" >
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+
+
+                            <ListView.View >
+                                <GridView>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id"  Width="75" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Parcel Status" Width="125"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding Weight}" Header="Weight" Width="95" />
+                                    <GridViewColumn DisplayMemberBinding="{Binding Priority}" Header="Priority" Width="100"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding OtherSide.Id}" Header="Id Target" Width="105"/>
+                                    <GridViewColumn DisplayMemberBinding="{Binding OtherSide.Name}" Header="Name Target" Width="125"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                </materialDesign:Card>-->
+
+
+
+
+
+
+
+
+
+            </Grid>
         </Grid>
-
-    </Grid>
-
+    </Border>
 </Window>

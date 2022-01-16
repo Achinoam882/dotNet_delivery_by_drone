@@ -6,10 +6,11 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         WindowStyle="None"
+        ResizeMode="NoResize"
         Title="ParcelWindow" Height="670" Width="970"
            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize"
+      
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -17,7 +18,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}">
-      
+
 
 
     <Grid  x:Name="Menu" Margin="0,0,-5,0" >
@@ -82,11 +83,7 @@
         <Grid x:Name="GridMain" Background="FloralWhite"  RenderTransformOrigin="0.5,0.5" Margin="210,-10,0,0">
 
             <StackPanel>
-                <TextBlock Text="Discover"
-                          Foreground="Black"
-                          FontSize="28"
-                          HorizontalAlignment="Left"
-                          Margin="20,20,0,20"/>
+                <Image  Width="128"  Source="/achi (3).png" Height="106" Margin="600,0,0,0"/>
                 <StackPanel Orientation="Horizontal" Margin="35,0,0,0">
                     <Border Width="400" Height="200">
                         <Border.Background>
@@ -100,8 +97,8 @@
                             <RectangleGeometry RadiusX="20" RadiusY="20" Rect="0,0,400,200"/>
                         </Border.Clip>
                         <Grid>
-                            <StackPanel>
-                                <TextBlock Text="MALKA AND ACHINOAM&#x0a;WE R THE KEADERS"
+                            <StackPanel Margin="0,6,-15,0">
+                                <TextBlock Text="MALKA AND ACHINOAM&#xA;WE R THE LEADERS"
                                         Foreground="Black"
                                          FontSize="28"
                                          Margin="20,10,10,0"/>
@@ -111,6 +108,24 @@
                                          Margin="20,10,10,0"/>
                             </StackPanel>
                             <!--<Image Width="255" Height="230" Source="/Untitled888.png" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-30,-65" RenderTransformOrigin="0.5,0.5">-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                             <!--<Image.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform/>
@@ -133,13 +148,13 @@
 
                         </Grid>
                     </Border>
-                    <Border Height="200" Width="200" CornerRadius="20" Margin="60,0,0,0">
+                    <Border Height="200" Width="200" CornerRadius="20" Margin="70,0,0,0">
                         <Border.Background>
                             <ImageBrush  ImageSource="/baf31f0f85f2abc1eefad3f1994362e6.jpg" Stretch="UniformToFill"  />
                         </Border.Background>
                     </Border>
                 </StackPanel>
-                <StackPanel  Margin="35,70,0,0">
+                <StackPanel  Margin="35,65,0,0">
                     <StackPanel Orientation="Horizontal">
                         <Border Width="200" Height="250" CornerRadius="20"   >
                             <Border.Background>
@@ -250,6 +265,8 @@
 
 
         </Grid>
+
+
 
     </Grid>
 </Window>

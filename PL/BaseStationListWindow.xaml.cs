@@ -26,9 +26,11 @@ namespace PL
         CollectionView view;
 
         BlApi.IBL bl;
-        bool close = true;
+      //  bool close = true;
         public ObservableCollection<BO.BaseStationToList> baseStationToList;
-        
+        /// <summary>
+        ///constractor of base station list window.
+        /// </summary>
         public BaseStationListWindow(BlApi.IBL blObject)
         {
             InitializeComponent();
@@ -46,56 +48,70 @@ namespace PL
             BaseStationListView.ItemsSource = baseStationToList;
             //baseStationToList.CollectionChanged += BaseStationToList_CollectionChanged;
         }
-      
 
+        /// <summary>
+        ///Open a window with the datails of the selected station and do act on this.
+        /// </summary>
         private void BaeStationAct_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             BaseStationToList baseStation = (BaseStationToList)BaseStationListView.SelectedItem;
             int baseStationIndex = BaseStationListView.SelectedIndex;
             //this.IsEnabled = false;
             if (baseStation != null)
-                new BaseStationWindow(bl, this, baseStation.Id, baseStationIndex).Show();
+                new BaseStationWindow(bl, this, baseStation.Id, baseStationIndex).ShowDialog();
             //BaseStationListView.ItemsSource=baseStationToList.refresh();
         }
 
+        /// <summary>
+        ///Open a window to add a new base station to the list
+        /// </summary>
         private void AddBaseStation_Click(object sender, RoutedEventArgs e)
         {
             
-            new BaseStationWindow(bl, this).Show();
-            this.IsEnabled = false;
+            new BaseStationWindow(bl, this).ShowDialog();
+           // this.IsEnabled = false;
         }
-        protected override void OnClosing(CancelEventArgs e)//bonus
-        {
-            base.OnClosing(e);
+        //protected override void OnClosing(CancelEventArgs e)//bonus
+        //{
+        //    base.OnClosing(e);
 
-            e.Cancel = close;
-        }
+        //    e.Cancel = close;
+        //}
+
+        /// <summary>
+        ///Group the list of stations according to Free Charge Slots
+        /// </summary>
 
         private void Group_click(object sender, RoutedEventArgs e)
         {
-            if (GroupButton.Name == "GroupButton")
-
-            {
+            
                 view = (CollectionView)CollectionViewSource.GetDefaultView(BaseStationListView.ItemsSource);
                 PropertyGroupDescription groupDescription = new PropertyGroupDescription(" FreeChargeSlots");
                 view.GroupDescriptions.Add(groupDescription);
-                GroupButton.Content = "Clear";
-                GroupButton.Name = "ClearButton";
-
-            }
-            else
-            {
-
-                view = (CollectionView)CollectionViewSource.GetDefaultView(BaseStationListView.ItemsSource);
-                view.GroupDescriptions.Clear();
-                GroupButton.Content = "Grouping By Free charges slots";
-                GroupButton.Name = "GroupButton";
-            }
+            
         }
+        /// <summary>
+        ///refresh the list of base station
+        /// </summary>
+        private void clearButtom_Click(object sender, RoutedEventArgs e)
+        {
+            BaseStationListView.ItemsSource = bl.GetBaseStationList();
+           
+        }
+        /// <summary>
+        ///close all windows
+        /// </summary>
         private void Close_Click(object sender, RoutedEventArgs e)
         {
 
             Application.Current.Shutdown();
+        }
+        /// <summary>
+        ///return to home window
+        /// </summary>
+        private void Home_click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
 
     }

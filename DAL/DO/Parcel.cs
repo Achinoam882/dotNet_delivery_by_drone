@@ -10,15 +10,15 @@ using System.Threading.Tasks;
         {
             public int Id { get; set; }
 
-            public int SenderId { get; set; }
+            public int SenderId { get; set; } //Id of sender the parcel
 
-            public int TargetId { get; set; }
+            public int TargetId { get; set; }//Id of receiver the parcel
 
             public WeightCategories Weight { get; set; }//light,medium,heavy
 
             public Priorities Priority { get; set; }//regular, fast, urgent
 
-            public int DroneId { get; set; }
+            public int DroneId { get; set; }//Drone id that associted with the parcel
 
             public DateTime? Scheduled { get; set; }//זמן שיוך החבילה לרחפן
 

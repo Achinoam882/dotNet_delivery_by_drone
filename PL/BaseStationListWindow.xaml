@@ -7,7 +7,7 @@
          mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize"
+        ResizeMode="NoResize"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -16,7 +16,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
       
-        Title="BaseStationListWindow" Height="500" Width="800">
+        Title="BaseStationListWindow" Height="670" Width="970"  WindowStyle="None">
 
     <Window.Resources>
 
@@ -30,7 +30,7 @@
         </Style>
 
         <Style TargetType="TextBox">
-
+            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
             <Setter Property="Background" Value="Transparent"/>
         </Style>
         <!--<Style TargetType="Button" >
@@ -85,7 +85,7 @@
                 </Button>
             </StackPanel>
         </Grid>
-        <Grid Height="67" Width="810" >
+        <Grid Height="67" Width="970" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
@@ -93,7 +93,7 @@
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Height="98">
                 <!--<RadioButton  Style="{StaticResource MaterialDesignTabRadioButton}"
     Margin="4" Uid="0" Width="150" Content="HOME" Height="30" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" />-->
-                <Button x:Name="Home"  Margin="20,0,0,20"
+                    <Button x:Name="Home"  Margin="20,0,0,20" Click="Home_click"
                              Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="AliceBlue" BorderBrush="Transparent" 
  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
                     <materialDesign:PackIcon Kind="Home" Height="30" Width="30" HorizontalAlignment="Center" />
@@ -106,7 +106,11 @@
  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" >
                     <materialDesign:PackIcon Kind="CardTextOutline" Height="30" Width="30" VerticalAlignment="Center" RenderTransformOrigin="1.18,0.535" />
                 </Button>
-            </StackPanel>
+                    <Button x:Name="clearButtom"   Margin="20,0,0,20" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}" Click="clearButtom_Click" ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="AliceBlue" BorderBrush="Transparent" 
+ IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" >
+                        <materialDesign:PackIcon Kind="Refresh" Height="30" Width="30" VerticalAlignment="Center" RenderTransformOrigin="1.18,0.535" />
+                    </Button>
+                </StackPanel>
         </Grid>
         </StackPanel>
 
@@ -119,20 +123,21 @@
 
 
 
-        <ListView x:Name= "BaseStationListView"  MouseDoubleClick="BaeStationAct_DoubleClick" Margin="0,73,0,0">
+        <ListView x:Name= "BaseStationListView" VerticalContentAlignment="Center"  MouseDoubleClick="BaeStationAct_DoubleClick" Margin="0,74,0,5">
+
             <ListView.View >
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="200" ></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" Width="200"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding FreeChargeSlots}" Header="Free Charge Slots" Width="200"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding TakenChargeSlots}" Header=" Taken Charge Slots" Width="200"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="243" ></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" Width="242"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding FreeChargeSlots}" Header="Free Charge Slots" Width="242"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding TakenChargeSlots}" Header=" Taken Charge Slots" Width="243"></GridViewColumn>
                 </GridView>
             </ListView.View>
             <ListView.GroupStyle >
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
-                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}"/>
+                            <TextBlock FontWeight="Bold" FontSize="14"  Foreground="#FF216882" Text="{Binding Name}"/>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>

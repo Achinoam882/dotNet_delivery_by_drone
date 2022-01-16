@@ -34,7 +34,7 @@ namespace Dal
         public IEnumerable<User> GetUsers()
         {
             return from User in DataSource.Users
-                   where User.DelUser == true
+                   where User.DelUser == true//???
                    select User;
         }
         /// <summary>
@@ -69,8 +69,22 @@ namespace Dal
             else
                 throw new NonExistingObjectException();
         }
-   
-    
+        /// <summary>
+        /// The method gets an object user to delete
+        /// </summary>
+        /// <param name="user"></param>
+        public void DeleteUser(User user)
+        {
+            var toDeleteIndex = DataSource.Users.FindIndex(u => u.UserName == user.UserName);
+            if (toDeleteIndex != -1)
+                if (DataSource.Users[toDeleteIndex].DelUser == false)
+                    DataSource.Users[toDeleteIndex].DelUser = true;
+                else
+                    throw new NonExistingObjectException();
+            else
+                throw new NonExistingObjectException();
+        }
+
         #endregion
     }
 }

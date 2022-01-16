@@ -111,6 +111,8 @@ namespace PL
             index = indexId;
             customer = bl.GetCustomer(id);
             DataContext = customer;
+            //ParcelFromCustomer.ItemsSource = bl.GetCustomer(customer.Id).ParcelFromCustomer;
+            //listOfCustomerRecieve.ItemsSource = bl.GetCustomer(customer.Id).ParcelToCustomer;
         }
         
 
@@ -120,39 +122,52 @@ namespace PL
             MessageBox.Show("The Customer Was Updated successfully", "success!");
             customer = bl.GetCustomer(customer.Id);
             DataContext = customer;
-            int index = customerListWindow.CustomerListView.SelectedIndex;
-            CustomerToList customerToList = customerListWindow.customerToList[index];
-            customerToList.Name = NameTextBox1.Text;
-            customerToList.PhoneNumber = PhoneTextBox.Text;
-            customerListWindow.customerToList[index] = customerToList;
-            NameTextBox1.IsReadOnly = true;
-            PhoneTextBox.IsReadOnly = true;
-            customerListWindow.CustomerListView.Items.Refresh();
+            if(customerListWindow!=null)
+            {
+                int index = customerListWindow.CustomerListView.SelectedIndex;
+                CustomerToList customerToList = customerListWindow.customerToList[index];
+                customerToList.Name = NameTextBox1.Text;
+                customerToList.PhoneNumber = PhoneTextBox.Text;
+                customerListWindow.customerToList[index] = customerToList;
+                customerListWindow.CustomerListView.Items.Refresh();
+
             }
 
-        //private void ParcelFromCustomer_Click(object sender, MouseButtonEventArgs e)
-        //{
-        //    Parcel parcel = bl.GetParcel(customer.ParcelFromCustomer[index].Id);
-        //    new ParcelWindow(bl, this, parcel.Id, index);
-        //}
+            NameTextBox1.IsReadOnly = true;
+            PhoneTextBox.IsReadOnly = true;
+            }
 
-        //private void ParcelToCustomer_Click(object sender, MouseButtonEventArgs e)
-        //{
-        //    Parcel parcel = bl.GetParcel(customer.ParcelToCustomer[index].Id);
-        //    new ParcelWindow(bl, this, parcel.Id, index);
-        //}
+        private void ParcelFromCustomer_Click(object sender, MouseButtonEventArgs e)
+        {
+            ParcelAtCustomer parcelAtCustomer = (ParcelAtCustomer)ParcelFromCustomer.SelectedItem;
+            int droneIndex = ParcelFromCustomer.SelectedIndex;
+            if (parcelAtCustomer != null)
+                new ParcelWindow(bl, this, parcelAtCustomer.Id, index).Show();
+        }
+
+
+        private void ParcelToCustomer_Click(object sender, MouseButtonEventArgs e)
+        {
+            ParcelAtCustomer parcelAtCustomer = (ParcelAtCustomer)listOfCustomerRecieve.SelectedItem;
+            int droneIndex = listOfCustomerRecieve.SelectedIndex;
+            if (parcelAtCustomer != null)
+                new ParcelWindow(bl,this, parcelAtCustomer.Id, index).Show();
+        }
         public CustomerWindow(BlApi.IBL blObject, int id, int indexId)
         {
             InitializeComponent();
             UpdateGrid.Visibility = Visibility.Visible;
-            this.NameTextBox1.IsReadOnly = true;
-            this.PhoneTextBox.IsReadOnly = true;
-            this.UpdateButton.IsEnabled = false;
+            //this.NameTextBox1.IsReadOnly = true;
+            //this.PhoneTextBox.IsReadOnly = true;
+            //this.UpdateButton.IsEnabled = false;
             bl = blObject;
             //customerListWindow = customerList;
+
             index = indexId;
             customer = bl.GetCustomer(id);
             DataContext = customer;
+            ParcelFromCustomer.ItemsSource = bl.GetCustomer(customer.Id).ParcelFromCustomer;
+            listOfCustomerRecieve.ItemsSource = bl.GetCustomer(customer.Id).ParcelToCustomer;
         }
         private void TextBoxId_KeyDown(object sender, KeyEventArgs e)
         {
@@ -195,14 +210,32 @@ namespace PL
 
         private void ListParcelToCustomer_Click(object sender, RoutedEventArgs e)
         {
-            ListOfParcelsCustomer listOfParcelsCustomer = new ListOfParcelsCustomer(bl, this, index, customer.Id);
-            this.Content = listOfParcelsCustomer;
+            ToCustomer.Visibility = Visibility.Visible;
         }
 
         private void ListParcelFromCustomer_Click(object sender, RoutedEventArgs e)
         {
-            ListOfParcelsCustomer listOfParcelsCustomer= new ListOfParcelsCustomer(bl, this, index, customer.Id);
-            this.Content = listOfParcelsCustomer;
+            FromCustomer.Visibility = Visibility.Visible;
+
+        }
+
+        private void HOME_CLICK(object sender, RoutedEventArgs e)
+        {
+            CustomerListWindow customerlist;
+            customerlist = customerListWindow;
+            customerListWindow.Close();
+            Close();
+
+
+        }
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void listOfCustomerRecieve_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
     

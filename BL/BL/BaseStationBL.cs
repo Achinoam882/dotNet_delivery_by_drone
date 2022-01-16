@@ -45,6 +45,10 @@ namespace BL
         #endregion add base station
 
         #region update Base Staison
+        /// <summary>
+        /// The function update the name and charge slots of station .
+        /// </summary>
+      
         public void UpdateBaseStaison(int baseStationId, string baseStationName, string chargeSlots)
         {
             DO.BaseStation newBaseStation = new DO.BaseStation();
@@ -79,6 +83,10 @@ namespace BL
         #endregion update Base Staison
 
         #region display base station
+        /// <summary>
+        /// The function return a base station  .
+        /// </summary>
+        /// <param name="idForDisplayBaseStation">id of station to display</param>
         public BaseStation GetBaseStation(int idForDisplayBaseStation)
         {
             DO.BaseStation dalBase = new DO.BaseStation();
@@ -90,46 +98,39 @@ namespace BL
             {
                 throw new GetDetailsProblemException("ID  doesnt exists");
             }
-            Location dalBaseStationLoc = new Location() { Longitude = dalBase.Longitude, Latitude = dalBase.Latitude };
+            //Location dalBaseStationLoc = new Location() { Longitude = dalBase.Longitude, Latitude = dalBase.Latitude };
             BaseStation blBaseStation = new BaseStation()
             {
                 Id = dalBase.Id,
                 Name = dalBase.Name,
-                BaseStationLocation = dalBaseStationLoc,
+                BaseStationLocation = new Location() { Longitude = dalBase.Longitude, Latitude = dalBase.Latitude },
                 FreeChargeSlots = dalBase.ChargeSlots,
-                DroneChargingList = new List<DroneCharging>()
             };
-            List<DO.DroneCharge> droneInCharge = dalObject.GetChargeSlotsList(i => i.StationId == idForDisplayBaseStation).ToList();
-            foreach (var item in droneInCharge)
-            {
-                blBaseStation.DroneChargingList.Add(new DroneCharging { Id = item.DroneId, Battery = dronesListBL.Find(x => x.Id == item.DroneId).Battery });
-            }
+            blBaseStation.DroneChargingList=from item in dalObject.GetChargeSlotsList(i => i.StationId == idForDisplayBaseStation)
+                                            select new DroneCharging { Id = item.DroneId, Battery = dronesListBL.Find(x => x.Id == item.DroneId).Battery };
             return blBaseStation;
         }
         #endregion display base station
 
         #region display base station list
+        /// <summary>
+        /// The function return a list of  base stations  .
+        /// </summary>
         public IEnumerable<BaseStationToList> GetBaseStationList(Predicate<BaseStationToList> predicate = null)
         {
-            List<BaseStationToList> baseStationBL = new List<BaseStationToList>();
-            List<DO.BaseStation> holdDalBaseStation = dalObject.GetBaseStationList().ToList();
-            foreach (var item in holdDalBaseStation)
-            {
-                baseStationBL.Add(new BaseStationToList
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    FreeChargeSlots = item.ChargeSlots,
-                    TakenChargeSlots = dalObject.GetChargeSlotsList(x => x.StationId == item.Id).ToList().Count
-                });
-            }
-
-            return baseStationBL.FindAll(x => predicate == null ? true : predicate(x));
-        }
+            IEnumerable<BaseStationToList> baseStationBL = from item in dalObject.GetBaseStationList()
+                                                           select new BaseStationToList()
+                                                           {
+                                                               Id = item.Id,
+                                                               Name = item.Name,
+                                                               FreeChargeSlots = item.ChargeSlots,
+                                                               TakenChargeSlots = dalObject.GetChargeSlotsList(x => x.StationId == item.Id).Count()
+                                                           };
+            return baseStationBL.Where(x => predicate == null ? true : predicate(x));
+     }
         #endregion display base station list
 
-
-
+        
 
     }
 }

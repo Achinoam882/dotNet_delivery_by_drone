@@ -111,6 +111,10 @@ namespace Dal
         #endregion  drone list
 
         #region to update a drone
+        /// <summary>
+        /// update model drone .
+        /// </summary>
+        /// <param name="newDrone">drone with new model</param>
         public void UpDateDrone(Drone newDrone)
         {
              DataSource.DroneList[DataSource.DroneList.FindIndex(x => x.Id == newDrone.Id)] = newDrone;

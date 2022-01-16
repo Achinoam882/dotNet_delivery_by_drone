@@ -5,20 +5,20 @@
     <Name>beit shemesh</Name>
     <Longitude>35.18722</Longitude>
     <Latitude>31.78272</Latitude>
-    <ChargeSlots>15</ChargeSlots>
+    <ChargeSlots>4</ChargeSlots>
   </BaseStation>
   <BaseStation>
     <Id>11</Id>
     <Name>jerusalem</Name>
     <Longitude>35.316667</Longitude>
     <Latitude>31.783333</Latitude>
-    <ChargeSlots>10</ChargeSlots>
+    <ChargeSlots>8</ChargeSlots>
   </BaseStation>
   <BaseStation>
-    <Id>5</Id>
-    <Name>f</Name>
-    <Longitude>35.1</Longitude>
-    <Latitude>34.8</Latitude>
-    <ChargeSlots>5</ChargeSlots>
+    <Id>14</Id>
+    <Name>Beit Azit</Name>
+    <Longitude>35.2</Longitude>
+    <Latitude>34.9</Latitude>
+    <ChargeSlots>9</ChargeSlots>
   </BaseStation>
 </ArrayOfBaseStation>

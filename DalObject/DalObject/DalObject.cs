@@ -30,10 +30,11 @@ namespace Dal
 
         #endregion
 
+
+        #region Request Power by Drone
         /// <summary>
-        /// Default constructor.
+        /// The funcation return an arr of weight carrier of parcel
         /// </summary>
-       
         public double[] RequestPowerbyDrone()
         {
             double[] temp = { DataSource.Config.Available, DataSource.Config.LightWeightCarrier, 
@@ -41,7 +42,7 @@ namespace Dal
             DataSource.Config.DroneChargingRate };
             return temp;
         }
-        
+        #endregion
 
 
 

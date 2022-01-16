@@ -32,28 +32,31 @@ namespace Dal
         public static List<User> Users;
         #endregion lists of structs
 
-      
 
+       
         internal class Config
         {
-            public static int IdParcel=1;
             public static double Available = 0.5;
             public static double LightWeightCarrier = 0.6;
             public static double MediumWeightCarrier = 0.7;
             public static double HeavyWeightCarrier = 0.800;
             public static double DroneChargingRate = 300;
+            public static int IdParcel = 1;
 
         }
-       
+
         public static void Initialize()
         {
             #region User initialization
-            //Users = new List<User>
-            //{
-            //    new User{AllowingAccess=true,DelUser=false,UserName="MalkaSait",Salt=12122,HashedPassword= Tools.hashPassword(12122+"Malka1053")},
-            //    new User{AllowingAccess=true,DelUser=false,UserName="Achinoam",Salt=1234213,HashedPassword= Tools.hashPassword(1234213+"Achinoam123")},
-            //    new User{AllowingAccess=true,DelUser=false,UserName="a",Salt=12342,HashedPassword= Tools.hashPassword(12342+"a")}
-            //};
+            /// <summary>
+            /// Add an users to the list
+            /// </summary>
+            Users = new List<User>
+            {
+                new User{Id=209624931,AllowingAccess=true,DelUser=false,UserName="m",Salt=12122,HashedPassword= Tools.hashPassword(12122+"3")},
+                new User{Id=206464067,AllowingAccess=true,DelUser=false,UserName="Achinoam",Salt=1234213,HashedPassword= Tools.hashPassword(1234213+"Achinoam123")},
+                new User{Id=0,AllowingAccess=false,DelUser=false,UserName="mosait",Salt=12342,HashedPassword= Tools.hashPassword(12342+"mo123")}
+            };
             #endregion User initialization
             #region base station initialization
             //initialization of 2 base station in two random cities

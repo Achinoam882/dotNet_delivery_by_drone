@@ -135,12 +135,12 @@ namespace Dal
         }
         #endregion deliver to customer
 
-        #region to update a newParcel
-        public void UpDateParcel(Parcel newParcel)
-        {
-            DataSource.ParcelList[DataSource.ParcelList.FindIndex(x => x.Id == newParcel.Id)] = newParcel;
-        }
-        #endregion to update a newParcel
+       
+        #region to delete a parcel
+        // <summary>
+        ///The function delete an exists parcel.
+        /// </summary>
+        /// <param name="parcelId">Id of Parcel</param>
         public void DeleteParcel(int parcelId)
         {
             int index = DataSource.ParcelList.FindIndex(x => x.Id == parcelId);
@@ -148,5 +148,6 @@ namespace Dal
                 throw new NonExistingObjectException();
             DataSource.ParcelList.RemoveAt(index);
         }
+        #endregion to delete a parcel
     }
 }

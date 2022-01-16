@@ -7,7 +7,7 @@
         mc:Ignorable="d"
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize"
+       ResizeMode="NoResize"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -15,7 +15,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="DroneListWindow" Height="500" Width="800" >
+        Title="DroneListWindow" Height="670" Width="970"  WindowStyle="None">
     <Window.Resources>
 
         <Style TargetType="Grid">
@@ -24,11 +24,12 @@
         </Style>
         <Style TargetType="ListViewItem">
             <Setter Property="Background" Value="AliceBlue"/>
-
+         
         </Style>
 
-        <Style TargetType="TextBox">
 
+        <Style TargetType="TextBox">
+            <Setter Property="VerticalContentAlignment" Value="Bottom"/>
             <Setter Property="Background" Value="Transparent"/>
         </Style>
         <Style TargetType="Button" >
@@ -79,12 +80,12 @@
             </StackPanel.Background>
             <Grid Height="20">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="20 0">
-                    <Button Background="{x:Null}"  Click="Close_Click" BorderBrush="{x:Null}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  >
+                    <Button x:Name="off" Background="{x:Null}"  Click="Close_Click" BorderBrush="{x:Null}" VerticalAlignment="Center" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"  >
                         <materialDesign:PackIcon Kind="Power" Foreground="#FFA2A2A2" Width="20" Height="20" />
                     </Button>
                 </StackPanel>
             </Grid>
-            <Grid Height="67" Width="800" >
+            <Grid Height="67" Width="970" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
@@ -122,16 +123,18 @@
                 </StackPanel>
             </Grid>
         </StackPanel>
-        <ListView x:Name= "DronesListView"  MouseDoubleClick="DroneAct_DoubleClick"  Margin="0,86,0,0"   >
+        <ListView x:Name= "DronesListView"  MouseDoubleClick="DroneAct_DoubleClick"  Margin="0,74,0,0" HorizontalContentAlignment="Center"   >
+        
+           
             <ListView.View >
                 <GridView >
-                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="100" ></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Model}" Header="Model" Width="100"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="135"   ></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Model}" Header="Model" Width="135"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding MaxWeight}" Header="Weight" Width="100"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Battery}" Header="Battery" Width="100"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Battery}" Header="Battery" Width="135"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding Status}" Header="Status" Width="100"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding DroneLocation.Latitude}" Header="Latitude" Width="100"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding DroneLocation.Longitude}" Header="Longitude" Width="100"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding DroneLocation.Latitude,StringFormat=N5}" Header="Latitude" Width="130"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding DroneLocation.Longitude,StringFormat=N5}" Header="Longitude" Width="135"></GridViewColumn>
                     <GridViewColumn DisplayMemberBinding="{Binding NumParcelTransfer}" Header="Associted Parcel" Width="100"></GridViewColumn>
                 </GridView>
             </ListView.View>
@@ -139,7 +142,7 @@
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
-                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}"/>
+                            <TextBlock FontWeight="Bold" FontSize="14" Foreground="#FF216882" Text="{Binding Name}"/>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>

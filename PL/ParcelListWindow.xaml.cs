@@ -80,6 +80,11 @@ namespace PL
             }
 
         }
+        private void datepicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ParcelListView.ItemsSource = parcelToList.ToList().FindAll(x => bl.GetParcel(x.Id).Requested >= datepicker.SelectedDate );
+
+        }
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             clearButtom.Visibility = Visibility.Visible;
@@ -107,13 +112,13 @@ namespace PL
             int parcelIndex = ParcelListView.SelectedIndex;
             //this.IsEnabled = false;
             if (parcel != null)
-                new ParcelWindow(bl, this, parcel.Id, parcelIndex).Show();
+                new ParcelWindow(bl, this, parcel.Id, parcelIndex).ShowDialog();
         }
               
             
         private void AddParcel_Click(object sender, RoutedEventArgs e)
         {
-            new ParcelWindow(bl, this).Show();
+            new ParcelWindow(bl, this).ShowDialog();
            // this.IsEnabled = false;
         }
         private void Close_Click(object sender, RoutedEventArgs e)
@@ -144,27 +149,12 @@ namespace PL
             }
 
         }
-        //private void Group_click2(object sender, RoutedEventArgs e)
-        //{
+        private void Home_Click(object sender, RoutedEventArgs e)
+        {
+        
 
-        //    if (GroupButton2.Name == "GroupButton2")
+            Close();
 
-        //    {
-        //        view = (CollectionView)CollectionViewSource.GetDefaultView(ParcelListView.ItemsSource);
-        //        PropertyGroupDescription groupDescription = new PropertyGroupDescription("Receiving");
-        //        view.GroupDescriptions.Add(groupDescription);
-        //        GroupButton2.Content = "Clear";
-        //        GroupButton2.Name = "ClearButton2";
-
-        //    }
-        //    else
-        //    {
-
-        //        view = (CollectionView)CollectionViewSource.GetDefaultView(ParcelListView.ItemsSource);
-        //        view.GroupDescriptions.Clear();
-        //        GroupButton2.Content = "Grouping By Receiver";
-        //        GroupButton2.Name = "GroupButton2";
-        //    }
-        //}
+        }
     }
 }

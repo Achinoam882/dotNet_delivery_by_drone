@@ -137,19 +137,68 @@ namespace DalApi
         /// <returns>returns a new List that hold all the data from the reqsted List</returns>
         IEnumerable<BaseStation> GetBaseStationFreeChargeSlots();
 
-
+        /// <summary>
+        /// Get Charge Slots List
+        /// </summary>
+        /// <returns>returns a new List that hold all the charge slots list</returns>
         public IEnumerable<DroneCharge> GetChargeSlotsList(Predicate<DroneCharge> DroneChargepredicate = null);
-
+        /// <summary>
+        /// The function update the name and charge slots of base stations .
+        /// </summary>
         public void UpDateBaseStation(BaseStation newBaseStation);
-        public  double[] RequestPowerbyDrone();
+        /// <summary>
+        /// The function returns array of WeightCarrier parcel.
+        /// </summary>
+  
+        public double[] RequestPowerbyDrone();
+        /// <summary>
+        /// The function update the model  of drone .
+        /// </summary>
         public void UpDateDrone(Drone newDrone);
+        /// <summary>
+        /// The function update the name and phone number  of customer .
+        /// </summary>
         public void UpDateCustomer(Customer newCustomer);
-        //public void UpDateParcel(Parcel newParcel);
+        /// <summary>
+        /// The function  update less Charge Slots .
+        /// </summary>
         public void LessChargeSlots(int droneId);
-        public void MoreChargeSlots(int baseStationId);
-        public DroneCharge GetDroneCharge(int idForAllObjects);
-        public void DeleteParcel(int parcelId);
+        /// <summary>
+        /// The function  update more Charge Slots .
+        /// </summary>
 
+        public void MoreChargeSlots(int baseStationId);
+     
+        /// <summary>
+        /// The function returns the selected Drone charge.
+        /// </summary>
+        /// <returns>return empty object if its not there</returns>
+        public DroneCharge GetDroneCharge(int idForAllObjects);
+        /// <summary>
+        /// The function delete an exist parcel.
+        /// </summary>
+        public void DeleteParcel(int parcelId);
+        /// <summary>
+        /// The function returns user.
+        /// </summary>
+        /// <returns>return exist user</returns>
+        User GetUser(string id);
+        /// <summary>
+        //The function returns all users
+        /// </summary>
+        IEnumerable<User> GetUsers();
+        /// <summary>
+        /// The function add new  user .
+        /// </summary>
+        void AddUser(User user);
+        /// <summary>
+        /// The function update the user .
+        /// </summary>
+        void UpdatUser(User user);
+        /// <summary>
+        /// The function delete exist  user .
+        /// </summary>
+        void DeleteUser(User user);
 
 
     }

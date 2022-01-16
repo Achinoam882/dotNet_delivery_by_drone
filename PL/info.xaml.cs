@@ -19,9 +19,14 @@ namespace PL
     /// </summary>
     public partial class info : Window
     {
-        public info()
+        public  info()
         {
             InitializeComponent();
+           // await Task.Delay(2500);
+        }
+        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

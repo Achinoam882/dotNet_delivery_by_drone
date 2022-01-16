@@ -107,38 +107,28 @@ namespace BL
                 throw new UpdateProblemException("ID drone doesnt exists in the system");
             if (droneToCharge.Status != DroneStatuses.Free)//if the drone isnt free
                 throw new UpdateProblemException("not possible to send a drone for charging if its not free ");
-            List<DO.BaseStation> BaseStationDal = dalObject.GetBaseStationList(x => x.ChargeSlots > 0).ToList();/*(x => x.ChargeSlots > 0).ToList();*///to filter the basesattion with free chargeslots
-            
-            List<BaseStation> BaseStationBl = new List<BaseStation>();
-            foreach (var item in BaseStationDal)
-            {
-                BaseStationBl.Add(new BaseStation
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    FreeChargeSlots = item.ChargeSlots,
-                    BaseStationLocation = new Location() { Longitude = item.Longitude, Latitude = item.Latitude },
-                   // DroneChargingList = new List<DroneCharging>()
-                });
-            }
+            IEnumerable<DO.BaseStation> BaseStationDal = dalObject.GetBaseStationList(x => x.ChargeSlots > 0);/*(x => x.ChargeSlots > 0).ToList();*///to filter the basesattion with free chargeslots
+
+            IEnumerable<BaseStation> BaseStationBl = from item in BaseStationDal
+                                                     select new BaseStation()
+                                                     {
+                                                         Id = item.Id,
+                                                         Name = item.Name,
+                                                         FreeChargeSlots = item.ChargeSlots,
+                                                         BaseStationLocation = new Location() { Longitude = item.Longitude, Latitude = item.Latitude }
+                                                     };
             if (!BaseStationBl.Any())//no frre stations with charge slots
                 throw new UpdateProblemException("no base station with free charge slots");
-
-            double stationDistance = mindistanceBetweenLocationBaseStation(BaseStationBl, droneToCharge.DroneLocation).Item2;
-            double batteryUse = stationDistance * Available;
+           // Location closeBaseStation= (mindistanceBetweenLocationBaseStation(BaseStationBl, droneToCharge.DroneLocation).Item1);
+            int stationDistance =(int)(mindistanceBetweenLocationBaseStation(BaseStationBl, droneToCharge.DroneLocation).Item2);
+            int batteryUse =(int)(stationDistance * Available);
             if (droneToCharge.Battery - batteryUse < 0)
                 throw new UpdateProblemException("not possible to send a drone to be charged");
             droneToCharge.Status = DroneStatuses.InMaintenance;
             droneToCharge.DroneLocation = mindistanceBetweenLocationBaseStation(BaseStationBl, droneToCharge.DroneLocation).Item1;
             droneToCharge.Battery -= batteryUse;
-            
-                dalObject.LessChargeSlots(BaseStationBl.Find(x => x.BaseStationLocation == droneToCharge.DroneLocation).Id);
-                dalObject.SendDroneToCharge(droneId, BaseStationBl.Find(x => x.BaseStationLocation == droneToCharge.DroneLocation).Id);
-            
-            
-
-
-
+            dalObject.LessChargeSlots(BaseStationBl.First(x => x.BaseStationLocation.Latitude == droneToCharge.DroneLocation.Latitude&& x.BaseStationLocation.Longitude == droneToCharge.DroneLocation.Longitude).Id);
+            dalObject.SendDroneToCharge(droneId, BaseStationBl.First(x => x.BaseStationLocation.Latitude == droneToCharge.DroneLocation.Latitude && x.BaseStationLocation.Longitude == droneToCharge.DroneLocation.Longitude).Id);         
         }
         #endregion Send Drone To Charge
 
@@ -155,7 +145,7 @@ namespace BL
             if (droneToCharge.Status != DroneStatuses.InMaintenance)//if the drone isnt free
                 throw new UpdateProblemException("not possible to release  a drone from charging if it is not in maintenance");
             TimeSpan timeCharging = (TimeSpan)(DateTime.Now - dalObject.GetDroneCharge(droneId).TimeDroneInCharging);   
-            double batteryLevel = ((timeCharging.TotalHours * DroneChargingRate) + droneToCharge.Battery);
+            int batteryLevel = (int)(((timeCharging.TotalHours * DroneChargingRate) + droneToCharge.Battery));
             if (batteryLevel > 100) { batteryLevel = 100; }
             droneToCharge.Battery = batteryLevel;
             droneToCharge.Status = DroneStatuses.Free;
@@ -166,6 +156,10 @@ namespace BL
         #endregion Release Drone  From Charging
 
         #region display drone
+        /// <summary>
+        /// The function return an exists drone 
+        /// </summary>
+        /// <param name="idForDisplayDrone">Id of drone</param>
         public Drone GetDrone(int idForDisplayDrone)
         {
             DroneToList droneToList = dronesListBL.Find(x => x.Id == idForDisplayDrone);
@@ -199,14 +193,20 @@ namespace BL
                 // reciver
                 displayDrone.DroneParcel.Receiving = new CustomerParcel() { Id = DalReciver.Id, Name = DalReciver.Name };
                 displayDrone.DroneParcel.DeliveryDestination = locationOfReciver;
-                displayDrone.DroneParcel.TransportDistance = GetDistance(locationOfSender, locationOfReciver);
+                //if (DalParcel.PickUp == null)
+                //    displayDrone.DroneParcel.TransportDistance = GetDistance(displayDrone.DroneLocation, locationOfSender);
+                //else
+                //    displayDrone.DroneParcel.TransportDistance = GetDistance(locationOfSender, locationOfReciver);
+
+                displayDrone.DroneParcel.TransportDistance = DalParcel.PickUp == null ? GetDistance(displayDrone.DroneLocation, locationOfSender) : GetDistance(locationOfSender, locationOfReciver);
                 displayDrone.DroneParcel.Weight = (WeightCategories)DalParcel.Weight;
                 displayDrone.DroneParcel.Priority = (Priorities)DalParcel.Priority;
                 displayDrone.DroneParcel.Id = DalParcel.Id;
-                if (DalParcel.PickUp != null)
-                   displayDrone.DroneParcel.ParcelStatus = true;
-                else
-                    displayDrone.DroneParcel.ParcelStatus = false;
+                displayDrone.DroneParcel.ParcelStatus = DalParcel.PickUp != null ? true : false;
+                //if (DalParcel.PickUp != null)
+                //   displayDrone.DroneParcel.ParcelStatus = true;
+                //else
+                //    displayDrone.DroneParcel.ParcelStatus = false;
             }
 
             return displayDrone;
@@ -214,10 +214,23 @@ namespace BL
         #endregion display drone
 
         #region display drone list
+        /// <summary>
+        /// The function return a list of drone
+        /// </summary>
         public IEnumerable<DroneToList> GetDroneList(Predicate<DroneToList> predicate = null)
         {
             return dronesListBL.FindAll(x => predicate == null ? true : predicate(x));
         }
         #endregion display drone list
+
+        #region Drone Simulator
+        /// <summary>
+        /// The function start the simulation
+        /// </summary>
+        public void SimulatorOn(int droneId, Action ToReportProgress, Func<bool> IsTimeFinish)
+        {
+            new Simulator(this, droneId, ToReportProgress, IsTimeFinish);
+        }
+        #endregion Drone Simulator
     }
 }

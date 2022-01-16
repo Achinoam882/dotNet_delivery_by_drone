@@ -68,6 +68,9 @@ namespace Dal
 
 
         #region to update a BaseStation
+        /// <summary>
+        /// The function update name anf charge slots of base stations .
+        /// </summary>
         public void UpDateBaseStation(BaseStation newBaseStation)
         {
             if (!(DataSource.BaseStationList.Exists(x => x.Id == newBaseStation.Id)))
@@ -76,11 +79,10 @@ namespace Dal
         }
         #endregion to update a BaseStation
 
-        //BaseStation update.
-       
-
-
         #region to update less Charge Slots
+        /// <summary>
+        /// The function update less charge slots in base station.
+        /// </summary>
         public void LessChargeSlots(int baseStationId)
         {
 
@@ -95,6 +97,9 @@ namespace Dal
 
 
         #region to update more Charge Slots
+        /// <summary>
+        /// The function update more charge slots in base station.
+        /// </summary>
         public void MoreChargeSlots(int baseStationId)
         {
 

@@ -16,8 +16,8 @@ namespace BO
 
         public Location CustomerLocation { get; set; }
 
-        public List<ParcelAtCustomer> ParcelFromCustomer { get; set; }
-        public List<ParcelAtCustomer> ParcelToCustomer { get; set; }
+        public IEnumerable<ParcelAtCustomer> ParcelFromCustomer { get; set; }
+        public IEnumerable<ParcelAtCustomer> ParcelToCustomer { get; set; }
         public override string ToString()
         {
             return string.Format("Id is:{0}\nName of customer is:{1}\nPhone Number :{2}\nlocation:{3}\n", Id, Name, PhoneNumber, CustomerLocation)

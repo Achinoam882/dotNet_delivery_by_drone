@@ -12,7 +12,16 @@
                     <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                     <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
                 </ResourceDictionary.MergedDictionaries>
-            </ResourceDictionary>
+            <!--<ListView>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            </ListView>-->
+        </ResourceDictionary>
+        
         
     </Application.Resources>
+ 
 </Application>

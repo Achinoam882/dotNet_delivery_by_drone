@@ -9,11 +9,11 @@ using System.Threading.Tasks;
     {
         public struct Customer
         {
-            public int Id { get; set; }
+            public int Id { get; set; } //customer Id
 
-            public string Name { get; set; }
+            public string Name { get; set; } //Customer Name
 
-            public string PhoneNumber { get; set; }
+            public string PhoneNumber { get; set; } //Phone number of customer
 
             public double Longitude { get; set; }
 

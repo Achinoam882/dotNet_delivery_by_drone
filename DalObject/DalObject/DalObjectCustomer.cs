@@ -55,6 +55,9 @@ namespace Dal
 
 
         #region to update a Customer
+        /// <summary>
+        /// The function update phone number and name of customer .
+        /// </summary>
         public void UpDateCustomer(Customer newCustomer)
         {
             DataSource.CustomerList[DataSource.CustomerList.FindIndex(x => x.Id == newCustomer.Id)] = newCustomer;

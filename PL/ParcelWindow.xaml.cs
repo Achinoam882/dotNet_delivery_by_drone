@@ -23,7 +23,7 @@ namespace PL
     public partial class ParcelWindow : Window
     {
         BlApi.IBL bl;
-        public bool close = true;
+        //public bool close = true;
         private ParcelListWindow parcelListWindow;
         public ParcelWindow(BlApi.IBL blObject, ParcelListWindow parcelListWindoww)
         {
@@ -55,12 +55,26 @@ namespace PL
                 try
                 {
                     bl.SetParcel(newParcel);
+                    
+               
+                    if (parcelListWindow != null)
+                    {
+                        ParcelToList parcelList = bl.GetParcelList().ToList().Find(i => i.Id == newParcel.Id);
+                        parcelListWindow.parcelToList.Add(parcelList);
+                        parcelListWindow.ParcelListView.ItemsSource = bl.GetParcelList();
+
+                        //parcelListWindow.ParcelListView.Items.Refresh(); 
+
+                    }
                     MessageBox.Show("Your Parcel was added successfully", "success!");
-                    ParcelToList parcelList = bl.GetParcelList().ToList().Find(i => i.Id == newParcel.Id);
-                    parcelListWindow.parcelToList.Add(parcelList);
-                    close = false;
+                    if (clientWindow!=null)
+                    {
+                        clientWindow.ParcelFromCustomer.ItemsSource= bl.GetCustomer(customer.Id).ParcelFromCustomer;
+                    }
                     Close();
-                    parcelListWindow.IsEnabled = true;
+
+
+
 
 
                 }
@@ -90,7 +104,7 @@ namespace PL
             {
 
                 case MessageBoxResult.Yes:
-                    close = false;
+                   // close = false;
                     Close();
                     parcelListWindow.IsEnabled = true;
                     break;
@@ -111,11 +125,14 @@ namespace PL
             index = myIndex;
             parcel = bl.GetParcel(id);
             DataContext = parcel;
-           // SenderTextBox.Text = parcel.Sender.ToString();
+            // SenderTextBox.Text = parcel.Sender.ToString();
             //RecieverTextBox.Text = parcel.Receiving.ToString();
             //if(parcel.Scheduled!=null)
-            //DroneParcelTextBox.Text = parcel.DroneAtParcel.ToString();
-
+            if (parcel.DroneAtParcel==null)
+            {
+                DroneDetails.Visibility = Visibility.Hidden;
+               // DroneParcelTextBox.Text = parcel.DroneAtParcel.ToString();
+            }
 
         }
         DroneWindow MyDroneWindow;
@@ -131,16 +148,16 @@ namespace PL
             DataContext = parcel;
 
         }
-        ListOfParcelsCustomer listOfParcelsCustomer;
-        
-        public ParcelWindow(BlApi.IBL blObject, ListOfParcelsCustomer MylistOfParcelsCustomer, int id,int Index )
+        CustomerWindow ListOfParcel;
+        public ParcelWindow(BlApi.IBL blObject, CustomerWindow myList ,int id,int Index )
         {
             InitializeComponent();
             UpdateGrid.Visibility = Visibility.Visible;
             bl = blObject;
-            listOfParcelsCustomer = MylistOfParcelsCustomer;
-             parcel = bl.GetParcel(id);
+            parcel = bl.GetParcel(id);
             index = Index;
+            DataContext = parcel;
+            ListOfParcel = myList;
         }
 
         //private void Delivery_Click(object sender, RoutedEventArgs e)
@@ -214,13 +231,22 @@ namespace PL
                     case MessageBoxResult.Yes:
 
                         bl.DeleteParcel(parcel.Id);
-                        parcelListWindow.parcelToList.RemoveAt(index);
-                        parcelListWindow.IsEnabled = true;
+                        if (parcelListWindow != null)
+                        {
+                            parcelListWindow.parcelToList.RemoveAt(index);
+                            parcelListWindow.IsEnabled = true;
+                        }
+                        if(ListOfParcel!=null)
+                        {
+                          
+                             ListOfParcel.ParcelFromCustomer.ItemsSource = bl.GetCustomer(parcel.Sender.Id).ParcelFromCustomer; 
+                             
+                            ListOfParcel.listOfCustomerRecieve.ItemsSource = bl.GetCustomer(parcel.Receiving.Id).ParcelToCustomer;
+                        }
                         deleteParcel.IsEnabled = false;
-                        close = false;
-                        Close();
                         MessageBox.Show("Your Parcel was deleted  successfully", "success!");
                         Close();
+                       
                         break;
                     case MessageBoxResult.No:
                         break;
@@ -235,7 +261,7 @@ namespace PL
         private void SenderDetails_Click(object sender, MouseButtonEventArgs e)
         {
           Customer customer=  bl.GetCustomer(parcel.Sender.Id);
-           new CustomerWindow(bl,  customer.Id, index).Show(); 
+           new CustomerWindow(bl,  customer.Id, index).ShowDialog(); 
             //SenderTextBox.DataContext = customerParcel;
             //int droneIndex = DroneChargingView.SelectedIndex;
             //this.IsEnabled = false;
@@ -245,15 +271,17 @@ namespace PL
         private void ReceiverDetails_Click(object sender, MouseButtonEventArgs e)
         {
             Customer customer = bl.GetCustomer(parcel.Receiving.Id);
-            new CustomerWindow(bl, customer.Id, index).Show();
+            new CustomerWindow(bl, customer.Id, index).ShowDialog();
         }
 
         private void DroneParcel_Click(object sender, MouseButtonEventArgs e)
         {
             if(parcel.Scheduled!=null)
             {
-                Drone drone = bl.GetDrone(parcel.DroneAtParcel.Id);
-                new DroneWindow(bl,drone.Id, index).Show();
+                
+                    Drone drone = bl.GetDrone(parcel.DroneAtParcel.Id);
+                    new DroneWindow(bl, drone.Id, index).ShowDialog();
+                
 
             }
         }
@@ -267,7 +295,36 @@ namespace PL
         {
             this.Close();
         }
-      
+        ClientWindow clientWindow;
+        Customer customer;
+       public  ParcelWindow(BlApi.IBL blObject,Customer mycustomer,ParcelListWindow myparcel, ClientWindow myclientWindow)
+        {
+            InitializeComponent();
+            AddParcelGrid.Visibility = Visibility.Visible;
+            bl = blObject;
+            clientWindow = myclientWindow;
+            customer = mycustomer;
+            parcelListWindow = myparcel;
+            //DataContext = customer;
+            WeightComboBox.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            PriortryComboBox.ItemsSource = Enum.GetValues(typeof(Priorities));
+        }
+        private void Home_Click(object sender, RoutedEventArgs e)
+        {
+            //close = false;
+            if (parcelListWindow != null)
+            {
+                parcelListWindow.Close();
+            }
+
+            Close();
+
+        }
+
+        private void back_click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
 

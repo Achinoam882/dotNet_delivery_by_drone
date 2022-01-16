@@ -7,7 +7,7 @@
         mc:Ignorable="d"
            xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize"
+       ResizeMode="NoResize"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -86,13 +86,13 @@
                     </Button>
                 </StackPanel>
             </Grid>
-            <Grid Height="67" Width="800" >
+            <Grid Height="67" Width="970" >
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Height="98">
-                    <Button x:Name="Home"  Margin="20,0,0,20"
+                    <Button x:Name="Home"  Margin="20,0,0,20" Click="Home_Click"
                              Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"  ToolTip="MaterialDesignFloatingActionMiniLightButton" Background="AliceBlue" BorderBrush="Transparent" 
  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}">
                         <materialDesign:PackIcon Kind="Home" Height="30" Width="30" HorizontalAlignment="Center" />
@@ -113,27 +113,26 @@
  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" >
                         <materialDesign:PackIcon Kind="CardTextOutline"  Height="30" Width="30" VerticalAlignment="Center" RenderTransformOrigin="1.18,0.535" />
                     </Button>-->
-                    <ComboBox x:Name="weightselector" Margin="20,0,0,20"  SelectionChanged="MaxWeightSelector_SelectionChanged"
+                    <ComboBox x:Name="weightselector" Margin="40,0,0,20"  SelectionChanged="MaxWeightSelector_SelectionChanged"
     Style="{StaticResource MaterialDesignFilledComboBox}"
     IsEnabled="{Binding Path=IsChecked, ElementName=FilledComboBoxEnabledCheckBox}"
     materialDesign:HintAssist.Hint="Parcel Weight"
-    Width="110" Height="50">
+    Width="145" Height="50">
                     </ComboBox>
-                    <ComboBox x:Name="statusselector" Margin="20,0,0,20" SelectionChanged="StatusSelector_SelectionChanged"
+                    <ComboBox x:Name="statusselector" Margin="40,0,0,20" SelectionChanged="StatusSelector_SelectionChanged"
     Style="{StaticResource MaterialDesignFilledComboBox}"
     IsEnabled="{Binding Path=IsChecked, ElementName=FilledComboBoxEnabledCheckBox}"
     materialDesign:HintAssist.Hint="Parcel Status"
-    Width="110" Height="50">
+    Width="145" Height="50">
                     </ComboBox>
-                    <ComboBox x:Name="Priorityselector" Margin="20,0,0,20"  SelectionChanged="PrioritySelector_SelectionChanged"
+                    <ComboBox x:Name="Priorityselector" Margin="40,0,0,20"  SelectionChanged="PrioritySelector_SelectionChanged"
     Style="{StaticResource MaterialDesignFilledComboBox}"
     IsEnabled="{Binding Path=IsChecked, ElementName=FilledComboBoxEnabledCheckBox}"
     materialDesign:HintAssist.Hint="Priority Of Parcel"
-    Width="110" Height="50">
+    Width="145" Height="48">
                     </ComboBox>
-                    <Calendar Height="56" Width="92" SelectionMode="MultipleRange">
-
-                    </Calendar>
+                    <!--<Calendar Height="50" Width="57" SelectionMode="MultipleRange" RenderTransformOrigin="1.25,0.438" Margin="60,0,0,20"/>-->
+                    <DatePicker x:Name="datepicker"  Width="120" SelectedDateChanged="datepicker_SelectedDateChanged" Height="48" Margin="40,0,0,20" materialDesign:HintAssist.Hint="Pick Date"  materialDesign:TextFieldAssist.HasClearButton="True" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                 </StackPanel>
             </Grid>
         </StackPanel>
@@ -156,22 +155,22 @@
     ItemsSource="{Binding ShortStringList}" Margin="570,63,10,322"  SelectionChanged="PrioritySelector_SelectionChanged" />-->
 
 
-        <ListView x:Name= "ParcelListView" MouseDoubleClick="ParcelAct_DoubleClick" Margin="0,85,0,0">
+        <ListView x:Name= "ParcelListView" MouseDoubleClick="ParcelAct_DoubleClick" HorizontalContentAlignment="Center" Margin="0,75,0,0">
             <ListView.View >
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="140" ></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Sender}" Header="Sender Name " Width="140"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Receiving}" Header="Receiver Name" Width="140"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Weight}" Header=" Weight" Width="120"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Priority}" Header=" Priority" Width="130"></GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding Status}" Header=" Status" Width="130"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Id}" Header="Id" Width="170" ></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Sender}" Header="Sender Name " Width="160"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Receiving}" Header="Receiver Name" Width="160"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Weight}" Header=" Weight" Width="160"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Priority}" Header=" Priority" Width="160"></GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Status}" Header=" Status" Width="160"></GridViewColumn>
                 </GridView>
             </ListView.View>
             <ListView.GroupStyle >
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
                         <DataTemplate>
-                            <TextBlock FontWeight="Bold" FontSize="14" Text="{Binding Name}"/>
+                            <TextBlock FontWeight="Bold" FontSize="14"  Foreground="#FF216882" Text="{Binding Name}"/>
                         </DataTemplate>
                     </GroupStyle.HeaderTemplate>
                 </GroupStyle>

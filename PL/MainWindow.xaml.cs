@@ -16,7 +16,6 @@ using System.Media;
 using BlApi;
 
 
-
 namespace PL
 {
     /// <summary>
@@ -24,56 +23,58 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        BlApi.IBL BlObject;
+        public MainWindow(BlApi.IBL bl)
         {
             InitializeComponent();
+            BlObject = bl;
         }
-        BlApi.IBL BlObject = BlApi.BlFactory.GetBl();
+       // BlApi.IBL BlObject = BlApi.BlFactory.GetBl();
         private void ShowDroneListButtom(object sender, RoutedEventArgs e)
         {
-            new DroneListWindow(BlObject).Show();
+            new DroneListWindow(BlObject).ShowDialog();
             //this.Close();
             //SystemSounds.Asterisk.Play();
         }
 
         private void BaseStation_Click(object sender, RoutedEventArgs e)
         {
-            new BaseStationListWindow(BlObject).Show();
+            new BaseStationListWindow(BlObject).ShowDialog();
             //this.Close();
         }
 
         private void Customer_Click(object sender, RoutedEventArgs e)
         {
-            new CustomerListWindow(BlObject).Show();
+            new CustomerListWindow(BlObject).ShowDialog();
             //this.Close();
         }
 
         private void Parcel_Click(object sender, RoutedEventArgs e)
         {
-            new ParcelListWindow(BlObject).Show();
+            new ParcelListWindow(BlObject).ShowDialog();
             //this.Close();
         }
 
         private void Star_Click(object sender, RoutedEventArgs e)
         {
-            new Star1().Show();
+            new Star1().ShowDialog();
           
         }
         private void Close_Click(object sender, RoutedEventArgs e)
         {
 
-            IEnumerable<BO.DroneToList> DroneToList = from item in BlObject.GetDroneList()
-                                                      where item.Status == BO.DroneStatuses.InMaintenance
-                                                      select item;
-            if (DroneToList.Any())
-            {
-                foreach (var item in DroneToList)//when we close the app we need to put all of the drones that are inmintinan to free
-                                                 //becuse we dont have such area to store the in charge drones 
-                {
-                    BlObject.ReleaseFromCharging(item.Id);
+            //IEnumerable<BO.DroneToList> DroneToList = from item in BlObject.GetDroneList()
+            //                                          where item.Status == BO.DroneStatuses.InMaintenance
+            //                                          select item;
+            //if (DroneToList.Any())
+            //{
+            //    foreach (var item in DroneToList)//when we close the app we need to put all of the drones that are inmintinan to free
+            //                                     //becuse we dont have such area to store the in charge drones 
+            //    {
+            //        BlObject.ReleaseFromCharging(item.Id);
                     
-                }
-            }
+            //    }
+            //}
             Application.Current.Shutdown();
         }
 
@@ -99,8 +100,12 @@ namespace PL
 
         private void  info_Click(object sender, RoutedEventArgs e)
         {
-            new info().Show();
+            new info().ShowDialog();
 
         }
     }
+
+   
+    
+        
 }

@@ -8,22 +8,17 @@ using System.Threading.Tasks;
     {
        public struct BaseStation
         {
-            public int Id { get; set; }
+            public int Id { get; set; } //baseStation Id
 
-            public string Name { get; set; }
+            public string Name { get; set; } //Base Station Name
 
             public double Longitude { get; set; }
 
             public double Latitude { get; set; }
 
-            public int ChargeSlots { get; set; }//מספר עמדות טעינה פנויות
+            public int ChargeSlots { get; set; }//Num of  Free charg slots
 
-            /*  public override string ToString()
-              {
-                  return string.Format("Id is:{0,-14}\tName of Base Station is:{1,-14}\tLongitude is:{2,-14}\t " +
-                      "Latitude is:{3,-14}\tNumber of Charge Slots is:{4,-14}\t", Id, Name, Longitude, Latitude, ChargeSlots);
-              }
-            */
+          
             public override string ToString()
             {
                 return this.ToStringProperty();

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <User>
+    <Id>209624931</Id>
+    <Salt>12122</Salt>
+    <HashedPassword>+ysrT8KLU8oJbVzfdDGz130F5SpYXy9J+0CYkmo/fwc1hDoV+VpKJy+iIMV1MjDAxTHbQWy/0g1bjlUIvyin4w==</HashedPassword>
+    <UserName>m</UserName>
+    <AllowingAccess>true</AllowingAccess>
+    <DelUser>false</DelUser>
+  </User>
+  <User>
+    <Id>206464067</Id>
+    <Salt>1234213</Salt>
+    <HashedPassword>XDIZg+Sy0dzgNfs4kudkbfi4cL8Cuimsmb1Ug971KtisC4cB9rpoCl3+XDgxd4WLvmrQe0L7dlbaLTBfNxLc8Q==</HashedPassword>
+    <UserName>Achinoam</UserName>
+    <AllowingAccess>true</AllowingAccess>
+    <DelUser>false</DelUser>
+  </User>
+  <User>
+    <Id>547884762</Id>
+    <Salt>12342</Salt>
+    <HashedPassword>vbPEy9oQiEd2eg7Vhqis0W9BKTFL1aeX/9cBTYK8am/K5ce5tR3tx/JUlYvm448t2a0Z/NHXBPq71EvHvcIJgA==</HashedPassword>
+    <UserName>mosait</UserName>
+    <AllowingAccess>false</AllowingAccess>
+    <DelUser>false</DelUser>
+  </User>
+  <User>
+    <Id>887523441</Id>
+    <UserName>Dani</UserName>
+    <Salt>1149758973</Salt>
+    <HashedPassword>TqtcuSxp3Xl8EURGvo1oLEOr6vf6ju41JEiCeVk/lfo9sPlvUnT1gZUEGfJNQGZuh0/i4WzrYrmYSW6WUnVBpg==</HashedPassword>
+    <AllowingAccess>false</AllowingAccess>
+    <password>IloveDani1053</password>
+    <DelUser>false</DelUser>
+  </User>
+</ArrayOfUser>

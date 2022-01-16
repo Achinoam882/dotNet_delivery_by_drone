@@ -4,29 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace DO
 {
-    /// <summary>
-    /// class user
-    ///  This class constitutes a data contract of the dl layer
-    /// </summary>
     public class User
     {
-        public int Salt { get; set; }//salt
-        public string HashedPassword { get; set; }//HashedPassword
+
+        /// <summary>
+        /// sets and gets
+        /// </summary>
+        public int Id { get; set; }
+        public int Salt { get; set; }
+        public string HashedPassword { get; set; }
         public string UserName { get; set; }//users Name
-        //public bool AllowingAccess { get; set; }//User access
-       
-        public bool DelUser { get; set; }//User delete field (no actual deletion)
-     
-        public string Password { get; set; }
-     
-        //public AuthorizationManagement AuthorizationManagement { get; set; }
-     
-        public override string ToString()
-        {
-            return this.ToStringProperty<User>();
-        }
+        public bool AllowingAccess { get; set; }//User access
+        public bool DelUser { set; get; }//A flage for Deletion
+        public string password { set; get; }
+        public override string ToString() => this.ToStringProperty();
+
     }
 }

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -17,7 +18,9 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         
         Title="Star1" Height="200" Width="350">
-    <Grid  x:Name="RateUs"  >
+    <Border  BorderBrush="Black" BorderThickness="2,2,2,2">
+
+        <Grid  x:Name="RateUs"  >
         <Grid.Background>
             <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
                 <GradientStop Color="#FFD28D87" Offset="0.54"/>
@@ -40,4 +43,5 @@
             <materialDesign:PackIcon Kind="Close" Height="20" Width="20"  />
             </Button>
     </Grid>
+    </Border>
 </Window>

@@ -11,7 +11,10 @@ namespace Dal
 {
     partial class DalObject :IDal
     {
-      #region to Get Charge Slots List
+        #region to Get Charge Slots List
+        /// <summary>
+        /// The function returns list  of drone charge.
+        /// </summary>
         public IEnumerable<DroneCharge>GetChargeSlotsList(Predicate<DroneCharge> DroneChargepredicate = null)
         {
             return DataSource.DroneChargeList.FindAll(x => DroneChargepredicate == null ? true : DroneChargepredicate(x)).ToList();
@@ -32,7 +35,7 @@ namespace Dal
         /// The function returns the selected Drone charge.
         /// </summary>
         /// <param name="idForAllObjects">Id of a selected Drone</param>
-        /// <returns>return empty ubjact if its not there</returns>
+        /// <returns>return empty object if its not there</returns>
         public DroneCharge GetDroneCharge(int idForAllObjects)
         {
             if (!(DataSource.DroneChargeList.Exists(x => x.DroneId == idForAllObjects)))

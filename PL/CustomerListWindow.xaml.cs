@@ -53,13 +53,18 @@ namespace PL
             int customerIndex = CustomerListView.SelectedIndex;
            // this.IsEnabled = false;
             if (customer != null)
-                new CustomerWindow(bl, this, customer.Id, customerIndex).Show();
+                new CustomerWindow(bl, this, customer.Id, customerIndex).ShowDialog();
          }
 
         private void AddCustomer_Click(object sender, RoutedEventArgs e)
         {
-            new CustomerWindow(bl, this).Show();
+            new CustomerWindow(bl, this).ShowDialog();
             //this.IsEnabled = false;
+        }
+
+        private void Home_click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

@@ -46,7 +46,10 @@ namespace BL
 
 
         #region Update Customer
-
+        /// <summary>
+        /// The function update name and phone number customer.
+        /// </summary>
+       
         public void UpdateCustomer(int customerId, string customerName, string phoneNumber)
         {
             try
@@ -68,6 +71,11 @@ namespace BL
 
 
         #region display customer
+        /// <summary>
+        /// The function return an exists customer .
+        /// </summary>
+        /// <param name="idForDisplayCustomer"> id of customer</param>
+
         public Customer GetCustomer(int idForDisplayCustomer)
         {
             DO.Customer dalCustomer = new DO.Customer();
@@ -79,96 +87,72 @@ namespace BL
             {
                 throw new GetDetailsProblemException("ID customer doesnt exists in the system");
             }
-            Location dalocation = new Location() { Latitude = dalCustomer.Latitude, Longitude = dalCustomer.Longitude };
+            // Location dalocation = new Location() { Latitude = dalCustomer.Latitude, Longitude = dalCustomer.Longitude };
             Customer DisPlayCustomer = new Customer()
             {
                 Id = dalCustomer.Id,
                 Name = dalCustomer.Name,
                 PhoneNumber = dalCustomer.PhoneNumber,
-                CustomerLocation = dalocation,
-                ParcelFromCustomer = new List<ParcelAtCustomer>(),
-                ParcelToCustomer = new List<ParcelAtCustomer>(),
+                CustomerLocation = new Location() { Latitude = dalCustomer.Latitude, Longitude = dalCustomer.Longitude },
+                // ParcelFromCustomer = new List<ParcelAtCustomer>(),
+                //ParcelToCustomer = new List<ParcelAtCustomer>(),
             };
-            List<DO.Parcel> dalParcelList = dalObject.GetParcelList(i => i.SenderId == idForDisplayCustomer).ToList();
-            foreach (var item in dalParcelList)
-            {
-                CustomerParcel customerParcel = new CustomerParcel() { Id = item.TargetId, Name = dalObject.GetCustomer(item.TargetId).Name };
-                ParcelAtCustomer parcelAtCustomer = new ParcelAtCustomer()
-                {
-                    Id = item.Id,
-                    Priority = (Priorities)item.Priority,
-                    Weight = (WeightCategories)item.Weight,
-                    OtherSide = customerParcel
-                };
-                if (item.Delivered != null)
-                    parcelAtCustomer.Status = ParcelStatus.Delivered;
-                else if (item.PickUp != null)
-                    parcelAtCustomer.Status = ParcelStatus.PickUp;
-                else if (item.Scheduled != null)
-                    parcelAtCustomer.Status = ParcelStatus.Scheduled;
-                else
-                    parcelAtCustomer.Status = ParcelStatus.Requested;
+            IEnumerable<DO.Parcel> dalParcelList = dalObject.GetParcelList(i => i.SenderId == idForDisplayCustomer);
+            DisPlayCustomer.ParcelFromCustomer = (from item in dalParcelList
+                                                 select new ParcelAtCustomer()
+                                                 {
+                                                     Id = item.Id,
+                                                     Priority = (Priorities)item.Priority,
+                                                     Weight = (WeightCategories)item.Weight,
+                                                     Status = item.Delivered != null ? ParcelStatus.Delivered : item.PickUp != null ? ParcelStatus.PickUp :
+                                                     item.Scheduled != null ? ParcelStatus.Scheduled : ParcelStatus.Requested,
+                                                     OtherSide = new CustomerParcel() { Id = item.TargetId, Name = dalObject.GetCustomer(item.TargetId).Name },
 
-                DisPlayCustomer.ParcelFromCustomer.Add(parcelAtCustomer);
 
-            }
-            List<DO.Parcel> dalSentParcelList = dalObject.GetParcelList(i => i.TargetId == idForDisplayCustomer).ToList();
-            foreach (var item in dalSentParcelList)
-            {
-                CustomerParcel customerParcel = new CustomerParcel() { Id = item.SenderId, Name = dalObject.GetCustomer(item.SenderId).Name };
-                ParcelAtCustomer parcelAtCustomer = new ParcelAtCustomer()
-                {
-                    Id = item.Id,
-                    Priority = (Priorities)item.Priority,
-                    Weight = (WeightCategories)item.Weight,
-                    OtherSide = customerParcel,
-                };
-                if (item.Delivered != null)
-                    parcelAtCustomer.Status = ParcelStatus.Delivered;
-                else if (item.PickUp != null)
-                    parcelAtCustomer.Status = ParcelStatus.PickUp;
-                else if (item.Scheduled != null)
-                    parcelAtCustomer.Status = ParcelStatus.Scheduled;
-                else
-                    parcelAtCustomer.Status = ParcelStatus.Requested;
-
-                DisPlayCustomer.ParcelToCustomer.Add(parcelAtCustomer);
-
-            }
+                                                 }).ToList();
+            IEnumerable<DO.Parcel> dalSentParcelList = dalObject.GetParcelList(i => i.TargetId == idForDisplayCustomer);
+            DisPlayCustomer.ParcelToCustomer = (from item in dalSentParcelList
+                                               select new ParcelAtCustomer()
+                                               {
+                                                   Id = item.Id,
+                                                   Priority = (Priorities)item.Priority,
+                                                   Weight = (WeightCategories)item.Weight,
+                                                   Status = item.Delivered != null ? ParcelStatus.Delivered : item.PickUp != null ? ParcelStatus.PickUp :
+                                                     item.Scheduled != null ? ParcelStatus.Scheduled : ParcelStatus.Requested,
+                                                   OtherSide = new CustomerParcel() { Id = item.SenderId, Name = dalObject.GetCustomer(item.SenderId).Name },
+                                               }).ToList();
             return DisPlayCustomer;
+
         }
         #endregion display customer
 
 
         #region display customer list
+        /// <summary>
+        /// The function return list of customers .
+        /// </summary>
+        
+        // run on all the customer list and put the correct info into  
         public IEnumerable<CustomerToList> GetCustomerList(Predicate<CustomerToList> predicate = null)
-        {
-            List<CustomerToList> customerBL = new List<CustomerToList>();
-            List<DO.Customer> holdDalCustomer = dalObject.GetCustomerList().ToList();
-            // run on all the customer list and put the correct info into   
-            foreach (var item in holdDalCustomer)
             {
-                customerBL.Add(new CustomerToList
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    PhoneNumber = item.PhoneNumber,
-                    ParcelProvided = dalObject.GetParcelList
-                    (x => x.Delivered != null && x.SenderId == item.Id).ToList().Count,
+            
+            IEnumerable<DO.Customer> DalCustomers = dalObject.GetCustomerList();
+                IEnumerable<CustomerToList> BLcustomers = from item in DalCustomers
+                                                          select new CustomerToList()
+                                                          {
+                                                              Id = item.Id,
+                                                              Name = item.Name,
+                                                              PhoneNumber = item.PhoneNumber,
+                                                              ParcelProvided = dalObject.GetParcelList(x => x.Delivered != null && x.SenderId == item.Id).Count(),
+                                                              Parcelsnet = dalObject.GetParcelList(x => x.PickUp != null && x.Delivered == null && x.SenderId == item.Id).Count(),
+                                                              ParcelReceived = dalObject.GetParcelList(x => x.Delivered != null && x.TargetId == item.Id).ToList().Count(),
+                                                              ParcelOnTheWay = dalObject.GetParcelList(x => x.PickUp != null && x.Delivered == null && x.TargetId == item.Id).Count(),
+                                                          };
+                
+          
 
-                    Parcelsnet = dalObject.GetParcelList
-                    (x => x.PickUp != null && x.Delivered == null && x.SenderId == item.Id).ToList().Count,
-
-                    ParcelReceived = dalObject.GetParcelList
-                    (x => x.Delivered != null && x.TargetId == item.Id).ToList().Count,
-
-                    ParcelOnTheWay = dalObject.GetParcelList
-                    (x => x.PickUp != null && x.Delivered == null && x.TargetId == item.Id).ToList().Count,
-                });
+            return BLcustomers.Where(x => predicate == null ? true : predicate(x));
             }
-
-            return customerBL.FindAll(x => predicate == null ? true : predicate(x));
-        }
         #endregion display customer list
     }
 }

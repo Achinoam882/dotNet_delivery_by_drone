@@ -25,15 +25,17 @@ namespace BL
         /// <param name="baseStationBL">baseStationBL List</param>
         /// <param name="location">location</param>
         /// <returns>The location of the base station closest to the location and the min distance</returns>
-        private (Location, double) mindistanceBetweenLocationBaseStation(List<BaseStation> baseStationBL, Location location)
+        internal (Location, double) mindistanceBetweenLocationBaseStation(IEnumerable<BaseStation> baseStationBL, Location location)
         {
-            List<double> distance = new List<double>();
-            foreach (var item in baseStationBL)
-            {
-                distance.Add(GetDistance(location, item.BaseStationLocation));
-            }
-            double minimumDistance = distance.Min();
-            return (baseStationBL[distance.FindIndex(x => x == minimumDistance)].BaseStationLocation, minimumDistance);
+            IEnumerable<Location> distance = from item in baseStationBL
+                                             orderby GetDistance(location, item.BaseStationLocation)
+                                             select item.BaseStationLocation;
+
+            Location minimumDistance = distance.First();
+            return (minimumDistance, GetDistance(location, minimumDistance));
+
+
+
 
         }
         #endregion finding the nearest base station to the location
@@ -75,18 +77,18 @@ namespace BL
         /// <returns>The electric use</returns>
         private double CalculateElectricityUse(WeightCategories weight, double distance1, double distance2)
         {
-            double electricityUse = distance2 * Available;
+            int electricityUse = (int)(distance2 * Available);
             WeightCategories weightOfParcel = weight;
             switch (weightOfParcel)
             {
                 case WeightCategories.Light:
-                    electricityUse += distance1 * LightWeightCarrier;
+                    electricityUse +=(int)( distance1 * LightWeightCarrier);
                     break;
                 case WeightCategories.Medium:
-                    electricityUse += distance1 * MediumWeightCarrier;
+                    electricityUse += (int)(distance1 * MediumWeightCarrier);
                     break;
                 case WeightCategories.Heavy:
-                    electricityUse += distance1 * HeavyWeightCarrier;
+                    electricityUse += (int)(distance1 * HeavyWeightCarrier);
                     break;
                 default:
                     break;
@@ -102,7 +104,7 @@ namespace BL
         public static double DroneChargingRate ;
 
         public List<DroneToList> dronesListBL;
-        DalApi.IDal dalObject;
+       internal DalApi.IDal dalObject;
 
         //Create a Random object to be used to draw the battery status and Location of the drones.
         Random random = new Random(DateTime.Now.Millisecond);
@@ -135,76 +137,74 @@ namespace BL
             DroneChargingRate = arrDrone[4];
 
             // Convert a layer dronelist to a logical layer drone list
-            List<DO.Drone> dronesDal = dalObject.GetDroneList().ToList();
-            dronesListBL = new List<DroneToList>();
-            foreach (var item in dronesDal)
-            {
-                dronesListBL.Add(new DroneToList { Id = item.Id, Model = item.Model,
-                    MaxWeight = (WeightCategories)item.MaxWeight
-                });
-            }
+            IEnumerable<DO.Drone> dronesDal = dalObject.GetDroneList().ToList();
+            dronesListBL = (from item in dronesDal
+                            select new DroneToList
+                            {
+                                Id = item.Id,
+                                Model = item.Model,
+                                MaxWeight = (WeightCategories)item.MaxWeight
+                            }).ToList();
 
             //creating a customer list 
-            List<Customer> customerListBL = new List<Customer>();
-            List<DO.Customer> customerDal = dalObject.GetCustomerList().ToList();
-            foreach (var item in customerDal)
-            {
-                customerListBL.Add(new Customer
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    PhoneNumber = item.PhoneNumber,
-                    CustomerLocation = new Location() { Longitude = item.Longitude, Latitude = item.Latitude },
-                });
-            }
+
+            IEnumerable<DO.Customer> customerDal = dalObject.GetCustomerList().ToList();
+List<Customer> customerListBL = (from item in customerDal
+                                             select new Customer()
+                                             {
+                                                 Id = item.Id,
+                                                 Name = item.Name,
+                                                 PhoneNumber = item.PhoneNumber,
+                                                 CustomerLocation = new Location() { Longitude = item.Longitude, Latitude = item.Latitude },
+                                             }).ToList();
             //creating a basestationlist list
-            List<BaseStation> baseStationBL = new List<BaseStation>();
-            List<DO.BaseStation> baseStationDal = dalObject.GetBaseStationList().ToList();
-            foreach (var item in baseStationDal)
-            {
-               
-                baseStationBL.Add(new BaseStation
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    FreeChargeSlots = item.ChargeSlots,
-                    BaseStationLocation = new Location() { Longitude = item.Longitude, Latitude = item.Latitude },
-                    DroneChargingList = new List<DroneCharging>()
-                });
-            }
+
+            IEnumerable<DO.BaseStation> baseStationDal = dalObject.GetBaseStationList().ToList();
+            List<BaseStation> baseStationBL = (from item in baseStationDal
+                                                     select new BaseStation()
+                                                     {
+                                                         Id = item.Id,
+                                                         Name = item.Name,
+                                                         FreeChargeSlots = item.ChargeSlots,
+                                                         BaseStationLocation = new Location() { Longitude = item.Longitude, Latitude = item.Latitude },
+                                                         DroneChargingList = new List<DroneCharging>()
+                                                     }).ToList();
+
 
             //creating a parcel list of parcel fro the data layer that were set to a drone already
-            List<DO.Parcel> parcelListDal = dalObject.GetParcelList(x => x.DroneId != 0).ToList();
+           List<DO.Parcel> parcelListDal = dalObject.GetParcelList(x => x.DroneId != 0).ToList();
 
 
 
 
             foreach (var item in dronesListBL)
             {
-                int index = parcelListDal.FindIndex(x => x.DroneId == item.Id && x.Delivered == DateTime.MinValue);
+                
+                int index = parcelListDal.FindIndex(x => x.DroneId == item.Id && x.Delivered == null);
                 if (index != -1)
                 {
                     item.Status = DroneStatuses.Busy;//if the parcel was set to a drone but wasnt delivered so the drone status is bust
-                    Location locationSender = customerListBL.Find(x => x.Id == parcelListDal[index].SenderId).CustomerLocation;//creating the location of the sender of the parcel that was set to a drond but not delivered yet
+                    Location locationSender = customerListBL.First(x => x.Id == parcelListDal[index].SenderId).CustomerLocation;//creating the location of the sender of the parcel that was set to a drond but not delivered yet
                                                                                                                                //Distance between sender and receiver.
-                    Location locationReceiver = customerListBL.Find(x => x.Id == parcelListDal[index].TargetId).CustomerLocation;
+                    Location locationReceiver = customerListBL.First(x => x.Id == parcelListDal[index].TargetId).CustomerLocation;
                     double distanceBetweenSenderAndReceiver = GetDistance(locationSender, locationReceiver);
 
                     //Distance between the receiver and the nearest base station.
                     double DistanceBetweenReceiverAndNearestBaseStation = mindistanceBetweenLocationBaseStation(baseStationBL, locationReceiver).Item2;
-                    double electricityUse = CalculateElectricityUse((WeightCategories)parcelListDal[index].Weight, distanceBetweenSenderAndReceiver, DistanceBetweenReceiverAndNearestBaseStation);
+                    int electricityUse = (int)(CalculateElectricityUse((WeightCategories)parcelListDal[index].Weight, distanceBetweenSenderAndReceiver, DistanceBetweenReceiverAndNearestBaseStation));
 
-                    if (parcelListDal[index].PickUp == DateTime.MinValue)//if the parcel wasnt pickedup yet
+                    if (parcelListDal[index].PickUp == null)//if the parcel wasnt pickedup yet
                     {
                         item.DroneLocation = mindistanceBetweenLocationBaseStation(baseStationBL, locationSender).Item1;
-                        electricityUse += GetDistance(item.DroneLocation, locationSender) * Available; //
+                        electricityUse +=(int)( GetDistance(item.DroneLocation, locationSender) * Available); //
                     }
                     else
                     {
                         item.DroneLocation = locationSender;
                     }
                     // random number battery status between minimum charge to make the shipment and full charge.     
-                    item.Battery = ((float)((float)random.NextDouble() * (100 - electricityUse)) + electricityUse);
+                    item.Battery =(int)( ((float)((float)random.NextDouble() * (100 - electricityUse)) + electricityUse));
+                    item.NumParcelTransfer = parcelListDal[index].Id;
 
                 }
                 else//if the drone isnt busy
@@ -220,13 +220,13 @@ namespace BL
                     }
                     if (item.Status == DroneStatuses.Free)
                     {
-                        List<DO.Parcel> parcelListDeliveredByThisDrone = parcelListDal.FindAll(x => x.DroneId == item.Id && x.Delivered != DateTime.MinValue);
-                        if (parcelListDeliveredByThisDrone.Any())
+                        List<DO.Parcel> DeliveredByThisDroneparcelList = parcelListDal.FindAll(x => x.DroneId == item.Id && x.Delivered != null);
+                        if (DeliveredByThisDroneparcelList.Any())
                         {
-                           
-                            item.DroneLocation = customerListBL.Find(x => x.Id == parcelListDeliveredByThisDrone[random.Next(0, parcelListDeliveredByThisDrone.Count)].TargetId).CustomerLocation;
-                            double batteryUse = mindistanceBetweenLocationBaseStation(baseStationBL, item.DroneLocation).Item2 * Available;
-                            item.Battery = (float)((float)(random.NextDouble() * (100 - batteryUse)) + batteryUse);
+                            int TargetId = DeliveredByThisDroneparcelList[random.Next(0, DeliveredByThisDroneparcelList.Count)].TargetId;
+                            item.DroneLocation = customerListBL.First(x => x.Id == TargetId).CustomerLocation;
+                            int batteryUse =(int) (mindistanceBetweenLocationBaseStation(baseStationBL, item.DroneLocation).Item2 * Available);
+                            item.Battery =(int) ((float)((float)(random.NextDouble() * (100 - batteryUse)) + batteryUse));
 
                         }
                         else //if the List is empty.

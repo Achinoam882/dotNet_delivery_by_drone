@@ -7,7 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Targil0", "Targil0\Targil0.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{10537B68-D0E8-4173-9394-8C0D379F93EF}"
 	ProjectSection(SolutionItems) = preProject
-		dal-config.xml = dal-config.xml
 		DalXmlConfig.xml = DalXmlConfig.xml
 		README.md = README.md
 	EndProjectSection
@@ -32,13 +31,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "xml", "xml", "{1A86E3C2-56D
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{37D09E23-E33A-408F-B536-DBEF62357295}"
-	ProjectSection(SolutionItems) = preProject
-		BaseStationXml.xml = BaseStationXml.xml
-		CustomerXml.xml = CustomerXml.xml
-		DroneChargeXml.xml = DroneChargeXml.xml
-		DroneXml.xml = DroneXml.xml
-		ParcelXml.xml = ParcelXml.xml
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
