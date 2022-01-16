@@ -22,9 +22,15 @@ namespace PL
     /// </summary>
     public partial class ParcelWindow : Window
     {
+        DroneWindow MyDroneWindow;
+        Parcel parcel;
+        int index;
         BlApi.IBL bl;
-        //public bool close = true;
         private ParcelListWindow parcelListWindow;
+        #region constractor
+        // <summary>
+        /// Constractor to add parcel window.
+        /// </summary>
         public ParcelWindow(BlApi.IBL blObject, ParcelListWindow parcelListWindoww)
         {
             InitializeComponent();
@@ -34,7 +40,11 @@ namespace PL
             WeightComboBox.ItemsSource = Enum.GetValues(typeof(WeightCategories));
             PriortryComboBox.ItemsSource = Enum.GetValues(typeof(Priorities));
         }
-
+        #endregion constractor
+        #region add clicks
+        // <summary>
+        /// Add a new parcel to the list 
+        /// </summary>
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             if (SenderNameTextBox.Text.Length != 0 && TargetNameTextBox.Text.Length != 0 && WeightComboBox.SelectedItem != null && PriortryComboBox.SelectedItem != null)
@@ -96,7 +106,9 @@ namespace PL
 
         }
 
-
+        // <summary>
+        /// Cancel addition parcel
+        /// </summary>
         private void cancel_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult boxresult = MessageBox.Show("Are you sure you want to cancel this addition?", "info!", MessageBoxButton.YesNo, MessageBoxImage.Information);
@@ -114,8 +126,11 @@ namespace PL
                     break;
             }
         }
-        Parcel parcel;
-        int index;
+        #endregion add clicks
+        #region constractor for update
+        // <summary>
+        /// Constractor for update parcel
+        /// </summary>
         public ParcelWindow(BlApi.IBL blObject, ParcelListWindow MyparcelListWindow, int id, int myIndex)
         {
             InitializeComponent();
@@ -125,19 +140,18 @@ namespace PL
             index = myIndex;
             parcel = bl.GetParcel(id);
             DataContext = parcel;
-            // SenderTextBox.Text = parcel.Sender.ToString();
-            //RecieverTextBox.Text = parcel.Receiving.ToString();
-            //if(parcel.Scheduled!=null)
             if (parcel.DroneAtParcel==null)
             {
                 DroneDetails.Visibility = Visibility.Hidden;
-               // DroneParcelTextBox.Text = parcel.DroneAtParcel.ToString();
             }
 
         }
-        DroneWindow MyDroneWindow;
-        //CustomerParcel customerParcel;
-       
+        #endregion constractor for update
+
+        #region constractor fromm drone window
+        // <summary>
+        /// Constractor for update parcel from drone window.
+        /// </summary>
         public ParcelWindow(BlApi.IBL blObject, DroneWindow droneWindow,  int id)
         {
             InitializeComponent();
@@ -148,7 +162,13 @@ namespace PL
             DataContext = parcel;
 
         }
+        #endregion constractor form drone window
+
         CustomerWindow ListOfParcel;
+        #region constractor from customer window
+        // <summary>
+        /// constractor to update parcel from customer window
+        /// </summary>
         public ParcelWindow(BlApi.IBL blObject, CustomerWindow myList ,int id,int Index )
         {
             InitializeComponent();
@@ -159,61 +179,12 @@ namespace PL
             DataContext = parcel;
             ListOfParcel = myList;
         }
+        #endregion constractor form customer window
 
-        //private void Delivery_Click(object sender, RoutedEventArgs e)
-        //{
-        //    try
-        //    {
-
-        //        bl.DroneDeliverParcel(parcel.DroneAtParcel.Id);
-
-        //        MessageBox.Show("Delivery By Drone was successfully done", "success!");
-        //        parcel = bl.GetParcel(parcel.Id);
-        //        DataContext = parcel;
-        //        parcelListWindow.ParcelListView.Items.Refresh();
-        //        parcelListWindow.AcordingToStatusSelectorChanged();
-        //        Delivery.IsEnabled = false;
-        //    }
-        //    catch (UpdateProblemException ex)
-        //    {
-        //        MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-
-        //    }
-        //}
-
-     //   private void PickUp_Click(object sender, RoutedEventArgs e)
-     //{
-     //       try
-     //       {
-               
-     //           if (parcel.Scheduled == null)
-     //           { PickUp.IsEnabled = false; }
-
-
-     //           bl.PickUpParcelByDrone(parcel.DroneAtParcel.Id);
-
-     //           MessageBox.Show("Pickup Parcel By Drone was successfully done", "success!");
-     //           parcel = bl.GetParcel(parcel.Id);
-     //           DataContext = parcel;
-
-     //           int index = parcelListWindow.ParcelListView.SelectedIndex;
-     //           ParcelToList parcelToList = parcelListWindow.parcelToList[index];
-     //           parcelToList.Status = ParcelStatus.PickUp;
-     //           parcelListWindow.parcelToList[index] = parcelToList;
-     //           parcelListWindow.ParcelListView.Items.Refresh();
-     //           Delivery.IsEnabled = true;
-     //           parcelListWindow.AcordingToStatusSelectorChanged();
-     //           PickUp.IsEnabled = false;
-
-
-     //       }
-     //       catch (UpdateProblemException ex)
-     //       {
-     //           MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
-
-     //       }
-     //   }
-
+        #region delete click
+        // <summary>
+        /// Delete an exists  parcel
+        /// </summary>
         private void deleteParcel_Click(object sender, RoutedEventArgs e)
         {
             if(parcel.Scheduled!=null)
@@ -257,23 +228,30 @@ namespace PL
 
             }
         }
-      
+        #endregion delete click
+        #region sender target details
+        // <summary>
+        ///Open  customer sender details
+        /// </summary>
         private void SenderDetails_Click(object sender, MouseButtonEventArgs e)
         {
           Customer customer=  bl.GetCustomer(parcel.Sender.Id);
            new CustomerWindow(bl,  customer.Id, index).ShowDialog(); 
-            //SenderTextBox.DataContext = customerParcel;
-            //int droneIndex = DroneChargingView.SelectedIndex;
-            //this.IsEnabled = false;
-            //if (drone != null)
-            //    new DroneWindow(bl, this, drone.Id, droneIndex).Show();
+           
         }
+        // <summary>
+        ///Open  customer target details
+        /// </summary>
         private void ReceiverDetails_Click(object sender, MouseButtonEventArgs e)
         {
             Customer customer = bl.GetCustomer(parcel.Receiving.Id);
             new CustomerWindow(bl, customer.Id, index).ShowDialog();
         }
-
+        #endregion sender target details
+        #region drone assig to parcel
+        // <summary>
+        ///Open  drone window that is assigned to the parcel
+        /// </summary>
         private void DroneParcel_Click(object sender, MouseButtonEventArgs e)
         {
             if(parcel.Scheduled!=null)
@@ -285,30 +263,26 @@ namespace PL
 
             }
         }
+        #endregion drone assig to parcel
+        #region close clicks
+        // <summary>
+        ///shuting down the program
+        /// </summary>
         private void Close_Click(object sender, RoutedEventArgs e)
         {
 
             Application.Current.Shutdown();
         }
-
+        // <summary>
+        ///going back
+        /// </summary>
         private void BackWindow_Click(object sender, MouseButtonEventArgs e)
         {
             this.Close();
         }
-        ClientWindow clientWindow;
-        Customer customer;
-       public  ParcelWindow(BlApi.IBL blObject,Customer mycustomer,ParcelListWindow myparcel, ClientWindow myclientWindow)
-        {
-            InitializeComponent();
-            AddParcelGrid.Visibility = Visibility.Visible;
-            bl = blObject;
-            clientWindow = myclientWindow;
-            customer = mycustomer;
-            parcelListWindow = myparcel;
-            //DataContext = customer;
-            WeightComboBox.ItemsSource = Enum.GetValues(typeof(WeightCategories));
-            PriortryComboBox.ItemsSource = Enum.GetValues(typeof(Priorities));
-        }
+        // <summary>
+        ///going back to home screen
+        /// </summary>
         private void Home_Click(object sender, RoutedEventArgs e)
         {
             //close = false;
@@ -320,11 +294,34 @@ namespace PL
             Close();
 
         }
-
+        // <summary>
+        ///going back
+        /// </summary>
         private void back_click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
+        #endregion close clicks
+        ClientWindow clientWindow;
+        Customer customer;
+        #region constractor for client window
+        // <summary>
+        ///Open  parcel window from client window
+        /// </summary>
+        public ParcelWindow(BlApi.IBL blObject,Customer mycustomer,ParcelListWindow myparcel, ClientWindow myclientWindow)
+        {
+            InitializeComponent();
+            AddParcelGrid.Visibility = Visibility.Visible;
+            bl = blObject;
+            clientWindow = myclientWindow;
+            customer = mycustomer;
+            parcelListWindow = myparcel;
+            //DataContext = customer;
+            WeightComboBox.ItemsSource = Enum.GetValues(typeof(WeightCategories));
+            PriortryComboBox.ItemsSource = Enum.GetValues(typeof(Priorities));
+        }
+        #endregion constractor for client window
+      
     }
 }
 

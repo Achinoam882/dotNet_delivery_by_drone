@@ -29,9 +29,13 @@ namespace PL
          bool homeClicked=false;
          bool powerClicked=false;
         bool BackClicked=false;
-
+        int index;
+        public Drone drone;
         private DroneListWindow DroneListWindow;
         #region add drone
+        /// <summary>
+        ///constractor to add drone
+        /// </summary>v
         public DroneWindow(BlApi.IBL blObject, DroneListWindow droneListWindow)
         {
             InitializeComponent();
@@ -42,7 +46,9 @@ namespace PL
             FirstCahrgingStationSelector1.ItemsSource = blObject.GetBaseStationList(x => x.FreeChargeSlots > 0);
 
         }
-
+        /// <summary>
+        ///Cancel addition drone
+        /// </summary>
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult boxresult = MessageBox.Show("Are you sure you want to cancel this addition?", "info!", MessageBoxButton.YesNo, MessageBoxImage.Information);
@@ -64,7 +70,9 @@ namespace PL
             }
 
         }
-
+        /// <summary>
+        ///Add new drone to the list
+        /// </summary>
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             if (IdTextBox.Text.Length != 0 && ModelTextBox.Text.Length != 0 && MaxWeightSelector1.SelectedItem != null && FirstCahrgingStationSelector1.SelectedItem != null)
@@ -119,7 +127,9 @@ namespace PL
 
         }
 
-
+        /// <summary>
+        ///integrity check for add negative id drone
+        /// </summary>
         private void IdCheck_LostFocus(object sender, RoutedEventArgs e)
         {
             if (IdTextBox.Text.StartsWith('-'))
@@ -129,6 +139,9 @@ namespace PL
                 IdTextBox.Foreground = Brushes.Red;
             }
         }
+        /// <summary>
+        ///integrity check for add negative id drone
+        /// </summary>
         private void IdCheck_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (IdTextBox.Text == "Id can't be a negative number")
@@ -138,6 +151,9 @@ namespace PL
                 IdTextBox.BorderBrush = Brushes.Transparent;
             }
         }
+        /// <summary>
+        ///integrity check for add long model  drone
+        /// </summary>
         private void ModelCheck_LostFocus(object sender, RoutedEventArgs e)
         {
             if (ModelTextBox.Text.Length > 5)
@@ -147,6 +163,9 @@ namespace PL
                 ModelTextBox.Foreground = Brushes.Red;
             }
         }
+        /// <summary>
+        ///integrity check for add too long model  drone
+        /// </summary>
         private void ModelCheck_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (ModelTextBox.Text == "Model name is too long")
@@ -157,10 +176,12 @@ namespace PL
             }
         }
         #endregion add drone
-        int index;
-        public Drone drone;
+
 
         #region  drone actions
+        /// <summary>
+        ///constractor to update drone window 
+        /// </summary>
         public DroneWindow(BlApi.IBL blObject, DroneListWindow droneListWindow, int Id, int Indexdrone)
         {
             InitializeComponent();
@@ -174,6 +195,9 @@ namespace PL
             StatusDroneclicks(drone.Status);
             BatteryChange(drone.Battery);
         }
+        /// <summary>
+        ///prograssbar battery change
+        /// </summary>
         private void BatteryChange(double battery)
         {
             if (battery < 50)
@@ -191,6 +215,9 @@ namespace PL
                 PrograssbarBattery.Foreground = Brushes.Green;
 
         }
+        /// <summary>
+        ///Status drone 
+        /// </summary>
         public void StatusDroneclicks(DroneStatuses status)
 
         {
@@ -241,7 +268,9 @@ namespace PL
         }
 
 
-
+        /// <summary>
+        ///Update the model drone and refresh the drone list
+        /// </summary>
         private void UpDateModel_Click(object sender, RoutedEventArgs e)
         {
             bl.ChangeDroneModel(drone.Id, ModelTextBox2.Text);
@@ -265,6 +294,9 @@ namespace PL
 
 
 
+        /// <summary>
+        ///Pick Up parcel by drone
+        /// </summary>
         private void PickupParcelByDrone_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -300,6 +332,9 @@ namespace PL
 
         }
 
+        /// <summary>
+        ///Assign drone to parcel
+        /// </summary>
         private void AssignDroneToParcel_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -339,6 +374,9 @@ namespace PL
             }
         }
 
+        /// <summary>
+        ///Realese drone from charging
+        /// </summary>
         private void StopChargingDrone_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -379,6 +417,9 @@ namespace PL
         }
 
 
+        /// <summary>
+        ///Sending Drone To Charge
+        /// </summary>
         private void SendDroneToCharge_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -409,7 +450,9 @@ namespace PL
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
+        /// <summary>
+        ///Delivery parcel by drone
+        /// </summary>
         private void DeliverDroneToParcel_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -447,35 +490,13 @@ namespace PL
 
 
 
-        private void Exit_Click(object sender, RoutedEventArgs e)
-        {
-            if (ManualButtom.Visibility == Visibility.Visible)
-            {
-                BackClicked = true;
-                SimulatorOfDrone.CancelAsync();
-                Cursor = Cursors.Wait;
-            }
-            else
-              Close();
-        }
 
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            if (ManualButtom.Visibility == Visibility.Visible)
-            {
-                powerClicked = true;
-                SimulatorOfDrone.CancelAsync();
-                Cursor = Cursors.Wait;
-            }
-            else
-              Application.Current.Shutdown();
-        }
-        private void BackWindow_Click(object sender, MouseButtonEventArgs e)
-        {
-            this.Close();
-        }
         #endregion  drone actions
 
+        #region drone window from base station
+        /// <summary>
+        ///Constractor to update  drone  window from base station
+        /// </summary>
         public DroneWindow(BlApi.IBL blObject, int id, int droneIndex)
         {
             InitializeComponent();
@@ -490,6 +511,12 @@ namespace PL
 
 
         }
+        #endregion drone window from base station
+
+        #region infor about parcel in transfer
+        /// <summary>
+        ///Open  parcel in transfer window
+        /// </summary>
         private void textboxParcelintransfer_MouseEnter(object sender, MouseButtonEventArgs e)
         {
             try
@@ -507,7 +534,47 @@ namespace PL
 
 
         }
+        #endregion infor about parcel in transfer
 
+        #region close clicks
+        /// <summary>
+        ///Back to previous window
+        /// </summary>
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            if (ManualButtom.Visibility == Visibility.Visible)
+            {
+                BackClicked = true;
+                SimulatorOfDrone.CancelAsync();
+                Cursor = Cursors.Wait;
+            }
+            else
+                Close();
+        }
+        /// <summary>
+        ///close all the windows.
+        /// </summary>
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            if (ManualButtom.Visibility == Visibility.Visible)
+            {
+                powerClicked = true;
+                SimulatorOfDrone.CancelAsync();
+                Cursor = Cursors.Wait;
+            }
+            else
+                Application.Current.Shutdown();
+        }
+        /// <summary>
+        ///back to previous window.
+        /// </summary>
+        private void BackWindow_Click(object sender, MouseButtonEventArgs e)
+        {
+            this.Close();
+        }
+        /// <summary>
+        ///return to home window.
+        /// </summary>
         private void Home_Click(object sender, RoutedEventArgs e)
         {
             if(ManualButtom.Visibility == Visibility.Visible)
@@ -526,15 +593,9 @@ namespace PL
                 this.Close();
                 DroneListWindow.Close();
             }
+            #endregion close clicks
+    }
 
-
-
-
-
-
-
-
-        }
         #region Simulator
 
         internal BackgroundWorker SimulatorOfDrone;//defining the simulator
@@ -608,7 +669,9 @@ namespace PL
             BatteryChange(drone.Battery);
 
 
-        }
+        }   /// <summary>
+            /// The function finish and completed the simulator
+            /// </summary>
         private void SimulatorOfDrone_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (ManualButtom.Visibility == Visibility.Hidden)//if he pressed manual bottom
@@ -641,6 +704,9 @@ namespace PL
           
 
         }
+        /// <summary>
+        /// Status Drone after simulator
+        /// </summary>
         private void StatusDroneclicksAfterSimulator()
         {
             ManualButtom.Visibility = Visibility.Hidden;
@@ -654,18 +720,24 @@ namespace PL
             simulatorButtom.IsEnabled = true;
         }
 
-
-
+        /// <summary>
+        ///When Simulator stops
+        /// </summary>
         public bool IsTimeFinish()
         {
             return SimulatorOfDrone.CancellationPending; //return true when u want to close the sim and becomes true
         }
+        /// <summary>
+        /// function calls from simulator constractor in BL to report progress
+        /// </summary>
         public void ToReportProgress()
         {
 
-            SimulatorOfDrone.ReportProgress(0);//cales the function(SimulatorOfDrone_ProgressChange) that is signed up to ProgressChanged
+            SimulatorOfDrone.ReportProgress(0);//calls the function(SimulatorOfDrone_ProgressChange) that is signed up to ProgressChanged
         }
-
+        /// <summary>
+        /// start the simulator
+        /// </summary>
         private void SimulatorOfDrone_DoWork(object sender, DoWorkEventArgs e) 
         {
             bl.SimulatorOn(drone.Id, ToReportProgress, IsTimeFinish);

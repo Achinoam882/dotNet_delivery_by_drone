@@ -28,6 +28,9 @@ namespace PL
         BlApi.IBL bl;
         public bool close = true;
         private BaseStationListWindow basestationListWindow;
+        public BaseStation baseStation;
+        int index;
+        #region constractor to add
         /// <summary>
         ///constractor of add base station  window.
         /// </summary>
@@ -40,6 +43,9 @@ namespace PL
 
            
         }
+        #endregion constractor to add
+
+        #region clicks to add
         /// <summary>
         ///cancel the addition and return to the station list  window.
         /// </summary>
@@ -109,8 +115,10 @@ namespace PL
             }
         
         }
-        public BaseStation baseStation;
-        int index;
+        #endregion clicks to add
+
+        #region constractor for the double click info
+
         /// <summary>
         ///constractor of update base station window.
         /// </summary>
@@ -126,6 +134,9 @@ namespace PL
            // DroneChargeTextBox.Text= bl.GetBaseStation(id).DroneChargingList.;
 
         }
+        #endregion constractor for the double click info
+
+        #region update basestation
         /// <summary>
         ///Update the name and charge slots of station
         /// </summary>
@@ -147,8 +158,10 @@ namespace PL
             //BaseStationListView.baseStationToList.Items.refresh();
             basestationListWindow.BaseStationListView.Items.Refresh();
         }
+        #endregion update basestation
 
 
+        #region drone info that is charging
         /// <summary>
         ///Open a window with the details of the drone 
         /// </summary>
@@ -160,7 +173,12 @@ namespace PL
                 new DroneWindow(bl,  drone.Id, droneIndex).Show();
 
         }
+        #endregion drone info that is charging
 
+        #region  charging slots check ups
+        /// <summary>
+        ///to check if entered a minus number for charge slots
+        /// </summary>
         private void chargeslotstextbox_LostFocus(object sender, RoutedEventArgs e)
         {
             if (chargeslotstextbox.Text.StartsWith('-'))
@@ -170,6 +188,9 @@ namespace PL
                 chargeslotstextbox.Foreground = Brushes.Red;
             }
         }
+        /// <summary>
+        ///a result if entered a minus number for charge slots 
+        /// </summary>
         private void DroneInfo_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (chargeslotstextbox.Text == "Charge Slots Can't Be A Negative Number")
@@ -179,16 +200,19 @@ namespace PL
                 chargeslotstextbox.BorderBrush = Brushes.Transparent;
             }
         }
+        #endregion  charging slots check ups
+
+        #region back and home clicks
         /// <summary>
-        ///back to the previous window.
-        /// </summary
+        ///  return back to the previous window.
+        /// </summary>
         private void BackWindow_Click(object sender, MouseButtonEventArgs e)
         {
             this.Close();
         }
         /// <summary>
         ///close all windows
-        /// </summary
+        /// </summary>
         private void Close_Click(object sender, RoutedEventArgs e)
         {
 
@@ -204,12 +228,13 @@ namespace PL
             Close();
         }
         /// <summary>
-        ///back to the previous window.
-        /// </summary
+        /// return back to the previous window.
+        /// </summary>
         private void Back_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
+        #endregion back and home clicks
     }
-   
+
 }

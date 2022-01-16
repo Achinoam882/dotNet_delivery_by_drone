@@ -33,7 +33,7 @@ namespace PL
         }
 
 
-
+        #region sign up
         private void ButtonSignIn_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -43,7 +43,7 @@ namespace PL
 
                 if (PasswordUser.Password.Any(char.IsDigit) && PasswordUser.Password.Any(char.IsLower) && PasswordUser.Password.Any(char.IsUpper))
                 {
-                    if (PasswordUser.Password.Length >= 6)
+                    if (PasswordUser.Password.Length >= 8)
                     {
                         if (PasswordUser.Password == PasswordBoxConfirm.Password)
                         {
@@ -90,5 +90,7 @@ namespace PL
                 MessageBox.Show(ex.Message, "ERROR", MessageBoxButton.OKCancel, MessageBoxImage.Error);
             }
         }
+        #endregion sign up
     }
+
 }

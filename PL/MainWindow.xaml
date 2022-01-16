@@ -98,11 +98,11 @@
                         </Border.Clip>
                         <Grid>
                             <StackPanel Margin="0,6,-15,0">
-                                <TextBlock Text="MALKA AND ACHINOAM&#xA;WE R THE LEADERS"
+                                <TextBlock Text="DRONES DELIVER&#xA;THE IMPOSSIBLE!"
                                         Foreground="Black"
                                          FontSize="28"
                                          Margin="20,10,10,0"/>
-                                <TextBlock Text="LETS GET STARTED"
+                                <TextBlock Text="DRONING ON!"
                                         Foreground="Black"
                                          FontSize="20"
                                          Margin="20,10,10,0"/>

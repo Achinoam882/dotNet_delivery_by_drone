@@ -116,7 +116,7 @@
 
             </Grid>
 
-            <Grid x:Name="UpDateGrid" RenderTransformOrigin="0.589,0.447" Background="FloralWhite "  >
+            <Grid x:Name="UpDateGrid" RenderTransformOrigin="0.589,0.447" Background="FloralWhite " Visibility="Hidden" >
                 <StackPanel Background="AliceBlue">
                     <Grid Height="30" Background="#FFA2A2C5">
 

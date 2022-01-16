@@ -25,7 +25,10 @@ namespace PL
         Customer customer;
         BlApi.IBL bl;
         int id,  parcelIndex;
-
+        #region constarctor
+        /// <summary>
+        ///constractor for th eclient window
+        /// </summary>
         public ClientWindow(BlApi.IBL myBl, int myId)
         {
             InitializeComponent();
@@ -41,12 +44,23 @@ namespace PL
             CheckBoxPickUpList.DisplayMemberPath = "Id";
             CheckBoxDeliverdList.DisplayMemberPath = "Id";
         }
+        #endregion constarctor
 
+        #region rate us
+        /// <summary>
+        ///rate us window
+        /// </summary>
         private void Star_Click(object sender, RoutedEventArgs e)
         {
             new Star1().Show();
 
         }
+        #endregion constarctor
+
+        #region close click
+        /// <summary>
+        ///close window
+        /// </summary>
         private void Close_Click(object sender, RoutedEventArgs e)
         {
 
@@ -56,7 +70,9 @@ namespace PL
 
 
 
-
+        /// <summary>
+        ///to log out from the account
+        /// </summary
         private void LogoutButtem_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult boxresult = MessageBox.Show("Are you sure you want to log out?", "info!", MessageBoxButton.YesNo, MessageBoxImage.Information);
@@ -73,13 +89,23 @@ namespace PL
                     break;
             }
         }
+        #endregion close click
 
+        #region info click
+        /// <summary>
+        ///information about us window
+        /// </summary>
         private void info_Click(object sender, RoutedEventArgs e)
         {
             new info().Show();
 
         }
+        #endregion info click
 
+        #region add parcel
+        /// <summary>
+        ///add parcel window window
+        /// </summary>
         private void AddParcel_Click(object sender, RoutedEventArgs e)
         {
             ParcelListWindow parcelList=null;
@@ -90,7 +116,12 @@ namespace PL
 
 
         }
+        #endregion add parcel
 
+        #region pickup parcel
+        /// <summary>
+        ///to pick up a parcel from the client  window
+        /// </summary>
         private void SendToPickUp_Checked(object sender, RoutedEventArgs e)
         {
             Parcel parcel;
@@ -126,23 +157,32 @@ namespace PL
                 MessageBox.Show(ex.ToString(), "ERROR", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
-          
-        
-
-
-            //else
-            //{
-            //    MessageBox.Show("No Parcel was selected", "ERROR!", MessageBoxButton.OK, MessageBoxImage.Error);
-            //     CheckBoxPickUp.IsChecked = false;
-            //}
 
         }
+        #endregion pickup parcel
 
+        #region reset click
+
+        /// <summary>
+        ///reset click for combo box
+        /// </summary>
         private void restComboBoxPickup_Click(object sender, RoutedEventArgs e)
         {
             CheckBoxPickUpList.SelectedItem = null;
         }
+        /// <summary>
+        ///reset click for combo box
+        /// </summary
+        private void resetComboBoxDelivery_Click(object sender, RoutedEventArgs e)
+        {
+            CheckBoxDeliverdList.SelectedItem = null;
+        }
+        #endregion endreset click
 
+        #region deliver parcel
+        /// <summary>
+        ///to deliver a parcel from the client  window
+        /// </summary>
         private void SendToDeliverd_Checked(object sender, RoutedEventArgs e)
         {
             int id = ((ParcelToList)CheckBoxDeliverdList.SelectedItem).Id;
@@ -175,10 +215,12 @@ namespace PL
             }
 
         }
-        private void resetComboBoxDelivery_Click(object sender, RoutedEventArgs e)
-        {
-            CheckBoxDeliverdList.SelectedItem = null;
-        }
+        #endregion deliver parcel
+
+         #region delete parcel
+        /// <summary>
+        ///delet click parcel
+        /// </summary>
         private void deleteButtom_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -212,7 +254,12 @@ namespace PL
 
             }
         }
+#endregion delete parcel
 
+        #region parcel info
+        /// <summary>
+        ///info about parcel from client window
+        /// </summary>
         private void ParcelFromCustomer_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             ParcelAtCustomer parcel = (ParcelAtCustomer)ParcelFromCustomer.SelectedItem;
@@ -220,7 +267,9 @@ namespace PL
             myParcel = parcel;
                    
         }
+        #endregion parcel info
 
-     
+
+
     }
 }

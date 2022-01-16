@@ -30,16 +30,17 @@ namespace PL
         }
         BlApi.IBL bl = BlApi.BlFactory.GetBl();
         int id;
-        private void signIn_checked(object sender, RoutedEventArgs e)
-        {
+        //private void signIn_checked(object sender, RoutedEventArgs e)
+        //{
             
                 
-        }
+        //}
         private void PassWord_KeyDown(object sender, KeyEventArgs e)
         {
             PassWordTextBox.Clear();
             PassWordTextBox.Foreground = Brushes.Black;
         }
+        #region login
         /// <summary>
         /// event click 
         /// Long in btn,Checking whether the user exists in another system will be notified to the user
@@ -88,6 +89,7 @@ namespace PL
             
             this.Close();
         }
+        #endregion login
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             Close();

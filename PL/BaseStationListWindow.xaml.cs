@@ -26,11 +26,12 @@ namespace PL
         CollectionView view;
 
         BlApi.IBL bl;
-      //  bool close = true;
+        #region constractor
         public ObservableCollection<BO.BaseStationToList> baseStationToList;
         /// <summary>
         ///constractor of base station list window.
         /// </summary>
+        
         public BaseStationListWindow(BlApi.IBL blObject)
         {
             InitializeComponent();
@@ -48,7 +49,9 @@ namespace PL
             BaseStationListView.ItemsSource = baseStationToList;
             //baseStationToList.CollectionChanged += BaseStationToList_CollectionChanged;
         }
+        #endregion constractor
 
+        #region info double click
         /// <summary>
         ///Open a window with the datails of the selected station and do act on this.
         /// </summary>
@@ -61,7 +64,9 @@ namespace PL
                 new BaseStationWindow(bl, this, baseStation.Id, baseStationIndex).ShowDialog();
             //BaseStationListView.ItemsSource=baseStationToList.refresh();
         }
+        #endregion info double click
 
+        #region add base station 
         /// <summary>
         ///Open a window to add a new base station to the list
         /// </summary>
@@ -71,12 +76,9 @@ namespace PL
             new BaseStationWindow(bl, this).ShowDialog();
            // this.IsEnabled = false;
         }
-        //protected override void OnClosing(CancelEventArgs e)//bonus
-        //{
-        //    base.OnClosing(e);
+        #endregion add base station 
 
-        //    e.Cancel = close;
-        //}
+        #region Grpouing
 
         /// <summary>
         ///Group the list of stations according to Free Charge Slots
@@ -98,6 +100,9 @@ namespace PL
             BaseStationListView.ItemsSource = bl.GetBaseStationList();
            
         }
+        #endregion Grouing
+
+        #region close and home click
         /// <summary>
         ///close all windows
         /// </summary>
@@ -113,7 +118,8 @@ namespace PL
         {
             Close();
         }
+        #endregion close and home click
 
     }
-    
+
 }

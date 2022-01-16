@@ -2,19 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Media;
 
 namespace PL
 {
@@ -26,8 +18,12 @@ namespace PL
         BlApi.IBL bl;
         CollectionView view;
 
-        //bool close = true;
+     
         public ObservableCollection<BO.ParcelToList> parcelToList;
+        #region constractor
+        /// <summary>
+        /// Constractor for parcel list window
+        /// </summary>
         public ParcelListWindow(BlApi.IBL blObject)
         {
             InitializeComponent();
@@ -45,13 +41,20 @@ namespace PL
             Priorityselector.ItemsSource = Enum.GetValues(typeof(Priorities));
 
         }
+        #endregion constractor
+        #region list  view selection change
+        /// <summary>
+        /// Collection change
+        /// </summary>
         private void ParcelToList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             AcordingToStatusSelectorChanged();
 
         }
 
-
+        /// <summary>
+        /// filter the list by weight and status parcel
+        /// </summary>
         public void AcordingToStatusSelectorChanged()
         {
 
@@ -80,53 +83,41 @@ namespace PL
             }
 
         }
+        /// <summary>
+        /// filter the list by date requested parcel
+        /// </summary>
         private void datepicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             ParcelListView.ItemsSource = parcelToList.ToList().FindAll(x => bl.GetParcel(x.Id).Requested >= datepicker.SelectedDate );
 
         }
+        /// <summary>
+        /// filter the list by status  parcel
+        /// </summary>
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             clearButtom.Visibility = Visibility.Visible;
             AcordingToStatusSelectorChanged();
         }
+        /// <summary>
+        /// filter the list by priority  parcel
+        /// </summary>
         private void PrioritySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             clearButtom.Visibility = Visibility.Visible;
             AcordingToStatusSelectorChanged();
         }
-
-
+        /// <summary>
+        /// filter the list by weight  parcel
+        /// </summary>
         private void MaxWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             clearButtom.Visibility = Visibility.Visible;
             AcordingToStatusSelectorChanged();
         }
-        
-
-
-
-        private void ParcelAct_DoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            ParcelToList parcel = (ParcelToList)ParcelListView.SelectedItem;
-            int parcelIndex = ParcelListView.SelectedIndex;
-            //this.IsEnabled = false;
-            if (parcel != null)
-                new ParcelWindow(bl, this, parcel.Id, parcelIndex).ShowDialog();
-        }
-              
-            
-        private void AddParcel_Click(object sender, RoutedEventArgs e)
-        {
-            new ParcelWindow(bl, this).ShowDialog();
-           // this.IsEnabled = false;
-        }
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-
-            Application.Current.Shutdown();
-        }
-
+        // <summary>
+        /// Refresh the list of parcel
+        /// </summary>
         private void clearButtom_Click(object sender, RoutedEventArgs e)
         {
             ParcelListView.ItemsSource = bl.GetParcelList();
@@ -134,7 +125,9 @@ namespace PL
             weightselector.SelectedItem = null;
             Priorityselector.SelectedItem = null;
         }
-
+        // <summary>
+        /// Group the list parcel by the sender
+        /// </summary>
         private void Group_click(object sender, RoutedEventArgs e)
         {
 
@@ -149,12 +142,52 @@ namespace PL
             }
 
         }
+
+        #endregion list  view selection change
+        #region parcel info
+        // <summary>
+        ///Open parcel window with his detail and do act on this
+        /// </summary>
+        private void ParcelAct_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            ParcelToList parcel = (ParcelToList)ParcelListView.SelectedItem;
+            int parcelIndex = ParcelListView.SelectedIndex;
+            //this.IsEnabled = false;
+            if (parcel != null)
+                new ParcelWindow(bl, this, parcel.Id, parcelIndex).ShowDialog();
+        }
+        #endregion parcel info 
+        #region  add parcel 
+        // <summary>
+        /// Open window to add new parcel
+        /// </summary>
+        private void AddParcel_Click(object sender, RoutedEventArgs e)
+        {
+            new ParcelWindow(bl, this).ShowDialog();
+           // this.IsEnabled = false;
+        }
+        #endregion  add parcel 
+        #region close
+        // <summary>
+        ///close all the windows.
+        /// </summary>
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+
+            Application.Current.Shutdown();
+        }
+        // <summary>
+        ///return to home window.
+        /// </summary>
         private void Home_Click(object sender, RoutedEventArgs e)
         {
-        
+
 
             Close();
 
         }
+        #endregion close
+
+
     }
 }

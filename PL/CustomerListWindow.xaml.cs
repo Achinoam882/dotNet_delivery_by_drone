@@ -24,9 +24,12 @@ namespace PL
     public partial class CustomerListWindow : Window
     {
         BlApi.IBL bl;
-        //bool close = true;
-        public ObservableCollection<BO.CustomerToList> customerToList;
 
+        public ObservableCollection<BO.CustomerToList> customerToList;
+        #region constractor
+        /// <summary>
+        ///constractor for customer list
+        /// </summary
         public CustomerListWindow(BlApi.IBL blObject)
         {
             InitializeComponent();
@@ -42,11 +45,31 @@ namespace PL
             
 
         }
+        #endregion constractor
+
+        #region close clicks
+        /// <summary>
+        ///click shut down
+        /// </summary
         private void Close_Click(object sender, RoutedEventArgs e)
         {
 
             Application.Current.Shutdown();
         }
+        /// <summary>
+        /// return home click 
+        /// </summary
+        private void Home_click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+        #endregion close clicks
+
+        #region infor of customer
+
+        /// <summary>
+        ///info about a customer from the view list
+        /// </summary
         private void CustomerAct_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             CustomerToList customer = (CustomerToList)CustomerListView.SelectedItem;
@@ -55,17 +78,19 @@ namespace PL
             if (customer != null)
                 new CustomerWindow(bl, this, customer.Id, customerIndex).ShowDialog();
          }
+        #endregion infor of customer
 
+        #region add customer
+        /// <summary>
+        ///add customer 
+        /// </summary
         private void AddCustomer_Click(object sender, RoutedEventArgs e)
         {
             new CustomerWindow(bl, this).ShowDialog();
             //this.IsEnabled = false;
         }
-
-        private void Home_click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+        #endregion add customer
+        
     }
 }
 

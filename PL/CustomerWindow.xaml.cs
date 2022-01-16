@@ -21,9 +21,14 @@ namespace PL
     /// </summary>
     public partial class CustomerWindow : Window
     {
+        Customer customer;
+        int index;
         BlApi.IBL bl;
-        public bool close = true;
         private CustomerListWindow customerListWindow;
+        #region constractor to add
+        /// <summary>
+        /// constractor to add customer
+        /// </summary>
         public CustomerWindow(BlApi.IBL blObject, CustomerListWindow customerList)
         {
             InitializeComponent();
@@ -31,16 +36,54 @@ namespace PL
             bl = blObject;
             customerListWindow = customerList;
         }
+        #endregion constractor to add
+
+        #region close clicks
+        /// <summary>
+        ///back to previous window.
+        /// </summary>
         private void BackWindow_Click(object sender, MouseButtonEventArgs e)
         {
             this.Close();
         }
+        /// <summary>
+        ///close all the windows.
+        /// </summary>
         private void Close_Click(object sender, RoutedEventArgs e)
         {
 
             Application.Current.Shutdown();
         }
+        /// <summary>
+        ///back to home window.
+        /// </summary>
+        private void HOME_CLICK(object sender, RoutedEventArgs e)
+        {
+            CustomerListWindow customerlist;
+            customerlist = customerListWindow;
+            customerListWindow.Close();
+            Close();
 
+
+        }
+        /// <summary>
+        ///back to previous window.
+        /// </summary>
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void listOfCustomerRecieve_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        #endregion close clicks
+
+        #region add clicks
+        /// <summary>
+        ///Add a new customer .
+        /// </summary>
         private void Add_Click(object sender, RoutedEventArgs e)
         {
             if (IdTextBox.Text.Length != 0 && NameTextBox.Text.Length != 0 && latitudeTextBox.Text.Length != 0 && longitudeTextBox.Text.Length != 0 && PhoneNumberTextbox.Text.Length != 0)
@@ -60,7 +103,6 @@ namespace PL
                     MessageBox.Show("Your customer was added successfully", "success!");
                     CustomerToList customerList = bl.GetCustomerList().ToList().Find(i => i.Id == newCustomer.Id);
                     customerListWindow.customerToList.Add(customerList);
-                    close = false;
                     Close();
                     customerListWindow.IsEnabled = true;
                 }
@@ -74,7 +116,6 @@ namespace PL
                     }
 
                 }
-                //רענון
             }
             else
             {
@@ -83,14 +124,15 @@ namespace PL
             }
         }
 
-
+        /// <summary>
+        ///cancel addition customer.
+        /// </summary>
         private void cancel_click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult boxresult = MessageBox.Show("Are you sure you want to cancel this addition?", "info!", MessageBoxButton.YesNo, MessageBoxImage.Information);
             switch (boxresult)
             {
                 case MessageBoxResult.Yes:
-                    close = false;
                     Close();
                     customerListWindow.IsEnabled = true;
                     break;
@@ -100,8 +142,12 @@ namespace PL
                     break;
             }
         }
-        Customer customer;
-        int index;
+        #endregion add clicks
+
+        #region constarctor info window
+        /// <summary>
+        ///constractor to update customer.
+        /// </summary>
         public CustomerWindow(BlApi.IBL blObject, CustomerListWindow customerList, int id, int indexId)
         {
             InitializeComponent();
@@ -111,12 +157,15 @@ namespace PL
             index = indexId;
             customer = bl.GetCustomer(id);
             DataContext = customer;
-            //ParcelFromCustomer.ItemsSource = bl.GetCustomer(customer.Id).ParcelFromCustomer;
-            //listOfCustomerRecieve.ItemsSource = bl.GetCustomer(customer.Id).ParcelToCustomer;
+         
         }
-        
+        #endregion constarctor info window
 
-            private void UpdateCustomer_Click(object sender, RoutedEventArgs e)
+        #region update click
+        /// <summary>
+        ///update the name and phone number customer.
+        /// </summary>
+        private void UpdateCustomer_Click(object sender, RoutedEventArgs e)
             {
             bl.UpdateCustomer(customer.Id, NameTextBox1.Text, PhoneTextBox.Text);
             MessageBox.Show("The Customer Was Updated successfully", "success!");
@@ -136,7 +185,12 @@ namespace PL
             NameTextBox1.IsReadOnly = true;
             PhoneTextBox.IsReadOnly = true;
             }
+        #endregion update click
 
+        #region click info parcel
+        /// <summary>
+        ///open a new parcel window that the customer sent
+        /// </summary>
         private void ParcelFromCustomer_Click(object sender, MouseButtonEventArgs e)
         {
             ParcelAtCustomer parcelAtCustomer = (ParcelAtCustomer)ParcelFromCustomer.SelectedItem;
@@ -145,7 +199,9 @@ namespace PL
                 new ParcelWindow(bl, this, parcelAtCustomer.Id, index).Show();
         }
 
-
+        /// <summary>
+        ///open a new parcel window that the customer receive
+        /// </summary>
         private void ParcelToCustomer_Click(object sender, MouseButtonEventArgs e)
         {
             ParcelAtCustomer parcelAtCustomer = (ParcelAtCustomer)listOfCustomerRecieve.SelectedItem;
@@ -153,22 +209,29 @@ namespace PL
             if (parcelAtCustomer != null)
                 new ParcelWindow(bl,this, parcelAtCustomer.Id, index).Show();
         }
+        #endregion click info parcel
+
+        #region constractor for update
+        /// <summary>
+        ///constractor to update customer from parcel window
+        /// </summary>
         public CustomerWindow(BlApi.IBL blObject, int id, int indexId)
         {
             InitializeComponent();
             UpdateGrid.Visibility = Visibility.Visible;
-            //this.NameTextBox1.IsReadOnly = true;
-            //this.PhoneTextBox.IsReadOnly = true;
-            //this.UpdateButton.IsEnabled = false;
             bl = blObject;
-            //customerListWindow = customerList;
-
             index = indexId;
             customer = bl.GetCustomer(id);
             DataContext = customer;
             ParcelFromCustomer.ItemsSource = bl.GetCustomer(customer.Id).ParcelFromCustomer;
             listOfCustomerRecieve.ItemsSource = bl.GetCustomer(customer.Id).ParcelToCustomer;
         }
+        #endregion constractor for update
+
+        #region checks up for adding customer
+        /// <summary>
+        ///integrity check to add customer
+        /// </summary>
         private void TextBoxId_KeyDown(object sender, KeyEventArgs e)
         {
            // IdTextBox.BorderBrush = Brushes.Gray;
@@ -189,6 +252,9 @@ namespace PL
                 e.Handled = true;
             }
         }
+        /// <summary>
+        ///integrity check to add customer
+        /// </summary>
         private void TextBoxPN_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key < Key.D0 || e.Key > Key.D9)
@@ -207,36 +273,27 @@ namespace PL
                 e.Handled = true;
             }
         }
+        #endregion checks up for adding customer
 
+
+        #region list of parcel to and from customer
+        /// <summary>
+        ///Show list of parcel that sent
+        /// </summary>
         private void ListParcelToCustomer_Click(object sender, RoutedEventArgs e)
         {
             ToCustomer.Visibility = Visibility.Visible;
         }
-
+        /// <summary>
+        ///Show list of parcel that receive
+        /// </summary>
         private void ListParcelFromCustomer_Click(object sender, RoutedEventArgs e)
         {
             FromCustomer.Visibility = Visibility.Visible;
 
         }
-
-        private void HOME_CLICK(object sender, RoutedEventArgs e)
-        {
-            CustomerListWindow customerlist;
-            customerlist = customerListWindow;
-            customerListWindow.Close();
-            Close();
-
-
-        }
-        private void Back_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
-
-        private void listOfCustomerRecieve_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
+        #endregion list of parcel to and from customer
+       
     }
     
 }

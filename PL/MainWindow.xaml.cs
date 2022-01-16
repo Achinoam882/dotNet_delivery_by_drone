@@ -24,63 +24,59 @@ namespace PL
     public partial class MainWindow : Window
     {
         BlApi.IBL BlObject;
+        #region constractor
         public MainWindow(BlApi.IBL bl)
         {
             InitializeComponent();
             BlObject = bl;
         }
-       // BlApi.IBL BlObject = BlApi.BlFactory.GetBl();
+        #endregion constractor
+    
+        #region Drone list
         private void ShowDroneListButtom(object sender, RoutedEventArgs e)
         {
             new DroneListWindow(BlObject).ShowDialog();
             //this.Close();
             //SystemSounds.Asterisk.Play();
         }
-
+        #endregion Drone list
+        #region base station list
         private void BaseStation_Click(object sender, RoutedEventArgs e)
         {
             new BaseStationListWindow(BlObject).ShowDialog();
             //this.Close();
         }
-
+        #endregion base station list
+        #region Customer list
         private void Customer_Click(object sender, RoutedEventArgs e)
         {
             new CustomerListWindow(BlObject).ShowDialog();
             //this.Close();
         }
-
+        #endregion Customer list
+        #region parcel list
         private void Parcel_Click(object sender, RoutedEventArgs e)
         {
             new ParcelListWindow(BlObject).ShowDialog();
             //this.Close();
         }
-
+        #endregion parcel list
+        #region rate us
         private void Star_Click(object sender, RoutedEventArgs e)
         {
             new Star1().ShowDialog();
           
         }
+        #endregion rate us
+        #region close
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-
-            //IEnumerable<BO.DroneToList> DroneToList = from item in BlObject.GetDroneList()
-            //                                          where item.Status == BO.DroneStatuses.InMaintenance
-            //                                          select item;
-            //if (DroneToList.Any())
-            //{
-            //    foreach (var item in DroneToList)//when we close the app we need to put all of the drones that are inmintinan to free
-            //                                     //becuse we dont have such area to store the in charge drones 
-            //    {
-            //        BlObject.ReleaseFromCharging(item.Id);
-                    
-            //    }
-            //}
             Application.Current.Shutdown();
         }
+        #endregion close
 
-  
-        
 
+        #region logout click
         private void LogoutButtem_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult boxresult = MessageBox.Show("Are you sure you want to log out?", "info!", MessageBoxButton.YesNo, MessageBoxImage.Information);
@@ -97,15 +93,17 @@ namespace PL
                     break;
             }
         }
-
+        #endregion logout click
+        #region info click
         private void  info_Click(object sender, RoutedEventArgs e)
         {
             new info().ShowDialog();
 
         }
+        #endregion info click
     }
 
-   
-    
-        
+
+
+
 }
