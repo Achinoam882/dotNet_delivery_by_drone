@@ -53,7 +53,7 @@ namespace PL
                                 UserName = UserName.Text,
                                 AllowingAccess = false,
                                 DelUser = false,
-                                password = PasswordUser.Password,
+                               // password = PasswordUser.Password,
                                 Salt = salt,
                                 HashedPassword = Tools.hashPassword(salt + PasswordUser.Password)
                             };

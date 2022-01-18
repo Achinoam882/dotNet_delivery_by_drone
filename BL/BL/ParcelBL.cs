@@ -79,7 +79,6 @@ namespace BL
                 throw new UpdateProblemException("no suitable parcels waiting to be assign");
             }
             DO.Parcel closestParcel = ReadyToAsiggenParcels.First();
-           // DO.Parcel closestParcel = MinDistaceFromDroneToParcel(tempParcels, drone.DroneLocation);
             drone.Status = DroneStatuses.Busy;
             drone.NumParcelTransfer = closestParcel.Id;
             dalObject.SetParcelToDrone(closestParcel.Id, droneId);

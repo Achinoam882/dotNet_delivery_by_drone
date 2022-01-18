@@ -18,11 +18,7 @@ using System.Threading.Tasks;
             public double Longitude { get; set; }
 
             public double Latitude { get; set; }
-            /*  public override string ToString()
-              {
-                  return string.Format("Id is:{0,-14}\tName of the customer is:{1,-14}\tPhoneNumber is:{2,-14}\tLongitude is:{3,-14}\tLatitude is:{4,-14}\t", Id,Name,PhoneNumber,Longitude,Latitude);
-              }
-           */
+           
             public override string ToString()
             {
                 return this.ToStringProperty();

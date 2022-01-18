@@ -441,7 +441,7 @@ namespace Dal
                         Salt = int.Parse(u.Element("Salt").Value),
                         HashedPassword = u.Element("HashedPassword").Value,
                         AllowingAccess = Boolean.Parse(u.Element("AllowingAccess").Value),
-                        password = u.Element("password").Value,
+                      //  password = u.Element("password").Value,
                         DelUser = Boolean.Parse(u.Element("DelUser").Value)
                     }
                    );
@@ -476,7 +476,7 @@ namespace Dal
                                    new XElement("Salt", user.Salt),
                                    new XElement("HashedPassword", user.HashedPassword),
                                    new XElement("AllowingAccess", user.AllowingAccess),
-                                   new XElement("password", user.password),
+                                  // new XElement("password", user.password),
                                    new XElement("DelUser", user.DelUser)
 
                                    );

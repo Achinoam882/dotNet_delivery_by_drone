@@ -12,7 +12,7 @@
     <Name>jerusalem</Name>
     <Longitude>35.316667</Longitude>
     <Latitude>31.783333</Latitude>
-    <ChargeSlots>10</ChargeSlots>
+    <ChargeSlots>9</ChargeSlots>
   </BaseStation>
   <BaseStation>
     <Id>14</Id>

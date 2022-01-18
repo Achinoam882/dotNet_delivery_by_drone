@@ -120,6 +120,8 @@ namespace PL
         /// </summary>
         private void clearButtom_Click(object sender, RoutedEventArgs e)
         {
+            view = (CollectionView)CollectionViewSource.GetDefaultView(ParcelListView.ItemsSource);
+            view.GroupDescriptions.Clear();
             ParcelListView.ItemsSource = bl.GetParcelList();
             statusselector.SelectedItem = null;
             weightselector.SelectedItem = null;
@@ -131,15 +133,12 @@ namespace PL
         private void Group_click(object sender, RoutedEventArgs e)
         {
 
-            if (GroupButton.Name == "GroupButton")
-
-            {
                 view = (CollectionView)CollectionViewSource.GetDefaultView(ParcelListView.ItemsSource);
                 PropertyGroupDescription groupDescription = new PropertyGroupDescription("Sender");
                 view.GroupDescriptions.Add(groupDescription);
 
 
-            }
+            
 
         }
 

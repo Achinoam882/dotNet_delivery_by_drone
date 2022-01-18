@@ -24,7 +24,7 @@ namespace PL
     /// </summary>
     public partial class DroneListWindow : Window
     {
-       
+        
         BlApi.IBL bl;
         CollectionView view;
         public ObservableCollection<BO.DroneToList> droneToLists;
@@ -111,6 +111,8 @@ namespace PL
         /// </summary>
         private void ResetClick(object sender, RoutedEventArgs e)
         {
+            view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
+            view.GroupDescriptions.Clear();
             DronesListView.ItemsSource = bl.GetDroneList();
             StatusSelector.SelectedItem = null;
             WeightSelector.SelectedItem = null;
@@ -156,14 +158,15 @@ namespace PL
         /// </summary>
         private void Group_click(object sender, RoutedEventArgs e)
         {
-            if(GroupButton.Name == "GroupButton")
-
-            {
                 view = (CollectionView)CollectionViewSource.GetDefaultView(DronesListView.ItemsSource);
                 PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
                 view.GroupDescriptions.Add(groupDescription);
-
-            }
+           
+                
+               
+                
+                
+           
         }
         #endregion group click
         

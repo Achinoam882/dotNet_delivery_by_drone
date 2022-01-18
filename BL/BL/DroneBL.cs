@@ -224,7 +224,7 @@ namespace BL
         #endregion display drone list
 
         #region Drone Simulator
-        /// <summary>
+      
         /// The function start the simulation
         /// </summary>
         public void SimulatorOn(int droneId, Action ToReportProgress, Func<bool> IsTimeFinish)

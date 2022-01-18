@@ -7,27 +7,42 @@
   </Drone>
   <Drone>
     <Id>646122326</Id>
-    <Model>TS60</Model>
+    <Model>TS61</Model>
     <MaxWeight>Light</MaxWeight>
   </Drone>
   <Drone>
     <Id>478357924</Id>
-    <Model>SH12</Model>
+    <Model>SH128</Model>
     <MaxWeight>Light</MaxWeight>
   </Drone>
   <Drone>
     <Id>282049042</Id>
-    <Model>AS81</Model>
+    <Model>AS80</Model>
     <MaxWeight>Medium</MaxWeight>
   </Drone>
   <Drone>
     <Id>334415624</Id>
-    <Model>IVV3</Model>
+    <Model>00IVV3</Model>
     <MaxWeight>Heavy</MaxWeight>
   </Drone>
   <Drone>
     <Id>45317</Id>
-    <Model>IV12</Model>
+    <Model>IV101</Model>
     <MaxWeight>Heavy</MaxWeight>
+  </Drone>
+  <Drone>
+    <Id>675533</Id>
+    <Model>IS123</Model>
+    <MaxWeight>Medium</MaxWeight>
+  </Drone>
+  <Drone>
+    <Id>87654</Id>
+    <Model>jhrf</Model>
+    <MaxWeight>Light</MaxWeight>
+  </Drone>
+  <Drone>
+    <Id>534</Id>
+    <Model>AP</Model>
+    <MaxWeight>Light</MaxWeight>
   </Drone>
 </ArrayOfDrone>

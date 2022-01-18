@@ -97,7 +97,8 @@ namespace PL
         /// </summary>
         private void clearButtom_Click(object sender, RoutedEventArgs e)
         {
-            BaseStationListView.ItemsSource = bl.GetBaseStationList();
+            view = (CollectionView)CollectionViewSource.GetDefaultView(BaseStationListView.ItemsSource);
+            view.GroupDescriptions.Clear();
            
         }
         #endregion Grouing
